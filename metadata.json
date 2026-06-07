@@ -1,0 +1,6 @@
+{
+  "name": "ImpactIQ",
+  "description": "An interactive, AI-powered qualitative research and donor reporting platform for NGOs and development organizations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
