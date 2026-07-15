@@ -15,7 +15,7 @@ export default defineConfig(() => {
           name: 'ImpactIQ',
           short_name: 'ImpactIQ',
           description: 'AI-powered NGO research and impact platform',
-          theme_color: '#2563eb',
+          theme_color: '#1B3A6B',
           background_color: '#ffffff',
           display: 'standalone',
           start_url: '/',

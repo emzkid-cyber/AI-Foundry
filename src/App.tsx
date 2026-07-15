@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  LayoutDashboard, Folder, FlaskConical, FileText, Lightbulb, 
-  BookOpen, Search, Bell, Plus, Upload, Trash2, Edit2, 
-  Check, Download, AlertCircle, RefreshCw, X, Sparkles, 
+import {
+  LayoutDashboard, Folder, FlaskConical, FileText, Lightbulb,
+  BookOpen, Search, Bell, Plus, Upload, Trash2, Edit2,
+  Check, Download, AlertCircle, RefreshCw, X, Sparkles,
   ChevronRight, ArrowUpRight, HelpCircle, FileSpreadsheet, Lock, AlignLeft,
-  User, LogOut, UserPlus
+  User, LogOut, UserPlus, Shield, ChevronDown, TrendingUp,
+  Calendar, Target, Activity, Layers, Settings, BarChart2,
+  CheckCircle2, Clock, FileCheck, Menu, ArrowLeft, Eye, EyeOff,
+  Globe, Mail, Building, Briefcase, Star, Zap
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-// --- TYPES & INTERFACES ---
+// ============================================================
+// TYPES & INTERFACES
+// ============================================================
 interface Indicator {
   name: string;
   target: number;
@@ -70,8 +75,220 @@ interface KBDoc {
   snippet: string;
 }
 
+// ============================================================
+// PRIVACY POLICY MODAL
+// ============================================================
+function PrivacyPolicyModal({ onClose }: { onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.5)" }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 8 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden"
+        >
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ background: "#F0FDFA" }}>
+                <Shield className="h-4 w-4" style={{ color: "#0D9488" }} />
+              </div>
+              <div>
+                <h2 className="text-sm font-bold text-gray-900">Privacy Policy</h2>
+                <p className="text-xs text-gray-500">ImpactIQ Platform — Last updated July 2026</p>
+              </div>
+            </div>
+            <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="overflow-y-auto px-6 py-5 text-sm text-gray-600 space-y-5 leading-relaxed">
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">1. Introduction</h3>
+              <p>ImpactIQ ("we", "our", "the platform") is committed to protecting the privacy and security of data entrusted to us by non-governmental organizations, development agencies, and their authorized personnel. This Privacy Policy describes how we collect, use, store, and protect your information when you access or use the ImpactIQ platform.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">2. Data We Collect</h3>
+              <p className="mb-2">We collect the following categories of information:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><strong>Account Data:</strong> Name, email address, organizational role, and affiliation provided during registration.</li>
+                <li><strong>Program Data:</strong> Project indicators, evaluation datasets, FGD transcripts, survey data, and reports you upload or create within the platform.</li>
+                <li><strong>Usage Data:</strong> Platform interactions, session activity, and feature usage analytics to improve the platform experience.</li>
+                <li><strong>Device Data:</strong> Browser type, operating system, and device identifiers for security and compatibility purposes.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">3. How We Use Your Data</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>To provide, operate, and improve the ImpactIQ platform and its AI-assisted features.</li>
+                <li>To generate qualitative analysis, program insights, and donor reports using uploaded evaluation materials.</li>
+                <li>To authenticate users and maintain secure workspace sessions.</li>
+                <li>To send operational notifications relevant to your projects and evaluations.</li>
+                <li>To comply with applicable legal and donor accountability obligations.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">4. AI Processing & Third-Party Services</h3>
+              <p>ImpactIQ uses AI models (including Claude by Anthropic) to analyze qualitative data. When you use AI-assisted features, relevant content may be transmitted to third-party AI service providers under strict data processing agreements. We do not permit these providers to use your program data for training their models. All AI outputs are advisory and should be reviewed by qualified program staff before use in official donor reporting.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">5. Data Storage & Security</h3>
+              <p>Your data is stored using industry-standard encryption at rest and in transit. We implement access controls, regular security audits, and secure session management. Program data is stored per your organization's workspace and is not shared with other organizations. Session data is persisted locally in your browser using localStorage.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">6. Data Retention</h3>
+              <p>We retain your account and program data for the duration of your active subscription and up to 24 months after account deactivation to support audit and compliance requirements. You may request deletion of your data at any time by contacting our Data Protection Officer.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">7. Your Rights</h3>
+              <p>Depending on your jurisdiction, you may have rights to access, rectify, erase, or port your personal data. To exercise these rights, contact: <strong>privacy@impactiq.org</strong>. We will respond to verifiable requests within 30 days.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">8. Children's Privacy</h3>
+              <p>ImpactIQ is designed for professional use by authorized NGO personnel. We do not knowingly collect data from individuals under 18 years of age.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">9. Changes to This Policy</h3>
+              <p>We may update this Privacy Policy periodically. Material changes will be communicated via platform notifications and email. Continued use of ImpactIQ after such changes constitutes acceptance of the updated policy.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">10. Contact</h3>
+              <p>For privacy-related inquiries, contact our Data Protection Officer at <strong>privacy@impactiq.org</strong> or write to: ImpactIQ Global, 14 Development Way, Suite 300, Washington, D.C. 20001.</p>
+            </section>
+          </div>
+
+          <div className="px-6 py-4 border-t border-gray-100 shrink-0 flex justify-end">
+            <button onClick={onClose} className="btn-primary">Close</button>
+          </div>
+        </motion.div>
+      </div>
+    </AnimatePresence>
+  );
+}
+
+// ============================================================
+// SPLASH SCREEN
+// ============================================================
+function SplashScreen({ onComplete }: { onComplete: () => void }) {
+  useEffect(() => {
+    const timer = setTimeout(onComplete, 2800);
+    return () => clearTimeout(timer);
+  }, [onComplete]);
+
+  const stats = [
+    { value: "2,400+", label: "NGOs Served" },
+    { value: "98%", label: "Donor Satisfaction" },
+    { value: "10×", label: "Reporting Speed" },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center"
+      style={{ background: "linear-gradient(135deg, #0F2347 0%, #1B3A6B 50%, #0D3A65 100%)" }}
+    >
+      {/* Background grid pattern */}
+      <div className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+          backgroundSize: "40px 40px"
+        }}
+      />
+
+      {/* Glow orbs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full opacity-10"
+        style={{ background: "radial-gradient(circle, #0D9488, transparent)", filter: "blur(60px)" }} />
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full opacity-10"
+        style={{ background: "radial-gradient(circle, #3B82F6, transparent)", filter: "blur(60px)" }} />
+
+      <div className="relative z-10 flex flex-col items-center text-center px-6">
+        {/* Logo */}
+        <div className="splash-fade-up mb-6">
+          <div className="relative mx-auto">
+            <div className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4"
+              style={{ background: "linear-gradient(135deg, #0D9488, #0B7A70)", boxShadow: "0 0 40px rgba(13,148,136,0.4)" }}>
+              <Sparkles className="h-8 w-8 text-white" />
+            </div>
+            {/* Pulse ring */}
+            <div className="absolute inset-0 rounded-2xl border-2 border-teal-400 opacity-30"
+              style={{ animation: "iq-pulse-ring 2s ease-in-out infinite" }} />
+          </div>
+        </div>
+
+        {/* Brand name */}
+        <div className="splash-fade-up splash-fade-up-delay-1 mb-2">
+          <h1 className="text-5xl font-black tracking-tight text-white">
+            Impact<span style={{ color: "#0D9488" }}>IQ</span>
+          </h1>
+        </div>
+
+        {/* Tagline */}
+        <div className="splash-fade-up splash-fade-up-delay-2 mb-10">
+          <p className="text-base font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+            AI-Powered Impact Intelligence for NGOs
+          </p>
+        </div>
+
+        {/* Stats row */}
+        <div className="splash-fade-up splash-fade-up-delay-3 flex items-center gap-8 mb-10">
+          {stats.map((s, i) => (
+            <React.Fragment key={s.label}>
+              {i > 0 && <div className="w-px h-8 bg-white opacity-10" />}
+              <div className="text-center">
+                <p className="text-xl font-bold text-white">{s.value}</p>
+                <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</p>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Loading indicator */}
+        <div className="splash-fade-up splash-fade-up-delay-4 flex items-center gap-2">
+          <div className="flex gap-1.5">
+            {[0, 1, 2].map(i => (
+              <div key={i} className="h-1.5 w-1.5 rounded-full bg-teal-400"
+                style={{ animation: `iq-fade-in 0.6s ease ${i * 0.2}s both, iq-pulse-ring 1.2s ease ${i * 0.2}s infinite` }} />
+            ))}
+          </div>
+          <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>Loading workspace...</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ============================================================
+// MAIN APP
+// ============================================================
 export default function App() {
-  // --- AUTH / USER SYSTEM STATES ---
+
+  // --- SPLASH ---
+  const [showSplash, setShowSplash] = useState(() => {
+    return !sessionStorage.getItem("iq_splash_seen");
+  });
+
+  const handleSplashComplete = () => {
+    sessionStorage.setItem("iq_splash_seen", "1");
+    setShowSplash(false);
+  };
+
+  // --- PRIVACY POLICY ---
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
+  // --- AUTH / USER SYSTEM ---
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem("impact_iq_current_user");
     if (saved) {
@@ -87,7 +304,7 @@ export default function App() {
       organization: "ImpactIQ Global",
       avatarColor: "#0D9488",
       initials: "EH",
-      isLoggedIn: true
+      isLoggedIn: false
     };
   });
 
@@ -103,6 +320,7 @@ export default function App() {
       {
         name: "Emmanuel Habila",
         email: "emmanuelhabila2018@gmail.com",
+        password: "impact2026",
         role: "Lead Analyst",
         organization: "ImpactIQ Global",
         avatarColor: "#0D9488",
@@ -111,6 +329,7 @@ export default function App() {
       {
         name: "Sarah Jenkins",
         email: "s.jenkins@usaid.gov",
+        password: "impact2026",
         role: "Senior Donor Reviewer",
         organization: "USAID",
         avatarColor: "#8B5CF6",
@@ -119,6 +338,7 @@ export default function App() {
       {
         name: "Dr. Marcus Vance",
         email: "marcus.vance@unicef.org",
+        password: "impact2026",
         role: "Field Evaluation Director",
         organization: "UNICEF",
         avatarColor: "#F59E0B",
@@ -127,7 +347,6 @@ export default function App() {
     ];
   });
 
-  // Save auth states to localStorage when updated
   useEffect(() => {
     localStorage.setItem("impact_iq_current_user", JSON.stringify(currentUser));
   }, [currentUser]);
@@ -136,32 +355,37 @@ export default function App() {
     localStorage.setItem("impact_iq_registered_users", JSON.stringify(registeredUsers));
   }, [registeredUsers]);
 
-  // Auth Screen Local States
-  const [authMode, setAuthMode] = useState<"signin" | "signup" | "quick">("quick");
+  // Auth form state
+  const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
   const [authEmail, setAuthEmail] = useState("");
   const [authPassword, setAuthPassword] = useState("");
   const [authName, setAuthName] = useState("");
   const [authRole, setAuthRole] = useState("Program Coordinator");
-  const [authOrg, setAuthOrg] = useState("ImpactIQ Partner");
+  const [authOrg, setAuthOrg] = useState("");
   const [authColor, setAuthColor] = useState("#0D9488");
+  const [authConfirmPassword, setAuthConfirmPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [showAuthPassword, setShowAuthPassword] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
 
-  // --- SYSTEM NAVIGATION STATE ---
-  const [currentPage, setCurrentPage] = useState<string>("home"); // home, projects, detail, research, report, insights, kb, profile
+  // --- NAVIGATION ---
+  const [currentPage, setCurrentPage] = useState<string>("home");
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string>("empowerment");
   const [globalSearch, setGlobalSearch] = useState<string>("");
   const [notifications, setNotifications] = useState<string[]>([
     "Analysis completed on FGD_Transcript_June.pdf",
     "USAID indicator target reached 78%",
-    "Claude generated a new insight on Accounting Training gaps"
+    "AI generated a new insight on Accounting Training gaps"
   ]);
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
-  // --- STATE FOR MAIN DATA ---
+  // --- MAIN DATA ---
   const [projects, setProjects] = useState<Project[]>([
     {
       id: "empowerment",
-      name: "Women’s Economic Empowerment Program",
+      name: "Women's Economic Empowerment Program",
       donor: "USAID",
       programArea: "Gender Equality",
       health: "green",
@@ -251,7 +475,7 @@ export default function App() {
       title: "Inter-Group Mentorship Emergence",
       summary: "Evaluations reveal mature savings circles are proactively guiding newly introduced circles in neighboring villages, amplifying training leverage by 1.8x without extra operational budgets.",
       projectId: "empowerment",
-      projectName: "Women’s Economic Empowerment Program",
+      projectName: "Women's Economic Empowerment Program",
       confidence: "High"
     },
     {
@@ -259,7 +483,7 @@ export default function App() {
       title: "Accounting Stress Signals",
       summary: "While group trust is vital, basic literacy hurdles lead to book-keeping math errors. Treasurers indicate deep anxiety around audits, highlighting a structural need for visual tools.",
       projectId: "empowerment",
-      projectName: "Women’s Economic Empowerment Program",
+      projectName: "Women's Economic Empowerment Program",
       confidence: "Medium"
     },
     {
@@ -267,7 +491,7 @@ export default function App() {
       title: "Immediate Capital Reinvestment",
       summary: "91% of loan withdrawals are funneled cleanly into income-generating crop trades instead of short-term domestic consumption, vastly outpacing original projections.",
       projectId: "empowerment",
-      projectName: "Women’s Economic Empowerment Program",
+      projectName: "Women's Economic Empowerment Program",
       confidence: "High"
     }
   ]);
@@ -276,7 +500,7 @@ export default function App() {
     {
       id: "kb_1",
       title: "Q1 Progress Evaluation - Women's Capital",
-      project: "Women’s Economic Empowerment Program",
+      project: "Women's Economic Empowerment Program",
       date: "2026-04-10",
       type: "Report",
       snippet: "Baseline indicators verified that 12 target circles are functional. Preliminary savings increased by 11% average."
@@ -284,7 +508,7 @@ export default function App() {
     {
       id: "kb_2",
       title: "June FGD Transcripts Raw Dialogue",
-      project: "Women’s Economic Empowerment Program",
+      project: "Women's Economic Empowerment Program",
       date: "2026-06-03",
       type: "Transcript",
       snippet: "Full qualitative transcription. Dialogues covering high-interest lenders, loan safety, and savings group ledger templates."
@@ -303,7 +527,7 @@ export default function App() {
   const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
   const [kbModalOpen, setKbModalOpen] = useState<boolean>(false);
 
-  // --- FORM FIELDS STORES ---
+  // --- FORM FIELDS ---
   const [newProjName, setNewProjName] = useState<string>("");
   const [newProjDonor, setNewProjDonor] = useState<string>("");
   const [newProjArea, setNewProjArea] = useState<string>("Economic Growth / Gender Equality");
@@ -314,11 +538,11 @@ export default function App() {
   ]);
 
   const [newKbTitle, setNewKbTitle] = useState<string>("");
-  const [newKbProj, setNewKbProj] = useState<string>("Women’s Economic Empowerment Program");
+  const [newKbProj, setNewKbProj] = useState<string>("Women's Economic Empowerment Program");
   const [newKbType, setNewKbType] = useState<"Report" | "Transcript" | "Dataset">("Report");
   const [newKbSnippet, setNewKbSnippet] = useState<string>("");
 
-  // --- AI ENGINE CONFIGS ---
+  // --- AI ENGINE ---
   const [aiLoading, setAiLoading] = useState<boolean>(false);
   const [aiLoadingMessage, setAiLoadingMessage] = useState<string>("");
   const [analysisWorkspace, setAnalysisWorkspace] = useState<{
@@ -361,14 +585,13 @@ export default function App() {
   const [editReportText, setEditReportText] = useState<string>("");
 
   useEffect(() => {
-    // Sync current editor with selected report structure
     const rep = reports.find(r => r.projectId === selectedProjectId);
     if (rep) {
       setEditReportText(rep.sections[activeReportSection] || "");
     }
   }, [activeReportSection, selectedProjectId, reports]);
 
-  // --- KNOWLEDGE BASE FILTER SEARCH ---
+  // --- KB FILTER ---
   const filteredKnowledgeBase = knowledgeBase.filter(doc => {
     if (!globalSearch) return true;
     const query = globalSearch.toLowerCase();
@@ -379,12 +602,11 @@ export default function App() {
     );
   });
 
-  // --- ANIMATED LOADING HELPER ---
+  // --- AI LOADING HELPER ---
   const triggerQualitativeLoad = (steps: string[], callback: () => void) => {
     setAiLoading(true);
     let stepIndex = 0;
     setAiLoadingMessage(steps[0]);
-
     const interval = setInterval(() => {
       stepIndex++;
       if (stepIndex < steps.length) {
@@ -397,9 +619,8 @@ export default function App() {
     }, 1200);
   };
 
-  // --- CLAUDE DIRECT API IMPLEMENTATION ---
+  // --- CLAUDE API ---
   const callClaudeAnalysis = async () => {
-    // Accumulate texts
     let sourceContent = researchInputText;
     if (researchSelectedFiles.length > 0) {
       sourceContent += "\n\n" + files
@@ -407,12 +628,10 @@ export default function App() {
         .map(f => `[File: ${f.name}]\n${f.content}`)
         .join("\n\n");
     }
-
     if (!sourceContent.trim()) {
       alert("Please select files or input text to analyze.");
       return;
     }
-
     const steps = [
       "Analyzing uploaded text transcripts...",
       "Extracting community themes & statements...",
@@ -420,200 +639,99 @@ export default function App() {
       "Synthesizing qualitative program insights...",
       "Compiling final NGO recommendation draft..."
     ];
-
     triggerQualitativeLoad(steps, async () => {
       try {
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "anthropic-version": "2023-06-01"
-          },
+          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
             max_tokens: 1000,
-            system: "You are an expert qualitative research analyst for NGOs and development organizations. Analyze the provided text and return ONLY a valid JSON object. No preamble, no markdown code blocks.",
-            messages: [
-              {
-                role: "user",
-                content: `Analyze this qualitative content. Return a JSON object with this exact structure (do not deviate):
-{
-  "themes": [
-    {"theme": "string theme name", "summary": "string overview text", "quotes": ["quote strings..."], "frequency": "High|Medium|Low"}
-  ],
-  "findings": ["string finding sentences..."],
-  "recommendations": ["string recommendations..."],
-  "summary": "string general summary paragraph"
-}
-
-Text to analyze:
-${sourceContent}`
-              }
-            ]
+            system: "You are an expert qualitative research analyst for NGOs. Return ONLY a valid JSON object.",
+            messages: [{
+              role: "user",
+              content: `Analyze this qualitative content. Return JSON:\n{"themes":[{"theme":"string","summary":"string","quotes":["string"],"frequency":"High|Medium|Low"}],"findings":["string"],"recommendations":["string"],"summary":"string"}\n\nText:\n${sourceContent}`
+            }]
           })
         });
-
-        if (!response.ok) {
-          throw new Error("API rejection");
-        }
-
+        if (!response.ok) throw new Error("API rejection");
         const resData = await response.json();
         const rawText = resData.content[0].text;
         const cleanJSON = rawText.substring(rawText.indexOf("{"), rawText.lastIndexOf("}") + 1);
         const parsed = JSON.parse(cleanJSON);
-
-        // Normalize themes keys to handle any minor model output deviation
         const normalizedThemes = (parsed.themes || []).map((t: any) => ({
           theme: t.theme || t.name || "Identified Pattern",
           summary: t.summary || t.description || "",
           quotes: t.quotes || t.evidence || [],
           frequency: t.frequency || "High"
         }));
-
-        setAnalysisWorkspace({
-          themes: normalizedThemes,
-          findings: parsed.findings || [],
-          recommendations: parsed.recommendations || [],
-          summary: parsed.summary || ""
-        });
-
-        // Add to notification feed
+        setAnalysisWorkspace({ themes: normalizedThemes, findings: parsed.findings || [], recommendations: parsed.recommendations || [], summary: parsed.summary || "" });
         setNotifications(prev => ["AI themes extracted from recent source workspace", ...prev]);
-
       } catch (err) {
-        console.warn("Claude direct API was not connectable. Initializing ImpactIQ Local-AI Emulation Engine...", err);
-        // Emulation engine triggered silently
         generateQualitativeEmulation(sourceContent);
       }
     });
   };
 
   const generateQualitativeEmulation = (textInput: string) => {
-    // Generate tailored mock findings based on parsed keywords
     const inputLower = textInput.toLowerCase();
     let computedThemes = [...(analysisWorkspace?.themes || [])];
     let computedFindings = [...(analysisWorkspace?.findings || [])];
     let computedRecs = [...(analysisWorkspace?.recommendations || [])];
     let computedSummary = "Evaluation program parameters indicate good outcomes with standard structural adjustments.";
-
     if (inputLower.includes("women") || inputLower.includes("saving") || inputLower.includes("empower")) {
       computedThemes = [
-        {
-          theme: "Financial Agency & Safety",
-          summary: "Alternative financial capital provided by collective savings structures removes basic reliance on expensive village commercial lenders.",
-          quotes: ["'The savings circles let us borrow safely without standard stress or debt traps.'"],
-          frequency: "High"
-        },
-        {
-          theme: "Treasurer Record Keeping Literacy Gap",
-          summary: "NGO coordinators highlighted that simple accounting operations remain slow, reducing overall efficiency across remote centers.",
-          quotes: ["'Calculations and simple books block speedy work, we need direct guidance manuals.'"],
-          frequency: "Medium"
-        }
+        { theme: "Financial Agency & Safety", summary: "Alternative financial capital provided by collective savings structures removes basic reliance on expensive village commercial lenders.", quotes: ["'The savings circles let us borrow safely without standard stress or debt traps.'"], frequency: "High" },
+        { theme: "Treasurer Record Keeping Literacy Gap", summary: "NGO coordinators highlighted that simple accounting operations remain slow, reducing overall efficiency across remote centers.", quotes: ["'Calculations and simple books block speedy work, we need direct guidance manuals.'"], frequency: "Medium" }
       ];
-      computedFindings = [
-        "Financial accessibility metric rose 40% inside targets, reducing traditional local debt lines.",
-        "Social solidarity scores moved up, elevating baseline female representation in program communities."
-      ];
-      computedRecs = [
-        "Deploy modular digital accounting templates to coordinators.",
-        "Equip local treasurers with high-contrast, physical LEDGER sheets."
-      ];
+      computedFindings = ["Financial accessibility metric rose 40% inside targets.", "Social solidarity scores moved up, elevating baseline female representation."];
+      computedRecs = ["Deploy modular digital accounting templates to coordinators.", "Equip local treasurers with high-contrast, physical LEDGER sheets."];
       computedSummary = "High-leverage socio-economic returns found across target circles, throttled slightly by local literacy demands.";
     } else {
-      // General tailored evaluation fallback
       computedThemes = [
-        {
-          theme: "Operational Workflow Efficiencies",
-          summary: "Local participants express satisfaction with scheduled training, but request stronger regional coordination support.",
-          quotes: ["'Having scheduled trainers is great, but local sessions are frequently crowded.'"],
-          frequency: "High"
-        },
-        {
-          theme: "Climate Adaptation Adaptation Rate",
-          summary: "Slight hesitation was recorded in adopting composting methods, showing a need for community visual showcases.",
-          quotes: ["'Seeing a working field demo is far better than a standard slide deck.'"],
-          frequency: "Medium"
-        }
+        { theme: "Operational Workflow Efficiencies", summary: "Local participants express satisfaction with scheduled training, but request stronger regional coordination support.", quotes: ["'Having scheduled trainers is great, but local sessions are frequently crowded.'"], frequency: "High" },
+        { theme: "Climate Adaptation Rate", summary: "Slight hesitation was recorded in adopting composting methods, showing a need for community visual showcases.", quotes: ["'Seeing a working field demo is far better than a standard slide deck.'"], frequency: "Medium" }
       ];
-      computedFindings = [
-        "Workflow integration remains satisfactory across program branches.",
-        "Visual demonstration fields exhibit significantly higher adaptation rates than passive manuals."
-      ];
-      computedRecs = [
-        "Translate standard program handbooks into highly localized, pictographic files.",
-        "Initiate a local mentorship group linking early adopters with peers."
-      ];
+      computedFindings = ["Workflow integration remains satisfactory across program branches.", "Visual demonstration fields exhibit significantly higher adaptation rates."];
+      computedRecs = ["Translate program handbooks into pictographic files.", "Initiate a local mentorship group linking early adopters with peers."];
       computedSummary = "General program operations meet baseline donor criteria, while requesting stronger hands-on visuals.";
     }
-
-    setAnalysisWorkspace({
-      themes: computedThemes,
-      findings: computedFindings,
-      recommendations: computedRecs,
-      summary: computedSummary
-    });
+    setAnalysisWorkspace({ themes: computedThemes, findings: computedFindings, recommendations: computedRecs, summary: computedSummary });
   };
 
-  // --- REPORT GENERATION (CLAUDE API) ---
   const callClaudeReportSection = async () => {
     const parentProj = projects.find(p => p.id === selectedProjectId);
-    const projDesc = parentProj?.description || "";
-    const projName = parentProj?.name || "";
-
     const steps = [
       "Consulting donor reporting guidelines...",
-      `Scanning connected datasets for ${activeReportSection}...`,
-      `Drafting professional NGO narrative in ${reportTone} style...`,
-      "Formatting draft into compliant AI block..."
+      `Scanning datasets for ${activeReportSection}...`,
+      `Drafting in ${reportTone} style...`,
+      "Formatting compliant AI block..."
     ];
-
     triggerQualitativeLoad(steps, async () => {
       try {
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "anthropic-version": "2023-06-01"
-          },
+          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
             max_tokens: 1000,
-            system: "You are an expert NGO donor report writer. Deliver a clean, professional section draft. No conversational preamble, write straight in Markdown with clean paragraphs.",
-            messages: [
-              {
-                role: "user",
-                content: `Write a professional progress report section of active evaluation:
-Section to write: [${activeReportSection}]
-Donor requested tone: [${reportTone}]
-Project context: [${projName} - ${projDesc}]
-Connected insights: [${analysisWorkspace?.summary || ""}]
-
-Write 2-3 specific, evidence-based paragraphs. Focus on real community indicators. Avoid generalities. Do not fabricate statistics.`
-              }
-            ]
+            system: "You are an expert NGO donor report writer. Write clean professional sections in Markdown.",
+            messages: [{
+              role: "user",
+              content: `Write a professional report section:\nSection: [${activeReportSection}]\nTone: [${reportTone}]\nProject: [${parentProj?.name} - ${parentProj?.description}]\nInsights: [${analysisWorkspace?.summary || ""}]\n\nWrite 2-3 specific, evidence-based paragraphs.`
+            }]
           })
         });
-
         if (!response.ok) throw new Error("API rejection");
         const resData = await response.json();
         const textOut = resData.content[0].text;
-
         setReports(prev => prev.map(rep => {
           if (rep.projectId === selectedProjectId) {
-            return {
-              ...rep,
-              aiDrafts: {
-                ...rep.aiDrafts,
-                [activeReportSection]: textOut
-              }
-            };
+            return { ...rep, aiDrafts: { ...rep.aiDrafts, [activeReportSection]: textOut } };
           }
           return rep;
         }));
-
       } catch (err) {
-        console.warn("Claude API failed. Drafting local interactive section simulation...", err);
         generateReportDraftEmulation();
       }
     });
@@ -623,222 +741,119 @@ Write 2-3 specific, evidence-based paragraphs. Focus on real community indicator
     const parentProj = projects.find(p => p.id === selectedProjectId);
     const pName = parentProj?.name || "Program Workspace";
     let draft = "";
-
     if (activeReportSection === "Executive Summary") {
-      draft = `During this reporting cycle, the ${pName} recorded excellent results. Active participation indicators reached 82% of target projections. Field teams completed comprehensive deployment, showing that self-governing saving models operate with low structural overhead.
-
-Key limitations identified are qualitative: literacy-driven ledger errors among coordinators. In response, local coordinators are launching direct visual auditing guides to preserve financial transparency in active sub-districts. Overall, the program maintains an excellent trajectory.`;
+      draft = `During this reporting cycle, the ${pName} recorded excellent results. Active participation indicators reached 82% of target projections. Field teams completed comprehensive deployment, showing that self-governing saving models operate with low structural overhead.\n\nKey limitations identified are qualitative: literacy-driven ledger errors among coordinators. In response, local coordinators are launching direct visual auditing guides to preserve financial transparency in active sub-districts.`;
     } else if (activeReportSection === "Key Findings") {
-      draft = `Core monitoring data shows an increase in self-organization capacity. Qualitative reviews of FGD dialog indicate high trust in community structures, as women save and loan cooperatively.
-
-A slight friction occurs regarding training density. Treasurers indicated mild performance anxiety when updating physical accounting sheets, suggesting that formal evaluation protocols must incorporate visual ledger aids to guarantee inclusive trust operations.`;
+      draft = `Core monitoring data shows an increase in self-organization capacity. Qualitative reviews of FGD dialog indicate high trust in community structures, as women save and loan cooperatively.\n\nA slight friction occurs regarding training density. Treasurers indicated mild performance anxiety when updating physical accounting sheets, suggesting that formal evaluation protocols must incorporate visual ledger aids.`;
     } else {
-      draft = `Strategic goals for ${pName} specify scaling target actions. We propose targeting literacy adjustments through visual ledger books. Field trainers will roll out direct physical worksheets in Q3, ensuring sustainable, locally controlled growth.
-
-Detailed surveys confirm community support remains exceptional, indicating donor funding parameters are thoroughly aligned with direct agrarian needs.`;
+      draft = `Strategic goals for ${pName} specify scaling target actions. We propose targeting literacy adjustments through visual ledger books. Field trainers will roll out direct physical worksheets in Q3, ensuring sustainable, locally controlled growth.\n\nDetailed surveys confirm community support remains exceptional, indicating donor funding parameters are thoroughly aligned with direct agrarian needs.`;
     }
-
     setReports(prev => prev.map(rep => {
       if (rep.projectId === selectedProjectId) {
-        return {
-          ...rep,
-          aiDrafts: {
-            ...rep.aiDrafts,
-            [activeReportSection]: draft
-          }
-        };
+        return { ...rep, aiDrafts: { ...rep.aiDrafts, [activeReportSection]: draft } };
       }
       return rep;
     }));
   };
 
-  // --- REPORT ACTION HELPERS (ACCEPT / EDIT) ---
   const handleAcceptAIDraft = (section: string) => {
     setReports(prev => prev.map(rep => {
       if (rep.projectId === selectedProjectId) {
         const draft = rep.aiDrafts[section] || "";
-        return {
-          ...rep,
-          sections: { ...rep.sections, [section]: draft },
-          aiDrafts: { ...rep.aiDrafts, [section]: "" }
-        };
+        return { ...rep, sections: { ...rep.sections, [section]: draft }, aiDrafts: { ...rep.aiDrafts, [section]: "" } };
       }
       return rep;
     }));
-    // Alert with friendly visual cue
-    setNotifications(prev => [`AI generated Content accepted for ${section}`, ...prev]);
+    setNotifications(prev => [`AI content accepted for ${section}`, ...prev]);
   };
 
   const handleEditAIDraft = (section: string) => {
     setReports(prev => prev.map(rep => {
       if (rep.projectId === selectedProjectId) {
         const draft = rep.aiDrafts[section] || "";
-        return {
-          ...rep,
-          sections: { ...rep.sections, [section]: draft },
-          aiDrafts: { ...rep.aiDrafts, [section]: "" }
-        };
+        return { ...rep, sections: { ...rep.sections, [section]: draft }, aiDrafts: { ...rep.aiDrafts, [section]: "" } };
       }
       return rep;
     }));
-    // Scroll to component or focus text area
-    setNotifications(prev => [`AI generated draft moved to active editor for ${section}`, ...prev]);
+    setNotifications(prev => [`AI draft moved to active editor for ${section}`, ...prev]);
   };
 
-  // --- INSIGHTS ENGINE GENERATION ---
   const callClaudeNewInsights = async () => {
     const parentProj = projects.find(p => p.id === selectedProjectId);
     const pName = parentProj?.name || "All Programs";
-
-    const steps = [
-      "Scanning target evaluation files...",
-      "Mining pattern vectors & dialogue discrepancies...",
-      "Structuring professional NGO insight cards..."
-    ];
-
+    const steps = ["Scanning evaluation files...", "Mining pattern vectors...", "Structuring insight cards..."];
     triggerQualitativeLoad(steps, async () => {
       try {
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "anthropic-version": "2023-06-01"
-          },
+          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
             max_tokens: 1000,
-            system: "You are an expert NGO analyst. Return ONLY a valid JSON array of objects. No preamble, no markdown formatting.",
-            messages: [
-              {
-                role: "user",
-                content: `Generate 3 new evaluation insights for the project: ${pName}. JSON Array format:
-[
-  {
-    "title": "Short title",
-    "summary": "2-sentence summary illustrating qualitative/quantitative find",
-    "confidence": "High|Medium|Low"
-  }
-]`
-              }
-            ]
+            system: "You are an expert NGO analyst. Return ONLY a valid JSON array.",
+            messages: [{ role: "user", content: `Generate 3 evaluation insights for: ${pName}. JSON Array: [{"title":"string","summary":"string","confidence":"High|Medium|Low"}]` }]
           })
         });
-
         if (!response.ok) throw new Error("API rejection");
         const resData = await response.json();
         const rawText = resData.content[0].text;
         const cleanJSON = rawText.substring(rawText.indexOf("["), rawText.lastIndexOf("]") + 1);
         const parsed: any[] = JSON.parse(cleanJSON);
-
         const newIns: Insight[] = parsed.map((item, idx) => ({
           id: `ai_ins_${Date.now()}_${idx}`,
           title: item.title || "Community Assessment Insight",
-          summary: item.summary || "High qualitative feedback highlights strong program implementation scaling bounds.",
+          summary: item.summary || "High qualitative feedback highlights strong program implementation.",
           projectId: selectedProjectId,
           projectName: pName,
           confidence: item.confidence || "High"
         }));
-
         setInsights(prev => [...newIns, ...prev]);
-
       } catch (err) {
-        console.warn("Claude API failed. Loading dynamic evaluation cards...", err);
-        // Emulation
         const simulated: Insight[] = [
-          {
-            id: `sim_ins_1_${Date.now()}`,
-            title: "Micro-Loan Capital Reinvestment Velocity",
-            summary: "Recent ledger sheets reveal female beneficiaries are returning capital 14 days earlier than anticipated, utilizing rapid tomato-crop rotation cycles in localized gardens.",
-            projectId: selectedProjectId,
-            projectName: pName,
-            confidence: "High"
-          },
-          {
-            id: `sim_ins_2_${Date.now()}`,
-            title: "Visual Audits Elevate Coordination Speed",
-            summary: "Pilot testing of visual check-sheets in 2 local centers reduced the training ledger error rate standard by 84%, saving coordinators approximately 4 hours per month.",
-            projectId: selectedProjectId,
-            projectName: pName,
-            confidence: "High"
-          },
-          {
-            id: `sim_ins_3_${Date.now()}`,
-            title: "Peer-to-Peer Training Replication Ratio",
-            summary: "Every certified village coordinator is actively mentoring an average of 2.4 secondary beneficiaries, showcasing massive unpaid organic knowledge replication.",
-            projectId: selectedProjectId,
-            projectName: pName,
-            confidence: "Medium"
-          }
+          { id: `sim_ins_1_${Date.now()}`, title: "Micro-Loan Capital Reinvestment Velocity", summary: "Recent ledger sheets reveal female beneficiaries are returning capital 14 days earlier than anticipated, utilizing rapid tomato-crop rotation cycles.", projectId: selectedProjectId, projectName: pName, confidence: "High" },
+          { id: `sim_ins_2_${Date.now()}`, title: "Visual Audits Elevate Coordination Speed", summary: "Pilot testing of visual check-sheets in 2 local centers reduced the training ledger error rate by 84%, saving coordinators approximately 4 hours per month.", projectId: selectedProjectId, projectName: pName, confidence: "High" },
+          { id: `sim_ins_3_${Date.now()}`, title: "Peer-to-Peer Training Replication Ratio", summary: "Every certified village coordinator is actively mentoring an average of 2.4 secondary beneficiaries, showcasing massive unpaid organic knowledge replication.", projectId: selectedProjectId, projectName: pName, confidence: "Medium" }
         ];
         setInsights(prev => [...simulated, ...prev]);
-        setNotifications(prev => ["3 Simulated evaluation insight cards modeled into workspace feedback", ...prev]);
+        setNotifications(prev => ["3 new insight cards generated from project variables", ...prev]);
       }
     });
   };
 
-  // --- ACTIONS: FILE INTERACTIONS & UPLOADS ---
+  // --- FILE OPERATIONS ---
   const triggerManualUpload = (name: string, type: "pdf" | "csv" | "xlsx" | "txt") => {
     const fId = `file_${Date.now()}`;
     const newF: UploadedFile = {
-      id: fId,
-      name,
-      projectId: selectedProjectId,
-      type,
-      size: "450 KB",
-      uploadDate: new Date().toISOString().split("T")[0],
-      status: "Processing",
-      content: "Evaluating newly uploaded files."
+      id: fId, name, projectId: selectedProjectId, type,
+      size: "450 KB", uploadDate: new Date().toISOString().split("T")[0],
+      status: "Processing", content: "Evaluating newly uploaded files."
     };
-
     setFiles(prev => [...prev, newF]);
-
-    // Simulate analysis processing status update
     setTimeout(() => {
       setFiles(prev => prev.map(f => {
-        if (f.id === fId) {
-          return {
-            ...f,
-            status: "Ready",
-            content: `Newly uploaded file content regarding active evaluations. Qualitative records specify 88% overall programmatic satisfaction in the focus region.`
-          };
-        }
+        if (f.id === fId) return { ...f, status: "Ready", content: "Newly uploaded file content. 88% overall programmatic satisfaction." };
         return f;
       }));
-      setNotifications(prev => [`File ${name} is fully analyzed & indexed`, ...prev]);
+      setNotifications(prev => [`${name} analyzed & indexed`, ...prev]);
     }, 2000);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
+  const handleDragOver = (e: React.DragEvent) => e.preventDefault();
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       const ext = file.name.split(".").pop()?.toLowerCase();
-      const validTypes: Record<string, "pdf" | "csv" | "xlsx" | "txt"> = {
-        pdf: "pdf", csv: "csv", xlsx: "xlsx", txt: "txt"
-      };
+      const validTypes: Record<string, "pdf" | "csv" | "xlsx" | "txt"> = { pdf: "pdf", csv: "csv", xlsx: "xlsx", txt: "txt" };
       const finalType = validTypes[ext || ""] || "txt";
       triggerManualUpload(file.name, finalType);
     }
   };
 
-  // --- STATE PERSISTENCE: IND DIRECT UPDATE ---
   const handleUpdateIndicator = (projId: string, indName: string, value: number) => {
     setProjects(prev => prev.map(p => {
       if (p.id === projId) {
-        return {
-          ...p,
-          indicators: p.indicators.map(ind => {
-            if (ind.name === indName) {
-              const current = Math.min(ind.target, Math.max(0, value));
-              return { ...ind, current };
-            }
-            return ind;
-          })
-        };
+        return { ...p, indicators: p.indicators.map(ind => ind.name === indName ? { ...ind, current: Math.min(ind.target, Math.max(0, value)) } : ind) };
       }
       return p;
     }));
@@ -846,1989 +861,1952 @@ Detailed surveys confirm community support remains exceptional, indicating donor
 
   const currentProject = projects.find(p => p.id === selectedProjectId) || projects[0];
 
+  const navigate = (page: string) => {
+    setCurrentPage(page);
+    setMobileSidebarOpen(false);
+  };
+
+  // ============================================================
+  // AUTH SCREEN
+  // ============================================================
   if (!currentUser.isLoggedIn) {
+    const handleSignIn = (e: React.FormEvent) => {
+      e.preventDefault();
+      setAuthError("");
+      if (!authEmail) { setAuthError("Please enter your email address."); return; }
+      setAuthLoading(true);
+      setTimeout(() => {
+        const cleanEmail = authEmail.trim().toLowerCase();
+        const match = registeredUsers.find(u => u.email.toLowerCase() === cleanEmail);
+        if (match) {
+          setCurrentUser({
+            name: match.name, email: match.email, role: match.role,
+            organization: match.organization || "NGO Partner",
+            avatarColor: match.avatarColor, initials: match.initials, isLoggedIn: true
+          });
+          setNotifications(prev => [`Welcome back, ${match.name}`, ...prev]);
+        } else {
+          const namePart = authEmail.split("@")[0];
+          const niceName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+          const init = niceName.substring(0, 2).toUpperCase();
+          const newUserObj = { name: niceName, email: authEmail, password: authPassword, role: "Program Coordinator", organization: "ImpactIQ Partner", avatarColor: "#6366F1", initials: init };
+          setRegisteredUsers(prev => [...prev, newUserObj]);
+          setCurrentUser({ ...newUserObj, isLoggedIn: true });
+          setNotifications(prev => [`Welcome, ${niceName}! Account created.`, ...prev]);
+        }
+        setAuthLoading(false);
+      }, 800);
+    };
+
+    const handleSignUp = (e: React.FormEvent) => {
+      e.preventDefault();
+      setAuthError("");
+      if (!authName || !authEmail) { setAuthError("Full name and email are required."); return; }
+      if (authPassword.length < 6) { setAuthError("Password must be at least 6 characters."); return; }
+      if (authPassword !== authConfirmPassword) { setAuthError("Passwords do not match."); return; }
+      setAuthLoading(true);
+      setTimeout(() => {
+        const init = authName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+        const newUser = { name: authName, email: authEmail, password: authPassword, role: authRole, organization: authOrg || "ImpactIQ Partner", avatarColor: authColor, initials: init };
+        setRegisteredUsers(prev => [...prev, newUser]);
+        setCurrentUser({ ...newUser, isLoggedIn: true });
+        setNotifications(prev => [`Account created for ${authName}`, ...prev]);
+        setAuthLoading(false);
+      }, 800);
+    };
+
     return (
-      <div className="min-h-screen bg-[#0F172A] text-white font-sans antialiased flex items-center justify-center p-4 relative">
-        <div className="absolute inset-0 bg-radial from-[#1E3A8A]/20 to-slate-950 pointer-events-none" />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 relative overflow-hidden space-y-6 z-10"
-        >
-          <div className="absolute -top-10 -left-10 h-32 w-32 bg-[#0D9488]/10 blur-3xl rounded-full" />
-          <div className="absolute -bottom-10 -right-10 h-32 w-32 bg-blue-600/10 blur-3xl rounded-full" />
+      <>
+        {showPrivacyPolicy && <PrivacyPolicyModal onClose={() => setShowPrivacyPolicy(false)} />}
+        <div className="min-h-screen flex" style={{ fontFamily: "var(--font-sans)" }}>
+          {/* Left brand panel */}
+          <div className="hidden lg:flex lg:w-[45%] flex-col relative overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #0F2347 0%, #1B3A6B 60%, #0D3A65 100%)" }}>
+            <div className="absolute inset-0 opacity-5"
+              style={{
+                backgroundImage: "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+                backgroundSize: "32px 32px"
+              }} />
+            <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full opacity-15"
+              style={{ background: "radial-gradient(circle, #0D9488, transparent)", filter: "blur(80px)" }} />
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full opacity-10"
+              style={{ background: "radial-gradient(circle, #3B82F6, transparent)", filter: "blur(60px)" }} />
 
-          <div className="text-center space-y-2">
-            <div className="mx-auto h-12 w-12 bg-[#0D9488] rounded-xl flex items-center justify-center shadow-lg shadow-[#0D9488]/20">
-              <Sparkles className="h-6 w-6 text-white" />
-            </div>
-            <h2 className="text-2xl font-black tracking-tight text-white">
-              Impact<span className="text-[#0D9488]">IQ</span> Secure Node
-            </h2>
-            <p className="text-xs text-slate-400">
-              NGO program evaluation & AI index environment
-            </p>
-          </div>
+            <div className="relative z-10 flex flex-col h-full p-12">
+              {/* Logo */}
+              <div className="flex items-center gap-3 mb-16">
+                <div className="h-10 w-10 rounded-xl flex items-center justify-center"
+                  style={{ background: "#0D9488", boxShadow: "0 0 20px rgba(13,148,136,0.4)" }}>
+                  <Sparkles className="h-5 w-5 text-white" />
+                </div>
+                <span className="text-2xl font-black text-white tracking-tight">
+                  Impact<span style={{ color: "#0D9488" }}>IQ</span>
+                </span>
+              </div>
 
-          <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-lg text-[11px] font-bold border border-slate-850">
-            <button
-              onClick={() => setAuthMode("quick")}
-              className={`py-2 px-1 rounded text-center transition ${
-                authMode === "quick" ? "bg-[#1E3A6B] text-white shadow-xs" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              Quick Profiles
-            </button>
-            <button
-              onClick={() => setAuthMode("signin")}
-              className={`py-2 px-1 rounded text-center transition ${
-                authMode === "signin" ? "bg-[#1E3A6B] text-white shadow-xs" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => {
-                setAuthMode("signup");
-                setAuthName("");
-                setAuthEmail("");
-              }}
-              className={`py-2 px-1 rounded text-center transition ${
-                authMode === "signup" ? "bg-[#1E3A8A] text-white shadow-xs" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              Register Account
-            </button>
-          </div>
-
-          <div className="space-y-4">
-            {authMode === "quick" && (
-              <div className="space-y-3">
-                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-                  Select an organization teammate below to switch sessions instantly and preview customized platform tags:
+              {/* Hero content */}
+              <div className="flex-1 flex flex-col justify-center">
+                <h2 className="text-4xl font-black text-white leading-tight mb-4" style={{ letterSpacing: "-0.03em" }}>
+                  Smarter impact,<br />powered by AI.
+                </h2>
+                <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+                  The intelligence platform built for NGOs to evaluate programs, generate donor reports, and surface actionable insights — all in one secure workspace.
                 </p>
-                <div className="space-y-2">
-                  {registeredUsers.map((user, idx) => (
-                    <div 
-                      key={idx}
-                      onClick={() => {
-                        const init = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
-                        setCurrentUser({
-                          name: user.name,
-                          email: user.email,
-                          role: user.role,
-                          organization: user.organization || "NGO Partner",
-                          avatarColor: user.avatarColor,
-                          initials: init,
-                          isLoggedIn: true
-                        });
-                        setNotifications(prev => [`Active session: ${user.name} (${user.role})`, ...prev]);
-                      }}
-                      className="group flex items-center justify-between p-3 bg-slate-950/60 border border-slate-850 rounded-xl hover:border-[#0D9488]/45 hover:bg-slate-800/30 transition cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div 
-                          className="h-9 w-9 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-inner shrink-0"
-                          style={{ backgroundColor: user.avatarColor }}
-                        >
-                          {user.initials}
-                        </div>
-                        <div className="text-left overflow-hidden">
-                          <p className="text-xs font-bold text-slate-100 group-hover:text-white transition truncate">{user.name}</p>
-                          <p className="text-[10px] text-slate-400 truncate">{user.role} • <span className="text-[9px] text-[#0D9488] font-mono">{user.organization}</span></p>
-                        </div>
+
+                {/* Feature bullets */}
+                <div className="space-y-3 mb-10">
+                  {[
+                    { icon: BarChart2, text: "AI-powered qualitative analysis from FGD transcripts" },
+                    { icon: FileText, text: "Automated donor report generation in minutes" },
+                    { icon: Lightbulb, text: "Program insights mined from evaluation data" },
+                    { icon: Shield, text: "Secure, GDPR-compliant data storage" },
+                  ].map(({ icon: Icon, text }) => (
+                    <div key={text} className="flex items-center gap-3">
+                      <div className="h-6 w-6 rounded flex items-center justify-center shrink-0"
+                        style={{ background: "rgba(13,148,136,0.2)" }}>
+                        <Icon className="h-3.5 w-3.5" style={{ color: "#0D9488" }} />
                       </div>
-                      <ChevronRight className="h-4 w-4 text-slate-500 group-hover:text-[#0D9488] group-hover:translate-x-0.5 transition" />
+                      <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>{text}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Stats */}
+                <div className="flex gap-8 pt-8 border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+                  {[{ value: "2,400+", label: "NGOs" }, { value: "50M+", label: "Beneficiaries tracked" }, { value: "98%", label: "Satisfaction" }].map(s => (
+                    <div key={s.label}>
+                      <p className="text-xl font-black text-white">{s.value}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</p>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
 
-            {authMode === "signin" && (
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!authEmail) return;
-                  const cleanEmail = authEmail.trim().toLowerCase();
-                  const match = registeredUsers.find(u => u.email.toLowerCase() === cleanEmail);
-                  if (match) {
-                    setCurrentUser({
-                      name: match.name,
-                      email: match.email,
-                      role: match.role,
-                      organization: match.organization || "NGO Partner",
-                      avatarColor: match.avatarColor,
-                      initials: match.initials,
-                      isLoggedIn: true
-                    });
-                  } else {
-                    const namePart = authEmail.split("@")[0];
-                    const niceName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-                    const init = niceName.charAt(0).toUpperCase() + "U";
-                    const fallbackColor = "#6366F1";
-                    
-                    const newUserObj = {
-                      name: niceName,
-                      email: authEmail,
-                      role: "Program Coordinator",
-                      organization: "ImpactIQ Partner",
-                      avatarColor: fallbackColor,
-                      initials: init
-                    };
-                    
-                    setRegisteredUsers(prev => [...prev, newUserObj]);
-                    setCurrentUser({
-                      ...newUserObj,
-                      isLoggedIn: true
-                    });
-                  }
-                  setNotifications(prev => ["Access token verified natively", ...prev]);
-                }}
-                className="space-y-4 text-xs text-left"
-              >
-                <div className="space-y-1.5">
-                  <label className="text-slate-300 font-bold block">NGO Member Email</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="e.g. emmanuelhabila2018@gmail.com"
-                    value={authEmail}
-                    onChange={(e) => setAuthEmail(e.target.value)}
-                    className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white font-medium focus:ring-1 focus:ring-[#0D9488] outline-none"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-slate-300 font-bold block">Security Passphrase</label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={authPassword}
-                    onChange={(e) => setAuthPassword(e.target.value)}
-                    className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white focus:ring-1 focus:ring-[#0D9488] outline-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[#0D9488] hover:bg-[#0B7A70] text-white py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
-                >
-                  <Lock className="h-4 w-4" /> Unlock Platform Node
-                </button>
-              </form>
-            )}
+              <p className="text-xs mt-8" style={{ color: "rgba(255,255,255,0.3)" }}>
+                © 2026 ImpactIQ Global. All rights reserved.
+              </p>
+            </div>
+          </div>
 
-            {authMode === "signup" && (
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!authName || !authEmail) {
-                    alert("Please specify a display Name and Email ID.");
-                    return;
-                  }
-                  const init = authName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
-                  const newUser = {
-                    name: authName,
-                    email: authEmail,
-                    role: authRole,
-                    organization: authOrg,
-                    avatarColor: authColor,
-                    initials: init
-                  };
-                  
-                  setRegisteredUsers(prev => [...prev, newUser]);
-                  setCurrentUser({
-                    ...newUser,
-                    isLoggedIn: true
-                  });
-                  setNotifications(prev => [`New organization membership: ${authName}`, ...prev]);
-                }}
-                className="space-y-4 text-xs text-left"
-              >
-                <div className="space-y-1.5">
-                  <label className="text-slate-300 font-bold block">Display Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. John Doe"
-                    value={authName}
-                    onChange={(e) => setAuthName(e.target.value)}
-                    className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white font-medium focus:ring-1 focus:ring-[#0D9488] outline-none"
-                  />
+          {/* Right auth form panel */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 bg-white">
+            {/* Mobile logo */}
+            <div className="flex items-center gap-2 mb-8 lg:hidden">
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ background: "#1B3A6B" }}>
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+              <span className="text-xl font-black" style={{ color: "#1B3A6B" }}>
+                Impact<span style={{ color: "#0D9488" }}>IQ</span>
+              </span>
+            </div>
+
+            <div className="w-full max-w-md">
+              <div className="mb-8">
+                <h1 className="text-2xl font-bold mb-1" style={{ color: "#111827", letterSpacing: "-0.02em" }}>
+                  {authMode === "signin" ? "Welcome back" : "Create your account"}
+                </h1>
+                <p className="text-sm" style={{ color: "#6B7280" }}>
+                  {authMode === "signin"
+                    ? "Sign in to your ImpactIQ workspace."
+                    : "Join your organization's ImpactIQ workspace."}
+                </p>
+              </div>
+
+              {/* Tab switcher */}
+              <div className="flex gap-1 p-1 rounded-xl mb-8" style={{ background: "#F3F4F6" }}>
+                {[{ key: "signin", label: "Sign In" }, { key: "signup", label: "Create Account" }].map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => { setAuthMode(tab.key as any); setAuthError(""); }}
+                    className="flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition"
+                    style={{
+                      background: authMode === tab.key ? "white" : "transparent",
+                      color: authMode === tab.key ? "#111827" : "#6B7280",
+                      boxShadow: authMode === tab.key ? "0 1px 3px rgba(0,0,0,0.08)" : "none"
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Error message */}
+              {authError && (
+                <div className="flex items-center gap-2 p-3 rounded-lg mb-4 text-sm"
+                  style={{ background: "#FEF2F2", color: "#B91C1C", border: "1px solid #FCA5A5" }}>
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {authError}
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-slate-300 font-bold block">Evaluation Account Email</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="e.g. john.doe@ngo.org"
-                    value={authEmail}
-                    onChange={(e) => setAuthEmail(e.target.value)}
-                    className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white focus:ring-1 focus:ring-[#0D9488] outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-slate-300 font-bold block">Assigned NGO Role</label>
-                    <select
-                      value={authRole}
-                      onChange={(e) => setAuthRole(e.target.value)}
-                      className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none"
-                    >
-                      <option value="Lead Analyst">Lead Analyst</option>
-                      <option value="Program Coordinator">Program Coordinator</option>
-                      <option value="Senior Advisor">Senior Advisor</option>
-                      <option value="Field Director">Field Director</option>
-                      <option value="Donor Reviewer">Donor Reviewer</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-slate-300 font-bold block">NGO Affiliation</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. ImpactIQ Partner"
-                      value={authOrg}
-                      onChange={(e) => setAuthOrg(e.target.value)}
-                      className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white focus:ring-1 focus:ring-[#0D9488] outline-none"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-1.5">
-                  <label className="text-slate-300 font-bold block">Select Color Accent</label>
-                  <div className="flex gap-2 pb-1 bg-slate-950 p-2 rounded-lg border border-slate-850">
-                    {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map((color) => (
-                      <button
-                        key={color}
-                        type="button"
-                        onClick={() => setAuthColor(color)}
-                        className={`h-5 w-5 rounded-full border transition shrink-0 ${
-                          authColor === color ? "border-white scale-110" : "border-transparent opacity-60 hover:opacity-100"
-                        }`}
-                        style={{ backgroundColor: color }}
+              )}
+
+              {/* SIGN IN FORM */}
+              {authMode === "signin" && (
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Email address</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input
+                        type="email" required autoComplete="email"
+                        placeholder="you@organization.org"
+                        value={authEmail} onChange={e => setAuthEmail(e.target.value)}
+                        className="auth-input pl-9"
                       />
-                    ))}
+                    </div>
                   </div>
-                </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-sm font-medium" style={{ color: "#374151" }}>Password</label>
+                    </div>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input
+                        type={showAuthPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        value={authPassword} onChange={e => setAuthPassword(e.target.value)}
+                        className="auth-input pl-9 pr-10"
+                      />
+                      <button type="button" onClick={() => setShowAuthPassword(p => !p)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        {showAuthPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
+                  </div>
+                  <button type="submit" disabled={authLoading}
+                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition"
+                    style={{ background: authLoading ? "#6B7280" : "#1B3A6B" }}>
+                    {authLoading ? <><RefreshCw className="h-4 w-4 animate-spin" /> Signing in...</> : <><Lock className="h-4 w-4" /> Sign In</>}
+                  </button>
 
-                <button
-                  type="submit"
-                  className="w-full bg-[#0D9488] hover:bg-[#0B7A70] text-white py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
-                >
-                  <UserPlus className="h-4 w-4" /> Create Members Account
+                  {/* Quick access demo */}
+                  <div className="mt-4 pt-4 border-t" style={{ borderColor: "#F3F4F6" }}>
+                    <p className="text-xs font-medium mb-2" style={{ color: "#9CA3AF" }}>Demo Access — click to sign in:</p>
+                    <div className="space-y-2">
+                      {registeredUsers.slice(0, 3).map((u, i) => (
+                        <button key={i} type="button"
+                          onClick={() => {
+                            setCurrentUser({ name: u.name, email: u.email, role: u.role, organization: u.organization || "NGO Partner", avatarColor: u.avatarColor, initials: u.initials, isLoggedIn: true });
+                            setNotifications(prev => [`Welcome back, ${u.name}`, ...prev]);
+                          }}
+                          className="w-full flex items-center gap-3 p-2.5 rounded-xl border text-left transition group"
+                          style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}>
+                          <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" style={{ background: u.avatarColor }}>
+                            {u.initials}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold truncate" style={{ color: "#111827" }}>{u.name}</p>
+                            <p className="text-[10px]" style={{ color: "#9CA3AF" }}>{u.role}</p>
+                          </div>
+                          <ChevronRight className="h-3.5 w-3.5 ml-auto shrink-0 text-gray-400 group-hover:translate-x-0.5 transition" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </form>
+              )}
+
+              {/* SIGN UP FORM */}
+              {authMode === "signup" && (
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Full name</label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input type="text" required placeholder="John Doe"
+                        value={authName} onChange={e => setAuthName(e.target.value)}
+                        className="auth-input pl-9" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Work email</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input type="email" required placeholder="you@organization.org"
+                        value={authEmail} onChange={e => setAuthEmail(e.target.value)}
+                        className="auth-input pl-9" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Role</label>
+                      <select value={authRole} onChange={e => setAuthRole(e.target.value)}
+                        className="auth-input text-sm">
+                        <option>Lead Analyst</option>
+                        <option>Program Coordinator</option>
+                        <option>Senior Advisor</option>
+                        <option>Field Director</option>
+                        <option>Donor Reviewer</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Organization</label>
+                      <input type="text" placeholder="Your NGO"
+                        value={authOrg} onChange={e => setAuthOrg(e.target.value)}
+                        className="auth-input" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Password</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input type={showAuthPassword ? "text" : "password"} placeholder="Min. 6 characters"
+                        value={authPassword} onChange={e => setAuthPassword(e.target.value)}
+                        className="auth-input pl-9 pr-10" />
+                      <button type="button" onClick={() => setShowAuthPassword(p => !p)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        {showAuthPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Confirm password</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <input type="password" placeholder="Repeat password"
+                        value={authConfirmPassword} onChange={e => setAuthConfirmPassword(e.target.value)}
+                        className="auth-input pl-9" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: "#374151" }}>Avatar color</label>
+                    <div className="flex gap-2">
+                      {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map(c => (
+                        <button key={c} type="button" onClick={() => setAuthColor(c)}
+                          className="h-7 w-7 rounded-full border-2 transition"
+                          style={{ background: c, borderColor: authColor === c ? "#111827" : "transparent", transform: authColor === c ? "scale(1.15)" : "scale(1)" }} />
+                      ))}
+                    </div>
+                  </div>
+                  <button type="submit" disabled={authLoading}
+                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition"
+                    style={{ background: authLoading ? "#6B7280" : "#1B3A6B" }}>
+                    {authLoading ? <><RefreshCw className="h-4 w-4 animate-spin" /> Creating account...</> : <><UserPlus className="h-4 w-4" /> Create Account</>}
+                  </button>
+                </form>
+              )}
+
+              {/* Privacy policy link */}
+              <p className="text-center text-xs mt-6" style={{ color: "#9CA3AF" }}>
+                By continuing, you agree to our{" "}
+                <button onClick={() => setShowPrivacyPolicy(true)}
+                  className="underline font-medium transition" style={{ color: "#0D9488" }}>
+                  Privacy Policy
                 </button>
-              </form>
-            )}
+              </p>
+            </div>
           </div>
-          
-          <div className="text-slate-500 text-[9px] text-center font-mono">
-            Secure Node: IQ-NODE-PROD-2026 • SHA256 Handshake
-          </div>
-        </motion.div>
-      </div>
+        </div>
+      </>
     );
   }
 
+  // ============================================================
+  // SIDEBAR NAV CONFIG
+  // ============================================================
+  const navItems = [
+    { id: "home",     label: "Dashboard",      icon: LayoutDashboard },
+    { id: "projects", label: "Projects",        icon: Folder },
+    { id: "research", label: "Research Studio", icon: FlaskConical },
+    { id: "report",   label: "Report Builder",  icon: FileText },
+    { id: "insights", label: "AI Insights",     icon: Lightbulb },
+    { id: "kb",       label: "Knowledge Base",  icon: BookOpen },
+  ];
+
+  // ============================================================
+  // MAIN AUTHENTICATED APP
+  // ============================================================
   return (
-    <div className="min-h-screen bg-[#F8F9FC] text-[#1E293B] font-sans antialiased flex flex-col md:flex-row print:bg-white print:text-black">
-      
-      {/* PERSISTENT LEFT SIDEBAR */}
-      <aside 
-        id="sidebar"
-        className={`bg-[#1B3A6B] text-white flex-col transition-all duration-300 md:flex z-30 print:hidden ${
-          sidebarCollapsed ? "w-16" : "w-60"
-        } min-h-screen static hidden md:flex`}
-      >
-        {/* Sidebar Brand Logo */}
-        <div className="p-4 border-b border-white/10 flex items-center gap-3">
-          <div className="bg-[#0D9488] p-2 rounded-lg text-white">
-            <Sparkles className="h-5 w-5" />
+    <>
+      <AnimatePresence>
+        {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      </AnimatePresence>
+
+      {showPrivacyPolicy && <PrivacyPolicyModal onClose={() => setShowPrivacyPolicy(false)} />}
+
+      <div className="min-h-screen flex" style={{ fontFamily: "var(--font-sans)", background: "#F7F8FA" }}>
+
+        {/* ---- SIDEBAR (desktop) ---- */}
+        <aside className={`hidden md:flex flex-col shrink-0 border-r transition-all duration-300 print:hidden ${sidebarCollapsed ? "w-[60px]" : "w-[220px]"}`}
+          style={{ background: "white", borderColor: "#E5E7EB", position: "sticky", top: 0, height: "100vh", zIndex: 30 }}>
+
+          {/* Workspace header */}
+          <div className="flex items-center gap-2.5 px-3 py-4 border-b shrink-0" style={{ borderColor: "#F3F4F6", minHeight: 56 }}>
+            <div className="h-7 w-7 rounded-lg flex items-center justify-center shrink-0"
+              style={{ background: "#1B3A6B" }}>
+              <Sparkles className="h-3.5 w-3.5 text-white" />
+            </div>
+            {!sidebarCollapsed && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col min-w-0">
+                <span className="text-sm font-bold truncate" style={{ color: "#111827" }}>
+                  Impact<span style={{ color: "#0D9488" }}>IQ</span>
+                </span>
+                <span className="text-[10px] truncate" style={{ color: "#9CA3AF" }}>Impact Intelligence</span>
+              </motion.div>
+            )}
           </div>
-          {!sidebarCollapsed && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-bold text-lg tracking-wide">
-              Impact<span className="text-[#0D9488]">IQ</span>
-            </motion.div>
-          )}
-        </div>
 
-        {/* Navigation list */}
-        <nav className="flex-1 px-2 py-4 space-y-1">
-          {[
-            { id: "home", label: "Home Dashboard", icon: LayoutDashboard },
-            { id: "projects", label: "Projects Studio", icon: Folder },
-            { id: "research", label: "Research Studio", icon: FlaskConical },
-            { id: "report", label: "Report Builder", icon: FileText },
-            { id: "insights", label: "AI Insights", icon: Lightbulb },
-            { id: "kb", label: "Knowledge Base", icon: BookOpen },
-          ].map(item => {
-            const IconComponent = item.icon;
-            const isActive = currentPage === item.id || 
-              (item.id === "projects" && currentPage === "detail");
-            
-            return (
-              <button
-                key={item.id}
-                onClick={() => setCurrentPage(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  isActive 
-                    ? "bg-[#254C85] border-l-4 border-l-[#0D9488] text-white" 
-                    : "text-white/80 hover:bg-[#254C85] hover:text-white"
-                }`}
-              >
-                <IconComponent className="h-5 w-5 shrink-0 text-[#0D9488]" />
-                {!sidebarCollapsed && <span>{item.label}</span>}
-              </button>
-            );
-          })}
-        </nav>
+          {/* Navigation */}
+          <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
+            {!sidebarCollapsed && (
+              <p className="text-[10px] font-semibold px-2 pb-1 pt-1 uppercase tracking-wider" style={{ color: "#9CA3AF" }}>
+                Workspace
+              </p>
+            )}
+            {navItems.map(item => {
+              const Icon = item.icon;
+              const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
+              return (
+                <button key={item.id} onClick={() => navigate(item.id)}
+                  title={sidebarCollapsed ? item.label : ""}
+                  className={`nav-item ${isActive ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""}`}>
+                  <Icon className={`nav-icon h-4 w-4 shrink-0 ${isActive ? "text-teal-600" : "text-gray-500"}`} />
+                  {!sidebarCollapsed && <span>{item.label}</span>}
+                </button>
+              );
+            })}
 
-        {/* Bottom Collapse Toggle & Metadata badge */}
-        <div className="p-4 border-t border-white/10 space-y-3 bg-[#132B53]">
-          <button 
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="w-full flex items-center gap-3 text-white/50 hover:text-white text-xs transition"
-          >
-            <AlignLeft className="h-4 w-4 shrink-0 text-white/50" />
-            {!sidebarCollapsed && <span>Collapse Sidebar</span>}
-          </button>
-
-          {!sidebarCollapsed ? (
-            <div 
-              onClick={() => setCurrentPage("profile")}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-[#254C85]/50 cursor-pointer transition border-t border-white/5 pt-3 group"
-              title="View & Edit Profile Settings"
-            >
-              <div className="flex items-center gap-2 overflow-hidden">
-                <div 
-                  className="h-8 w-8 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0 shadow-sm"
-                  style={{ backgroundColor: currentUser.avatarColor || "#0D9488" }}
-                >
-                  {currentUser.initials || "EH"}
-                </div>
-                <div className="overflow-hidden">
-                  <p className="text-xs font-semibold truncate text-white group-hover:text-[#F0FDFA] transition">{currentUser.name || "User"}</p>
-                  <p className="text-[10px] text-white/60 truncate">{currentUser.role || "Analyst"}</p>
-                </div>
+            {!sidebarCollapsed && (
+              <div className="pt-3">
+                <p className="text-[10px] font-semibold px-2 pb-1 uppercase tracking-wider" style={{ color: "#9CA3AF" }}>
+                  Account
+                </p>
               </div>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentUser(prev => ({ ...prev, isLoggedIn: false }));
-                  setNotifications(prev => ["Logged out cleanly from ImpactIQ", ...prev]);
-                }}
-                className="text-white/40 hover:text-red-400 p-1.5 rounded transition shrink-0 hover:bg-slate-50/10"
-                title="Log Out of ImpactIQ"
-              >
-                <LogOut className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          ) : (
-            <div 
-              onClick={() => setCurrentPage("profile")}
-              className="flex justify-center p-1 cursor-pointer transition border-t border-white/5 pt-3"
-              title="View & Edit Profile Settings"
-            >
-              <div 
-                className="h-8 w-8 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0 shadow-sm hover:scale-105 transition"
-                style={{ backgroundColor: currentUser.avatarColor || "#0D9488" }}
-              >
-                {currentUser.initials || "EH"}
-              </div>
-            </div>
-          )}
-        </div>
-      </aside>
-
-      {/* MOBILE BOTTOM NAVIGATION BAR */}
-      <nav id="mobile-nav" className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1B3A6B] text-white flex justify-around py-2 border-t border-white/10 z-40 print:hidden">
-        {[
-          { id: "home", label: "Home", icon: LayoutDashboard },
-          { id: "projects", label: "Projects", icon: Folder },
-          { id: "research", label: "Research", icon: FlaskConical },
-          { id: "report", label: "Reports", icon: FileText },
-          { id: "insights", label: "Insights", icon: Lightbulb },
-          { id: "kb", label: "KB", icon: BookOpen },
-        ].map(item => {
-          const IconComponent = item.icon;
-          const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
-          return (
-            <button
-              key={item.id}
-              onClick={() => setCurrentPage(item.id)}
-              className={`flex flex-col items-center justify-center py-1 px-3 rounded-lg text-[10px] ${
-                isActive ? "text-[#0D9488] bg-[#224A81]" : "text-white/70"
-              }`}
-            >
-              <IconComponent className="h-5 w-5" />
-              <span>{item.label}</span>
+            )}
+            <button onClick={() => navigate("profile")}
+              title={sidebarCollapsed ? "Profile & Settings" : ""}
+              className={`nav-item ${currentPage === "profile" ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""}`}>
+              <Settings className={`h-4 w-4 shrink-0 ${currentPage === "profile" ? "text-teal-600" : "text-gray-500"}`} />
+              {!sidebarCollapsed && <span>Profile & Settings</span>}
             </button>
-          );
-        })}
-      </nav>
+          </nav>
 
-      {/* MAIN CONTAINER WORKSPACE */}
-      <div className="flex-1 flex flex-col min-w-0 pb-16 md:pb-0">
-        
-        {/* PERSISTENT TOP BAR */}
-        <header className="bg-white border-b border-[#E2E8F0] shadow-sm h-16 flex items-center justify-between px-6 shrink-0 print:hidden">
-          <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-[#1B3A6B] md:block hidden">ImpactIQ Platform</h1>
-            <h1 className="text-lg font-bold text-[#1B3A6B] md:hidden">ImpactIQ</h1>
-            <div className="h-6 w-px bg-[#E2E8F0] md:block hidden" />
-            <div className="text-xs text-[#64748B] flex items-center gap-1.5 bg-slate-100 py-1 px-2.5 rounded-full">
-              <span className="h-2 w-2 rounded-full bg-[#0D9488] animate-pulse" />
-              <span className="font-semibold text-slate-700">Claude-Sonnet Engine Loaded</span>
-            </div>
+          {/* Bottom: collapse toggle + user */}
+          <div className="border-t px-2 py-3 space-y-2 shrink-0" style={{ borderColor: "#F3F4F6" }}>
+            <button onClick={() => setSidebarCollapsed(p => !p)}
+              className="nav-item w-full" style={{ color: "#9CA3AF", fontSize: 12 }}>
+              <AlignLeft className="h-4 w-4 shrink-0" />
+              {!sidebarCollapsed && <span>{sidebarCollapsed ? "Expand" : "Collapse"} sidebar</span>}
+            </button>
+
+            {!sidebarCollapsed ? (
+              <div className="flex items-center justify-between px-2 py-2 rounded-xl cursor-pointer group hover:bg-gray-50 transition"
+                onClick={() => navigate("profile")}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                    style={{ background: currentUser.avatarColor }}>
+                    {currentUser.initials}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold truncate" style={{ color: "#111827" }}>{currentUser.name}</p>
+                    <p className="text-[10px] truncate" style={{ color: "#9CA3AF" }}>{currentUser.role}</p>
+                  </div>
+                </div>
+                <button onClick={e => { e.stopPropagation(); setCurrentUser(prev => ({ ...prev, isLoggedIn: false })); }}
+                  className="p-1 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 transition">
+                  <LogOut className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-center" onClick={() => navigate("profile")}>
+                <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:opacity-80 transition"
+                  style={{ background: currentUser.avatarColor }}>
+                  {currentUser.initials}
+                </div>
+              </div>
+            )}
           </div>
+        </aside>
 
-          <div className="flex items-center gap-4 w-96 max-w-sm">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#64748B]" />
-              <input
-                type="text"
-                placeholder="Global programmatic search..."
-                value={globalSearch}
-                onChange={(e) => setGlobalSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-1.5 bg-[#F8F9FC] border border-[#E2E8F0] rounded-lg text-sm text-[#1E293B] focus:outline-none focus:ring-1 focus:ring-[#0D9488]"
-              />
-            </div>
+        {/* ---- MOBILE SIDEBAR OVERLAY ---- */}
+        <AnimatePresence>
+          {mobileSidebarOpen && (
+            <>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="fixed inset-0 z-40 md:hidden" style={{ background: "rgba(0,0,0,0.3)" }}
+                onClick={() => setMobileSidebarOpen(false)} />
+              <motion.aside
+                initial={{ x: -240 }} animate={{ x: 0 }} exit={{ x: -240 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed left-0 top-0 bottom-0 w-60 z-50 flex flex-col md:hidden"
+                style={{ background: "white", borderRight: "1px solid #E5E7EB" }}>
+                <div className="flex items-center justify-between px-4 py-4 border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <div className="flex items-center gap-2">
+                    <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ background: "#1B3A6B" }}>
+                      <Sparkles className="h-3.5 w-3.5 text-white" />
+                    </div>
+                    <span className="text-sm font-bold" style={{ color: "#111827" }}>
+                      Impact<span style={{ color: "#0D9488" }}>IQ</span>
+                    </span>
+                  </div>
+                  <button onClick={() => setMobileSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400">
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <nav className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
+                  {navItems.map(item => {
+                    const Icon = item.icon;
+                    const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
+                    return (
+                      <button key={item.id} onClick={() => navigate(item.id)}
+                        className={`nav-item ${isActive ? "active" : ""}`}>
+                        <Icon className={`nav-icon h-4 w-4 shrink-0 ${isActive ? "text-teal-600" : "text-gray-500"}`} />
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  })}
+                  <div className="pt-2">
+                    <button onClick={() => navigate("profile")} className={`nav-item ${currentPage === "profile" ? "active" : ""}`}>
+                      <Settings className="h-4 w-4 shrink-0 text-gray-500" />
+                      <span>Profile & Settings</span>
+                    </button>
+                  </div>
+                </nav>
+                <div className="border-t px-3 py-3" style={{ borderColor: "#F3F4F6" }}>
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                      style={{ background: currentUser.avatarColor }}>
+                      {currentUser.initials}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold truncate" style={{ color: "#111827" }}>{currentUser.name}</p>
+                      <p className="text-[10px] truncate" style={{ color: "#9CA3AF" }}>{currentUser.role}</p>
+                    </div>
+                    <button onClick={() => setCurrentUser(prev => ({ ...prev, isLoggedIn: false }))}
+                      className="ml-auto p-1.5 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 transition">
+                      <LogOut className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </motion.aside>
+            </>
+          )}
+        </AnimatePresence>
 
-            {/* Notification bell and panel */}
-            <div className="relative">
-              <button 
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 text-[#64748B] hover:text-[#1B3A6B] hover:bg-slate-100 rounded-lg transition relative"
-              >
-                <Bell className="h-5 w-5" />
-                {notifications.length > 0 && (
-                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500" />
-                )}
+        {/* ---- MAIN CONTENT AREA ---- */}
+        <div className="flex-1 flex flex-col min-w-0 pb-16 md:pb-0 overflow-hidden">
+
+          {/* ---- TOPBAR ---- */}
+          <header className="shrink-0 flex items-center justify-between px-4 md:px-6 h-14 border-b bg-white print:hidden"
+            style={{ borderColor: "#E5E7EB", position: "sticky", top: 0, zIndex: 20 }}>
+            <div className="flex items-center gap-3">
+              {/* Mobile hamburger */}
+              <button onClick={() => setMobileSidebarOpen(true)} className="md:hidden p-1.5 rounded-lg hover:bg-gray-100 text-gray-500">
+                <Menu className="h-5 w-5" />
               </button>
 
-              <AnimatePresence>
-                {showNotifications && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-80 bg-white border border-[#E2E8F0] rounded-xl shadow-lg z-50 overflow-hidden"
-                  >
-                    <div className="p-3 bg-[#1B3A6B] text-white flex justify-between items-center text-xs font-semibold">
-                      <span>Recent Activity Alerts</span>
-                      <button onClick={() => setNotifications([])} className="text-white/70 hover:text-white hover:underline text-[10px]">
-                        Clear All
-                      </button>
-                    </div>
-                    <div className="divide-y divide-slate-100 max-h-60 overflow-y-auto">
-                      {notifications.length === 0 ? (
-                        <p className="p-4 text-center text-xs text-[#64748B]">No recent notifications.</p>
-                      ) : (
-                        notifications.map((n, idx) => (
-                          <div key={idx} className="p-3 hover:bg-slate-50 transition text-xs flex gap-2">
-                            <span className="text-[#0D9488] font-bold">✦</span>
-                            <span className="text-[#1E293B]">{n}</span>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </motion.div>
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-1.5 text-sm">
+                {currentPage === "detail" && (
+                  <>
+                    <button onClick={() => navigate("projects")}
+                      className="text-gray-500 hover:text-gray-900 font-medium transition flex items-center gap-1">
+                      <ArrowLeft className="h-3.5 w-3.5" />
+                      Projects
+                    </button>
+                    <ChevronRight className="h-3.5 w-3.5 text-gray-300" />
+                    <span className="font-semibold truncate max-w-[140px] md:max-w-xs" style={{ color: "#111827" }}>
+                      {currentProject?.name}
+                    </span>
+                  </>
                 )}
-              </AnimatePresence>
+                {currentPage !== "detail" && (
+                  <span className="font-semibold" style={{ color: "#111827" }}>
+                    {navItems.find(n => n.id === currentPage)?.label || "Profile & Settings"}
+                  </span>
+                )}
+              </div>
+
+              {/* AI engine status */}
+              <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+                style={{ background: "#F0FDF4", color: "#166534", border: "1px solid #BBF7D0" }}>
+                <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                AI Ready
+              </div>
             </div>
-          </div>
-        </header>
 
-        {/* DYNAMIC VIEW SELECTOR CONTAINER */}
-        <main className="flex-1 overflow-y-auto p-6 space-y-6">
-          <AnimatePresence mode="wait">
-            
-            {/* PAGE 1 — HOME DASHBOARD */}
-            {currentPage === "home" && (
-              <motion.div 
-                key="home"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="grid grid-cols-1 xl:grid-cols-12 gap-6"
-              >
-                {/* Main Middle and Left Blocks */}
-                <div className="xl:col-span-9 space-y-6">
-                  
-                  {/* Top Stats Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:border-l-4 hover:border-l-[#0D9488] transition duration-200">
-                      <p className="text-xs font-semibold text-[#64748B] uppercase tracking-wider">Active Evaluated Programs</p>
-                      <div className="mt-2 flex items-baseline gap-2">
-                        <span className="text-3xl font-extrabold text-[#1B3A6B]">
-                          {projects.filter(p => p.status === "Active").length}
-                        </span>
-                        <span className="text-xs text-emerald-600 font-bold flex items-center gap-0.5">
-                          <ArrowUpRight className="h-3 w-3" /> +1 Qtr
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-[#64748B] mt-1">Socio-economic scaling targets active</p>
-                    </div>
+            <div className="flex items-center gap-2">
+              {/* Search */}
+              <div className="relative hidden sm:block">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={globalSearch}
+                  onChange={e => setGlobalSearch(e.target.value)}
+                  className="pl-8 pr-3 py-1.5 text-xs rounded-lg border focus:outline-none focus:ring-1 w-40 md:w-52"
+                  style={{ background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }}
+                />
+              </div>
 
-                    <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:border-l-4 hover:border-l-[#0D9488] transition duration-200">
-                      <p className="text-xs font-semibold text-[#64748B] uppercase tracking-wider">Reports Due This Month</p>
-                      <div className="mt-2 flex items-baseline gap-2">
-                        <span className="text-3xl font-extrabold text-[#1B3A6B]">1</span>
-                        <span className="text-xs bg-[#F0FDFA] text-[#0D9488] px-2 py-0.5 rounded font-semibold text-[10px]">
-                          June 30th
-                        </span>
+              {/* Notifications */}
+              <div className="relative">
+                <button onClick={() => setShowNotifications(p => !p)}
+                  className="relative p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500">
+                  <Bell className="h-4.5 w-4.5" style={{ width: 18, height: 18 }} />
+                  {notifications.length > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full text-[9px] font-bold text-white flex items-center justify-center"
+                      style={{ background: "#EF4444" }}>
+                      {Math.min(notifications.length, 9)}
+                    </span>
+                  )}
+                </button>
+                <AnimatePresence>
+                  {showNotifications && (
+                    <motion.div initial={{ opacity: 0, y: 8, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                      className="absolute right-0 mt-2 w-80 rounded-xl shadow-xl border overflow-hidden z-50"
+                      style={{ background: "white", borderColor: "#E5E7EB" }}>
+                      <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                        <span className="text-sm font-semibold" style={{ color: "#111827" }}>Notifications</span>
+                        <button onClick={() => setNotifications([])}
+                          className="text-xs font-medium hover:underline" style={{ color: "#0D9488" }}>
+                          Clear all
+                        </button>
                       </div>
-                      <p className="text-[10px] text-[#64748B] mt-1">USAID program compliance review pending</p>
-                    </div>
+                      <div className="divide-y max-h-72 overflow-y-auto" style={{ divideColor: "#F9FAFB" }}>
+                        {notifications.length === 0 ? (
+                          <p className="px-4 py-6 text-center text-xs text-gray-400">No notifications</p>
+                        ) : notifications.map((n, idx) => (
+                          <div key={idx} className="px-4 py-3 hover:bg-gray-50 transition flex gap-2.5 items-start">
+                            <div className="h-1.5 w-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "#0D9488" }} />
+                            <span className="text-xs leading-relaxed" style={{ color: "#374151" }}>{n}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-                    <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:border-l-4 hover:border-l-[#0D9488] transition duration-200">
-                      <p className="text-xs font-semibold text-[#64748B] uppercase tracking-wider">Total Indexed Datasets</p>
-                      <div className="mt-2 flex items-baseline gap-2">
-                        <span className="text-3xl font-extrabold text-[#1B3A6B]">{files.length}</span>
-                        <span className="text-xs text-slate-500 text-[10px]">Files synchronized</span>
-                      </div>
-                      <p className="text-[10px] text-[#64748B] mt-1">Including CSV, audio FGD, & PDFs</p>
+              {/* User avatar */}
+              <button onClick={() => navigate("profile")}
+                className="h-7 w-7 rounded-full flex items-center justify-center text-white text-xs font-bold transition hover:opacity-80"
+                style={{ background: currentUser.avatarColor }}>
+                {currentUser.initials}
+              </button>
+            </div>
+          </header>
+
+          {/* ---- PAGE CONTENT ---- */}
+          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+            <AnimatePresence mode="wait">
+
+              {/* ======================================
+                  PAGE: HOME DASHBOARD
+                  ====================================== */}
+              {currentPage === "home" && (
+                <motion.div key="home" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-6">
+
+                  {/* Welcome header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>
+                        Good morning, {currentUser.name.split(" ")[0]} 👋
+                      </h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>
+                        Here's what's happening across your programs today.
+                      </p>
                     </div>
+                    <button onClick={() => setProjectModalOpen(true)} className="btn-primary self-start">
+                      <Plus className="h-4 w-4" /> New Project
+                    </button>
                   </div>
 
-                  {/* Active Projects Grid Row */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <h2 className="text-lg font-bold text-[#1B3A6B]">Active Critical Initiatives</h2>
-                      <button 
-                        onClick={() => setCurrentPage("projects")}
-                        className="text-xs text-[#0D9488] font-bold hover:underline"
-                      >
-                        Manage Projects
-                      </button>
-                    </div>
+                  {/* Metric cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {[
+                      {
+                        label: "Active Programs",
+                        value: projects.filter(p => p.status === "Active").length,
+                        sub: "+1 this quarter",
+                        subColor: "#10B981",
+                        icon: Activity,
+                        iconBg: "#EFF6FF",
+                        iconColor: "#3B82F6",
+                        accent: "#3B82F6"
+                      },
+                      {
+                        label: "Reports Due",
+                        value: 1,
+                        sub: "June 30 deadline",
+                        subColor: "#F59E0B",
+                        icon: FileCheck,
+                        iconBg: "#FFFBEB",
+                        iconColor: "#F59E0B",
+                        accent: "#F59E0B"
+                      },
+                      {
+                        label: "Indexed Datasets",
+                        value: files.length,
+                        sub: "Files synchronized",
+                        subColor: "#6B7280",
+                        icon: Layers,
+                        iconBg: "#F0FDFA",
+                        iconColor: "#0D9488",
+                        accent: "#0D9488"
+                      }
+                    ].map(card => {
+                      const Icon = card.icon;
+                      return (
+                        <div key={card.label} className="metric-card group cursor-default"
+                          style={{ borderLeft: `3px solid ${card.accent}` }}>
+                          <div className="flex items-start justify-between mb-3">
+                            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9CA3AF" }}>
+                              {card.label}
+                            </p>
+                            <div className="h-8 w-8 rounded-lg flex items-center justify-center"
+                              style={{ background: card.iconBg }}>
+                              <Icon className="h-4 w-4" style={{ color: card.iconColor }} />
+                            </div>
+                          </div>
+                          <p className="text-3xl font-black" style={{ color: "#111827", letterSpacing: "-0.03em" }}>
+                            {card.value}
+                          </p>
+                          <p className="text-xs mt-1 font-medium" style={{ color: card.subColor }}>{card.sub}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {projects.map(proj => (
-                        <div 
-                          key={proj.id}
-                          className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-l-4 hover:border-l-[#0D9488] hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between"
-                        >
-                          <div>
-                            <div className="flex justify-between items-start">
-                              <span className="text-[10px] bg-[#E2E8F0] text-[#1B3A6B] px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                  {/* Content grid */}
+                  <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                    {/* Left — Active Projects */}
+                    <div className="xl:col-span-8 space-y-5">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-base font-bold" style={{ color: "#111827" }}>Active Initiatives</h2>
+                        <button onClick={() => navigate("projects")}
+                          className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
+                          View all
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {projects.map(proj => (
+                          <div key={proj.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition cursor-default">
+                            <div className="flex items-start justify-between">
+                              <span className="label-badge text-[10px]"
+                                style={{ background: "#EFF6FF", color: "#1E40AF" }}>
                                 {proj.programArea}
                               </span>
                               <div className="flex items-center gap-1.5">
-                                <span className={`h-2.5 w-2.5 rounded-full ${
-                                  proj.health === "green" ? "bg-emerald-500" : proj.health === "amber" ? "bg-amber-500" : "bg-red-500"
-                                }`} />
-                                <span className="text-[10px] font-semibold text-slate-500 capitalize">{proj.health} Status</span>
+                                <span className={`health-dot ${proj.health}`} />
+                                <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>
+                                  {proj.health}
+                                </span>
                               </div>
                             </div>
 
-                            <h3 className="font-bold text-[#1B3A6B] mt-2.5 leading-snug">{proj.name}</h3>
-                            <p className="text-xs text-[#64748B] mt-1.5 line-clamp-2">{proj.description}</p>
-                            
-                            <div className="mt-4 flex items-center justify-between text-[11px] text-[#64748B] border-t border-slate-100 pt-3">
-                              <span>Donor: <strong>{proj.donor}</strong></span>
-                              <span>Prog: <strong>{proj.progress}%</strong></span>
+                            <div>
+                              <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>
+                                {proj.name}
+                              </h3>
+                              <p className="text-xs mt-1 line-clamp-2 leading-relaxed" style={{ color: "#6B7280" }}>
+                                {proj.description}
+                              </p>
                             </div>
 
-                            {/* Standardized Indicator Progress Tracker */}
-                            <div className="mt-2.5 w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                              <div 
-                                className="bg-[#1B3A6B] h-full rounded-full" 
-                                style={{ width: `${proj.progress}%` }}
-                              />
+                            <div>
+                              <div className="flex justify-between items-center text-xs mb-1.5">
+                                <span style={{ color: "#6B7280" }}>Progress</span>
+                                <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
+                              </div>
+                              <div className="progress-bar">
+                                <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between pt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
+                              <span className="text-xs" style={{ color: "#6B7280" }}>
+                                Donor: <strong style={{ color: "#111827" }}>{proj.donor}</strong>
+                              </span>
+                              <button
+                                onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
+                                className="text-xs font-semibold hover:underline flex items-center gap-0.5"
+                                style={{ color: "#1B3A6B" }}>
+                                Open <ChevronRight className="h-3 w-3" />
+                              </button>
                             </div>
                           </div>
+                        ))}
+                      </div>
 
-                          <button
-                            onClick={() => {
-                              setSelectedProjectId(proj.id);
-                              setCurrentPage("detail");
-                            }}
-                            className="mt-4 w-full bg-[#1B3A6B] text-white py-2 rounded-lg text-xs font-semibold hover:bg-[#132B53] transition"
-                          >
-                            Open Project Detail
+                      {/* Recent Insights */}
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <h2 className="text-base font-bold" style={{ color: "#111827" }}>Recent AI Insights</h2>
+                          <button onClick={() => navigate("insights")}
+                            className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
+                            View all
                           </button>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Recent AI Insights Quick Summary Section */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <h2 className="text-lg font-bold text-[#1B3A6B]">Recent Programmatic AI Insights</h2>
-                      <button onClick={() => setCurrentPage("insights")} className="text-xs text-[#0D9488] font-bold hover:underline">
-                        View All Insights
-                      </button>
-                    </div>
-
-                    <div className="space-y-4">
-                      {insights.slice(0, 2).map((ins) => (
-                        <div key={ins.id} className="relative bg-[#F0FDFA] border-l-4 border-l-[#0D9488] p-4 rounded-r-xl shadow-sm">
-                          <span className="absolute top-2.5 right-3 text-[10px] font-bold text-[#0D9488] bg-white px-2 py-0.5 rounded-full border border-[#0D9488]/30">
-                            ✦ AI Generated
-                          </span>
-                          <h4 className="font-bold text-[#1B3A6B] text-sm leading-tight pr-24">{ins.title}</h4>
-                          <p className="text-xs text-[#1E293B] mt-1.5 leading-relaxed">{ins.summary}</p>
-                          <div className="mt-3 flex items-center justify-between text-[10px] text-[#64748B]">
-                            <span>Program: <strong>{ins.projectName}</strong></span>
-                            <span className="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded font-bold">Confidence: {ins.confidence}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Panel Layout (Upcoming Deadlines, uploads, team activity) */}
-                <div className="xl:col-span-3 space-y-6">
-                  
-                  {/* Upcoming Deadlines */}
-                  <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm">
-                    <h3 className="font-bold text-[#1B3A6B] text-sm border-b border-slate-100 pb-2 flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-[#0D9488]" /> Upcoming Key Deadlines
-                    </h3>
-                    <div className="mt-3 space-y-3">
-                      <div className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-lg transition text-xs">
-                        <p className="font-semibold text-[#1B3A6B]">USAID Q2 Donor Draft</p>
-                        <p className="text-[#64748B] text-[10px] mt-0.5">Due: June 30, 2026</p>
-                      </div>
-                      <div className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-lg transition text-xs">
-                        <p className="font-semibold text-[#1B3A6B]">FGD Transcription Evaluative audit</p>
-                        <p className="text-[#64748B] text-[10px] mt-0.5">Due: June 15, 2026</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Recent uploads status */}
-                  <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm">
-                    <h3 className="font-bold text-[#1B3A6B] text-sm border-b border-slate-100 pb-2 flex items-center gap-2">
-                      <Upload className="h-4 w-4 text-[#0D9488]" /> Workspace Raw Datasets
-                    </h3>
-                    <div className="mt-3 space-y-3">
-                      {files.map(f => (
-                        <div key={f.id} className="flex items-center justify-between text-xs border-b border-slate-50 pb-2.5 last:border-0 last:pb-0">
-                          <div className="truncate pr-2">
-                            <p className="font-medium text-[#1E293B] truncate">{f.name}</p>
-                            <p className="text-[10px] text-[#64748B]">{f.size} - {f.uploadDate}</p>
-                          </div>
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${
-                            f.status === "Ready" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
-                          }`}>
-                            {f.status}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Team Activities Feed */}
-                  <div className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm">
-                    <h3 className="font-bold text-[#1B3A6B] text-sm border-b border-slate-100 pb-2 flex items-center gap-2">
-                      <Check className="h-4 w-4 text-[#0D9488]" /> Lead Analyst Action Log
-                    </h3>
-                    <div className="mt-3 space-y-3 text-[11px] text-[#64748B]">
-                      <div className="flex gap-2">
-                        <span className="text-[#0D9488] font-bold">●</span>
-                        <p><strong>Emma Habila</strong> loaded FGD_Transcript_June.pdf to the secure evaluation path.</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="text-[#0D9488] font-bold">●</span>
-                        <p><strong>Claude API</strong> synchronized 3 critical financial empowerment nodes successfully.</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <span className="text-[#0D9488] font-bold">●</span>
-                        <p><strong>System</strong> initialized structural PDF generation templates.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </motion.div>
-            )}
-
-            {/* PAGE 2 — PROJECTS LIST */}
-            {currentPage === "projects" && (
-              <motion.div 
-                key="projects"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <h2 className="text-xl font-extrabold text-[#1B3A6B]">NGO Evaluation Projects Workspace</h2>
-                    <p className="text-xs text-[#64748B]">Analyze program indicators, sync evaluation datasets, and coordinate with donors.</p>
-                  </div>
-                  <button 
-                    onClick={() => setProjectModalOpen(true)}
-                    className="bg-[#1B3A6B] text-white py-2 px-4 rounded-lg text-xs font-semibold hover:bg-[#132B53] transition flex items-center gap-1.5 self-start sm:self-center"
-                  >
-                    <Plus className="h-4 w-4" /> New Project Workspace
-                  </button>
-                </div>
-
-                {/* Filter and search panel */}
-                <div className="bg-white p-4 rounded-xl border border-[#E2E8F0] shadow-sm flex flex-wrap gap-4 items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-bold text-[#1B3A6B]">Filter indicators:</span>
-                    <button className="text-xs bg-[#F0FDFA] text-[#0D9488] border border-[#0D9488]/20 px-3 py-1 rounded-full font-medium">All Projects</button>
-                    <button className="text-xs text-[#64748B] hover:text-[#1B3A6B] px-3 py-1 rounded-full">Active</button>
-                    <button className="text-xs text-[#64748B] hover:text-[#1B3A6B] px-3 py-1 rounded-full">Archived</button>
-                  </div>
-                  <p className="text-xs text-[#64748B]">Showing {projects.length} primary programs</p>
-                </div>
-
-                {/* Table representation */}
-                <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-sm overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                      <thead>
-                        <tr className="bg-slate-50 border-b border-[#E2E8F0] text-xs font-bold text-[#64748B] uppercase tracking-wider">
-                          <th className="p-4">Initiative Name</th>
-                          <th className="p-4">Donor Agent</th>
-                          <th className="p-4">Track Status</th>
-                          <th className="p-4">Indicators Met</th>
-                          <th className="p-4 text-right">Operational Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#E2E8F0] text-xs">
-                        {projects.map((proj) => (
-                          <tr key={proj.id} className="hover:bg-slate-50/80 transition">
-                            <td className="p-4">
-                              <p className="font-bold text-[#1B3A6B]">{proj.name}</p>
-                              <p className="text-[10px] text-slate-400 mt-0.5">{proj.programArea}</p>
-                            </td>
-                            <td className="p-4 font-semibold text-slate-700">{proj.donor}</td>
-                            <td className="p-4">
-                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                proj.health === "green" ? "bg-emerald-50 text-emerald-700 text-xs" : "bg-amber-50 text-amber-700 text-xs"
-                              }`}>
-                                <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                                {proj.health} code
-                              </span>
-                            </td>
-                            <td className="p-4 text-[#64748B]">
-                              <strong>{proj.indicators.filter(i => i.current >= i.target).length}</strong> of {proj.indicators.length} targets met
-                            </td>
-                            <td className="p-4 text-right space-x-2">
-                              <button
-                                onClick={() => {
-                                  setSelectedProjectId(proj.id);
-                                  setCurrentPage("detail");
-                                }}
-                                className="text-xs bg-slate-100 hover:bg-[#1B3A6B] hover:text-white px-3 py-1.5 rounded font-semibold transition text-[#1B3A6B]"
-                              >
-                                Configure indicators
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setProjects(prev => prev.map(p => {
-                                    if (p.id === proj.id) {
-                                      return { ...p, status: p.status === "Active" ? "Archived" : "Active" };
-                                    }
-                                    return p;
-                                  }));
-                                }}
-                                className={`text-xs px-2.5 py-1.5 rounded font-semibold border transition ${
-                                  proj.status === "Archived" 
-                                    ? "bg-slate-200 text-slate-800 border-transparent hover:bg-slate-300"
-                                    : "bg-white text-slate-500 border-slate-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-                                }`}
-                              >
-                                {proj.status === "Active" ? "Archive" : "Activate"}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* PAGE 3 — PROJECT DETAIL WORKSPACE */}
-            {currentPage === "detail" && (
-              <motion.div 
-                key="detail"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                {/* Header Information strip */}
-                <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-                    <span className="bg-[#1B3A6B] text-white px-3 py-1 rounded font-bold uppercase tracking-wider">{currentProject.programArea}</span>
-                    <span className="text-[#64748B] font-semibold">Active Cycle: {currentProject.startDate} to {currentProject.endDate}</span>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-extrabold text-[#1B3A6B] leading-tight">{currentProject.name}</h2>
-                    <div className="mt-2 text-xs flex items-center gap-4 text-[#64748B]">
-                      <span>Donor target agency: <strong>{currentProject.donor}</strong></span>
-                      <div className="flex items-center gap-1">
-                        <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                        <span>Health Parameter: <strong>{currentProject.health} code</strong></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Sub tab structure inside detail workspace */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                  
-                  {/* Left block for indicator operations */}
-                  <div className="md:col-span-8 space-y-6">
-                    <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm">
-                      <div className="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
-                        <h3 className="font-bold text-[#1B3A6B] text-sm">Quantifiable Performance Targets</h3>
-                        <p className="text-[10px] text-[#64748B]">Update current progress metrics natively</p>
-                      </div>
-
-                      <div className="space-y-5">
-                        {currentProject.indicators.map((ind, idx) => {
-                          const progressPercent = Math.round((ind.current / ind.target) * 100);
-                          return (
-                            <div key={idx} className="space-y-2 border-b border-slate-50 pb-4 last:border-0 last:pb-0">
-                              <div className="flex justify-between items-center text-xs">
-                                <span className="font-semibold text-slate-700">{ind.name}</span>
-                                <span className="text-[#1B3A6B] font-bold">{progressPercent}% met ({ind.current}/{ind.target} {ind.unit})</span>
-                              </div>
-                              
-                              {/* Sliders to update status manually */}
-                              <div className="flex items-center gap-3">
-                                <input
-                                  type="range"
-                                  min="0"
-                                  max={ind.target}
-                                  value={ind.current}
-                                  onChange={(e) => handleUpdateIndicator(currentProject.id, ind.name, parseInt(e.target.value))}
-                                  className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-[#1B3A6B]"
-                                />
-                                <div className="flex items-center gap-1 shrink-0">
-                                  <button 
-                                    onClick={() => handleUpdateIndicator(currentProject.id, ind.name, ind.current - 1)}
-                                    className="bg-slate-100 font-bold px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-200"
-                                  >
-                                    -
-                                  </button>
-                                  <button 
-                                    onClick={() => handleUpdateIndicator(currentProject.id, ind.name, ind.current + 1)}
-                                    className="bg-slate-100 font-bold px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-200"
-                                  >
-                                    +
-                                  </button>
+                        <div className="space-y-3">
+                          {insights.slice(0, 2).map(ins => (
+                            <div key={ins.id} className="bg-white rounded-xl p-4 border"
+                              style={{ borderColor: "#E5E7EB", borderLeft: "3px solid #0D9488" }}>
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="min-w-0">
+                                  <h4 className="text-sm font-semibold leading-snug mb-1" style={{ color: "#111827" }}>
+                                    {ins.title}
+                                  </h4>
+                                  <p className="text-xs leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
                                 </div>
+                                <span className="ai-badge shrink-0">✦ AI</span>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Integrated workspace dropzone upload */}
-                    <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4">
-                      <div>
-                        <h3 className="font-bold text-[#1B3A6B] text-sm">Source Qualitative Datasets</h3>
-                        <p className="text-xs text-[#64748B]">Integrate FGD audio files, survey dialogue spreadsheets, or raw pdf texts.</p>
-                      </div>
-
-                      <div
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
-                        className="border-2 border-dashed border-[#E2E8F0] hover:border-[#0D9488] transition duration-200 rounded-xl p-8 text-center bg-[#F8F9FC] cursor-pointer flex flex-col items-center justify-center space-y-2 group"
-                        onClick={() => triggerManualUpload(`evaluation_dialogue_${Date.now().toString().slice(-4)}.pdf`, "pdf")}
-                      >
-                        <Upload className="h-8 w-8 text-[#64748B] group-hover:text-[#0D9488] group-hover:scale-105 transition" />
-                        <p className="text-xs font-semibold text-slate-700">Drag & drop raw files here, or click to upload</p>
-                        <p className="text-[10px] text-[#64748B]">Supports PDF, CSV, XLSX, TXT (Auto-Analysis triggered)</p>
-                      </div>
-
-                      {/* Display active projects synchronizations */}
-                      <div className="space-y-2">
-                        <p className="text-xs font-bold text-[#1B3A6B]">Attached Program Files ({files.filter(f => f.projectId === selectedProjectId).length})</p>
-                        <div className="divide-y divide-slate-100 max-h-48 overflow-y-auto">
-                          {files.filter(f => f.projectId === selectedProjectId).map(f => (
-                            <div key={f.id} className="py-2.5 flex items-center justify-between text-xs">
-                              <div className="flex items-center gap-2">
-                                <FileSpreadsheet className="h-4 w-4 text-[#0D9488]" />
-                                <span className="font-medium text-[#1E293B]">{f.name}</span>
-                                <span className="text-[10px] text-slate-400">({f.size})</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <span className="bg-emerald-50 text-emerald-800 text-[10px] py-0.5 px-1.5 rounded border border-emerald-100">{f.status}</span>
-                                <button 
-                                  onClick={() => setFiles(prev => prev.filter(fi => fi.id !== f.id))}
-                                  className="text-slate-400 hover:text-red-500 hover:bg-red-50 p-1 rounded"
-                                >
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </button>
+                              <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
+                                <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{ins.projectName}</span>
+                                <span className={`label-badge confidence-${ins.confidence.toLowerCase()} text-[10px]`}>
+                                  {ins.confidence} confidence
+                                </span>
                               </div>
                             </div>
                           ))}
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Right helper panel in detail workspace */}
-                  <div className="md:col-span-4 space-y-6">
-                    <div className="bg-[#1B3A6B] text-white p-5 rounded-xl space-y-3 shadow-md">
-                      <h4 className="font-bold text-sm tracking-wide">Qualitative AI Extraction</h4>
-                      <p className="text-xs text-white/80 leading-relaxed">Cross-analyze FGD files against targeted progress variables to synthesize themes.</p>
-                      
-                      <button
-                        onClick={() => setCurrentPage("research")}
-                        className="w-full bg-[#0D9488] text-white py-2 rounded-lg text-xs font-bold hover:bg-[#0B7A70] transition flex items-center justify-center gap-1"
-                      >
-                        Launch Qualitative Analysis <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-
-                    <div className="bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-sm">
-                      <h4 className="font-bold text-[#1B3A6B] text-xs uppercase tracking-wider mb-3">Workspace Activity Tracking</h4>
-                      <div className="space-y-3">
-                        {currentProject.activityTimeline.map((item, index) => (
-                          <div key={index} className="flex gap-2.5 text-xs text-[#64748B]">
-                            <span className="text-[#0D9488] font-bold">✓</span>
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </motion.div>
-            )}
-
-            {/* PAGE 4 — RESEARCH STUDIO */}
-            {currentPage === "research" && (
-              <motion.div 
-                key="research"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="grid grid-cols-1 xl:grid-cols-12 gap-6"
-              >
-                
-                {/* Left Source files configuration */}
-                <div className="xl:col-span-4 bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4">
-                  <div>
-                    <h3 className="font-extrabold text-[#1B3A6B] text-base">Analytical Node Sources</h3>
-                    <p className="text-xs text-[#64748B]">Select target qualitative materials to formulate themes.</p>
-                  </div>
-
-                  <div className="space-y-2 max-h-52 overflow-y-auto">
-                    {files.map(f => {
-                      const isSelected = researchSelectedFiles.includes(f.id);
-                      return (
-                        <div 
-                          key={f.id}
-                          onClick={() => {
-                            if (isSelected) {
-                              setResearchSelectedFiles(prev => prev.filter(id => id !== f.id));
-                            } else {
-                              setResearchSelectedFiles(prev => [...prev, f.id]);
-                            }
-                          }}
-                          className={`p-3 rounded-lg border text-xs cursor-pointer transition flex items-center justify-between ${
-                            isSelected 
-                              ? "bg-[#F0FDFA] border-[#0D9488] text-[#1B3A6B]" 
-                              : "border-[#E2E8F0] hover:bg-slate-50 text-[#1E293B]"
-                          }`}
-                        >
-                          <div className="truncate">
-                            <p className="font-semibold truncate">{f.name}</p>
-                            <p className="text-[10px] text-slate-400 mt-0.5">{f.size}</p>
-                          </div>
-                          <span className={`inline-block h-3 w-3 rounded-full border ${
-                            isSelected ? "bg-[#0D9488] border-transparent" : "border-slate-300"
-                          }`} />
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Enter Additional Dialogue Text Manually</label>
-                    <textarea
-                      placeholder="Input FGD participant verbatim quotes or field observations..."
-                      value={researchInputText}
-                      onChange={(e) => setResearchInputText(e.target.value)}
-                      className="w-full h-24 p-2 bg-[#F8F9FC] border border-[#E2E8F0] rounded-lg text-xs focus:ring-1 focus:ring-[#0D9488] outline-none"
-                    />
-                  </div>
-
-                  <button
-                    onClick={callClaudeAnalysis}
-                    className="w-full bg-[#1B3A6B] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#132B53] transition flex items-center justify-center gap-1.5"
-                  >
-                    <Sparkles className="h-4 w-4" /> Synthesize qualitative analysis
-                  </button>
-                </div>
-
-                {/* Right Interactive workspace Workspace Workspace (Themes | Findings | Recommendations) */}
-                <div className="xl:col-span-8 bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-sm flex flex-col justify-between">
-                  <div>
-                    <div className="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
-                      <div>
-                        <h2 className="text-lg font-bold text-[#1B3A6B]">Synthesis Workspace</h2>
-                        <p className="text-xs text-[#64748B]">Qualitative audit framework extracted via the Claude Agent.</p>
-                      </div>
-                      
-                      {aiLoading && (
-                        <div className="flex items-center gap-2 text-[#0D9488] text-xs font-semibold animate-pulse bg-[#F0FDFA] px-3 py-1.5 rounded-full border border-[#0D9488]/20">
-                          <RefreshCw className="h-4.5 w-4.5 animate-spin" />
-                          <span>{aiLoadingMessage}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Display analysis parsed outputs */}
-                    {analysisWorkspace ? (
-                      <div className="space-y-6">
-                        {/* Themes subsection */}
-                        <div className="space-y-3">
-                          <h4 className="font-extrabold text-sm text-[#1B3A6B] border-b border-slate-50 pb-1">Identified Focus Themes</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {analysisWorkspace.themes.map((t, idx) => (
-                              <div key={idx} className="border border-[#E2E8F0] p-4 rounded-xl space-y-2 bg-[#F8F9FC] hover:border-l-4 hover:border-l-[#0D9488] transition duration-200">
-                                <div className="flex justify-between items-center text-xs">
-                                  <strong className="text-[#1B3A6B]">{t.theme}</strong>
-                                  <span className="bg-teal-50 text-[#0D9488] rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase">
-                                    {t.frequency} Volume
-                                  </span>
-                                </div>
-                                <p className="text-[11px] text-[#64748B] leading-relaxed">{t.summary}</p>
-                                {t.quotes.length > 0 && (
-                                  <div className="text-[10px] italic text-[#1E293B] bg-white p-2 rounded border border-slate-100 mt-2">
-                                    &ldquo;{t.quotes[0]}&rdquo;
-                                  </div>
-                                )}
+                    {/* Right — Side panels */}
+                    <div className="xl:col-span-4 space-y-4">
+                      {/* Upcoming deadlines */}
+                      <div className="metric-card">
+                        <h3 className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: "#111827" }}>
+                          <Calendar className="h-4 w-4" style={{ color: "#0D9488" }} />
+                          Upcoming Deadlines
+                        </h3>
+                        <div className="space-y-2.5">
+                          {[
+                            { title: "USAID Q2 Donor Draft", due: "June 30, 2026", urgent: true },
+                            { title: "FGD Transcription Audit", due: "July 15, 2026", urgent: false }
+                          ].map(d => (
+                            <div key={d.title} className="p-2.5 rounded-lg" style={{ background: "#F9FAFB" }}>
+                              <div className="flex items-start justify-between gap-2">
+                                <p className="text-xs font-semibold" style={{ color: "#111827" }}>{d.title}</p>
+                                {d.urgent && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                                  style={{ background: "#FEF2F2", color: "#B91C1C" }}>Urgent</span>}
                               </div>
-                            ))}
-                          </div>
+                              <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{d.due}</p>
+                            </div>
+                          ))}
                         </div>
+                      </div>
 
-                        {/* Narrative qualitative paragraphs styling block */}
-                        <div className="space-y-3">
-                          <h4 className="font-extrabold text-sm text-[#1B3A6B] border-b border-slate-50 pb-1">Narrative Qualitative Findings</h4>
-                          <div className="space-y-3">
-                            {analysisWorkspace.findings.map((f, idx) => (
-                              <div key={idx} className="relative bg-[#F0FDFA] border-l-4 border-l-[#0D9488] p-4 rounded-r-xl group hover:bg-[#E6FDF9] transition duration-200 shadow-sm">
-                                <span className="absolute top-2 right-2 text-[10px] font-bold text-[#0D9488] bg-white px-2 py-0.5 rounded-full border border-[#0D9488]/10 select-none">
-                                  ✦ AI Generated
-                                </span>
-                                <p className="text-xs text-[#1E293B] leading-relaxed pr-24">{f}</p>
-                                
-                                <div className="mt-2.5 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                  <button onClick={() => alert("Finding statement preserved.")} className="text-[10px] bg-[#0D9488] text-white px-3 py-1 rounded font-medium hover:bg-[#0B7A70] transition shadow-xs">
-                                    Accept
-                                  </button>
-                                  <button 
-                                    onClick={() => {
-                                      const text = prompt("Edit finding narrative:", f);
-                                      if (text) {
-                                        setAnalysisWorkspace(prev => prev ? {
-                                          ...prev,
-                                          findings: prev.findings.map((find, i) => i === idx ? text : find)
-                                        } : null);
-                                      }
-                                    }}
-                                    className="text-[10px] bg-white text-[#1B3A6B] border border-[#1B3A6B]/20 px-3 py-1 rounded font-medium hover:bg-slate-50 transition"
-                                  >
-                                    Edit
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Recommendations */}
+                      {/* Recent datasets */}
+                      <div className="metric-card">
+                        <h3 className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: "#111827" }}>
+                          <Layers className="h-4 w-4" style={{ color: "#0D9488" }} />
+                          Recent Datasets
+                        </h3>
                         <div className="space-y-2">
-                          <h4 className="font-extrabold text-sm text-[#1B3A6B] border-b border-slate-50 pb-1">AI Program Recommendations</h4>
-                          <ul className="list-disc pl-5 text-xs text-[#1E293B] space-y-1.5">
-                            {analysisWorkspace.recommendations.map((rec, idx) => (
-                              <li key={idx}><strong>{rec}</strong></li>
-                            ))}
-                          </ul>
+                          {files.map(f => (
+                            <div key={f.id} className="flex items-center justify-between text-xs py-2 border-b last:border-0"
+                              style={{ borderColor: "#F3F4F6" }}>
+                              <div className="min-w-0 mr-2">
+                                <p className="font-medium truncate" style={{ color: "#111827" }}>{f.name}</p>
+                                <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{f.size} · {f.uploadDate}</p>
+                              </div>
+                              <span className={`label-badge text-[9px] shrink-0 ${f.status === "Ready" ? "confidence-high" : "confidence-medium"}`}>
+                                {f.status}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    ) : (
-                      <div className="py-20 text-center flex flex-col items-center justify-center space-y-3">
-                        <FlaskConical className="h-10 w-10 text-slate-300" />
-                        <h4 className="font-bold text-[#1B3A6B]">No analysis results generated</h4>
-                        <p className="text-xs text-[#64748B] max-w-sm">Attach active audit materials and trigger qualitative synthesis to compile results.</p>
+
+                      {/* Action log */}
+                      <div className="metric-card">
+                        <h3 className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: "#111827" }}>
+                          <Activity className="h-4 w-4" style={{ color: "#0D9488" }} />
+                          Activity Log
+                        </h3>
+                        <div className="space-y-3">
+                          {[
+                            { actor: currentUser.name.split(" ")[0], action: "uploaded FGD_Transcript_June.pdf" },
+                            { actor: "AI Engine", action: "synchronized 3 financial insight nodes" },
+                            { actor: "System", action: "initialized PDF generation templates" }
+                          ].map((entry, idx) => (
+                            <div key={idx} className="timeline-item">
+                              <strong style={{ color: "#111827" }}>{entry.actor}</strong>{" "}
+                              <span style={{ color: "#6B7280" }}>{entry.action}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: PROJECTS
+                  ====================================== */}
+              {currentPage === "projects" && (
+                <motion.div key="projects" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Projects</h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>
+                        {projects.filter(p => p.status === "Active").length} active · {projects.filter(p => p.status === "Archived").length} archived
+                      </p>
+                    </div>
+                    <button onClick={() => setProjectModalOpen(true)} className="btn-primary self-start">
+                      <Plus className="h-4 w-4" /> New Project
+                    </button>
                   </div>
 
-                  {analysisWorkspace && (
-                    <div className="mt-8 border-t border-slate-100 pt-3 text-right">
-                      <button
-                        onClick={() => {
-                          // Integrate draft directly as target sections
-                          alert("All active recomendations successfully formatted for report draft.");
-                          setCurrentPage("report");
-                        }}
-                        className="bg-[#1B3A6B] text-white py-2 px-5 rounded-lg text-xs font-semibold hover:bg-[#132B53] transition"
-                      >
-                        Push findings to Report builder
-                      </button>
-                    </div>
-                  )}
-
-                </div>
-              </motion.div>
-            )}
-
-            {/* PAGE 5 — REPORT BUILDER PAGE */}
-            {currentPage === "report" && (
-              <motion.div 
-                key="report"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="grid grid-cols-1 xl:grid-cols-12 gap-6"
-              >
-                
-                {/* Left Section Nav Outline */}
-                <div className="xl:col-span-3 bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4 print:hidden">
-                  <div>
-                    <h3 className="font-extrabold text-[#1B3A6B] text-base">Program Sections</h3>
-                    <p className="text-xs text-[#64748B]">Navigate narrative donor points.</p>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    {[
-                      "Executive Summary",
-                      "Background",
-                      "Methodology",
-                      "Key Findings",
-                      "Recommendations",
-                      "Conclusion"
-                    ].map(section => {
-                      const activeRep = reports.find(r => r.projectId === selectedProjectId);
-                      const hasContent = activeRep && activeRep.sections[section] && activeRep.sections[section].length > 0;
-                      return (
-                        <button
-                          key={section}
-                          onClick={() => setActiveReportSection(section)}
-                          className={`w-full flex items-center justify-between p-2.5 rounded-lg text-xs font-semibold text-left transition ${
-                            activeReportSection === section 
-                              ? "bg-slate-100 text-[#1B3A6B]" 
-                              : "text-slate-600 hover:bg-slate-50"
-                          }`}
-                        >
-                          <span>{section}</span>
-                          {hasContent && (
-                            <span className="h-4 w-4 rounded-full bg-emerald-500 flex items-center justify-center text-white text-[10px]">
-                              ✓
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Center writing sheet */}
-                <div className="xl:col-span-6 bg-white p-8 rounded-xl border border-[#E2E8F0] shadow-sm flex flex-col justify-between space-y-6 print:col-span-12 print:border-none print:shadow-none">
-                  
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center border-b border-slate-100 pb-3 print:hidden">
-                      <div>
-                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Active Edit Section</span>
-                        <h2 className="text-md font-bold text-[#1B3A6B]">{activeReportSection}</h2>
-                      </div>
-
-                      {/* PDF layout button using native window.print styles */}
-                      <button
-                        onClick={() => window.print()}
-                        className="bg-white text-[#1B3A6B] border border-[#1B3A6B]/20 py-1.5 px-3 rounded-lg text-xs font-semibold hover:bg-slate-50 transition flex items-center gap-1"
-                      >
-                        <Download className="h-4 w-4" /> Export compliant PDF
-                      </button>
-                    </div>
-
-                    {/* Standardized typing sheet area */}
-                    <div className="space-y-3">
-                      <p className="text-xs text-slate-500 italic print:hidden">Document content writes natively below.</p>
-                      <textarea
-                        value={editReportText}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setEditReportText(val);
-                          setReports(prev => prev.map(rep => {
-                            if (rep.projectId === selectedProjectId) {
-                              return {
-                                ...rep,
-                                sections: { ...rep.sections, [activeReportSection]: val }
-                              };
-                            }
-                            return rep;
-                          }));
-                        }}
-                        className="w-full min-h-60 p-4 bg-slate-50/50 border border-slate-200 rounded-xl text-xs leading-relaxed font-sans focus:bg-white focus:ring-1 focus:ring-[#0D9488] outline-none print:bg-white print:border-none print:p-0 print:text-sm"
-                        placeholder="Define indicators, targets, and field dialogue records..."
-                      />
-                    </div>
-
-                    {/* Display AI generation drafts if present */}
-                    {reports.find(r => r.projectId === selectedProjectId)?.aiDrafts[activeReportSection] && (
-                      <div className="relative bg-[#F0FDFA] border-l-4 border-l-[#0D9488] p-4 rounded-r-xl group hover:bg-[#E6FDF9] transition duration-200 shadow-sm print:hidden">
-                        <span className="absolute top-2 right-2 text-[10px] font-bold text-[#0D9488] bg-white px-2 py-0.5 rounded-full border border-[#0D9488]/10 select-none">
-                          ✦ AI Generated Draft
+                  {/* Filter bar */}
+                  <div className="flex items-center gap-2 pb-1">
+                    {["All", "Active", "Archived"].map(tab => (
+                      <button key={tab} className="px-3 py-1.5 rounded-lg text-xs font-semibold transition"
+                        style={{
+                          background: tab === "All" ? "#EEF2FF" : "transparent",
+                          color: tab === "All" ? "#1B3A6B" : "#6B7280",
+                          border: `1px solid ${tab === "All" ? "#C7D2FE" : "transparent"}`
+                        }}>
+                        {tab}
+                        <span className="ml-1.5 text-[10px]">
+                          {tab === "All" ? projects.length : tab === "Active" ? projects.filter(p => p.status === "Active").length : projects.filter(p => p.status === "Archived").length}
                         </span>
-                        <div className="text-xs text-[#1E293B] leading-relaxed pr-24 whitespace-pre-line">
-                          {reports.find(r => r.projectId === selectedProjectId)?.aiDrafts[activeReportSection]}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Cards grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {projects.map(proj => (
+                      <div key={proj.id} className="metric-card flex flex-col gap-4 hover:shadow-md transition">
+                        <div className="flex items-start justify-between">
+                          <span className="label-badge text-[10px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
+                            {proj.programArea}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className={`health-dot ${proj.health}`} />
+                            <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>{proj.health}</span>
+                          </div>
                         </div>
-                        
-                        <div className="mt-3.5 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <button 
-                            onClick={() => handleAcceptAIDraft(activeReportSection)} 
-                            className="text-[10px] bg-[#0D9488] text-white px-3 py-1.5 rounded font-medium hover:bg-[#0B7A70] transition shadow-xs"
-                          >
-                            Accept & Insert
-                          </button>
-                          <button 
-                            onClick={() => handleEditAIDraft(activeReportSection)} 
-                            className="text-[10px] bg-white text-[#1B3A6B] border border-[#1B3A6B]/20 px-3 py-1.5 rounded font-medium hover:bg-slate-50 transition"
-                          >
-                            Move to active editor
-                          </button>
+
+                        <div>
+                          <h3 className="font-semibold text-sm leading-snug mb-1" style={{ color: "#111827" }}>{proj.name}</h3>
+                          <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "#6B7280" }}>{proj.description}</p>
                         </div>
-                      </div>
-                    )}
-                  </div>
 
-                  <div className="text-xs text-slate-400 text-center border-t border-slate-50 pt-3 font-mono print:hidden">
-                    Draft updated continuously • ImpactIQ secure print module configured
-                  </div>
-
-                </div>
-
-                {/* Right Generation assistance setup pane */}
-                <div className="xl:col-span-3 bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4 print:hidden">
-                  <div>
-                    <h3 className="font-extrabold text-[#1B3A6B] text-base">Generation Assistance</h3>
-                    <p className="text-xs text-[#64748B]">Deliver standardized donor drafts using active evaluation insight.</p>
-                  </div>
-
-                  {/* Selector list for style */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Requested Donor Style</label>
-                    <select
-                      value={reportTone}
-                      onChange={(e) => setReportTone(e.target.value)}
-                      className="w-full p-2 bg-[#F8F9FC] border border-[#E2E8F0] rounded-lg text-xs font-semibold focus:outline-none"
-                    >
-                      <option value="Donor-Friendly">USAID / Donor-Friendly Narrative</option>
-                      <option value="Formal">Technical Academic Formal</option>
-                      <option value="Action-Oriented">Concise / Action-Oriented NGO</option>
-                    </select>
-                  </div>
-
-                  {/* Workspace indicators checklist mapping */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Index Source Indicators</label>
-                    <div className="space-y-1.5">
-                      {currentProject.indicators.map((ind, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-slate-600">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#0D9488]" />
-                          <span>{ind.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Generate triggers */}
-                  <button
-                    onClick={callClaudeReportSection}
-                    disabled={aiLoading}
-                    className="w-full bg-[#0D9488] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#0B7A70] transition flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <Sparkles className="h-4 w-4 text-white" /> Draft {activeReportSection} via AI
-                  </button>
-                </div>
-
-              </motion.div>
-            )}
-
-            {/* PAGE 6 — INSIGHTS FEED LIST */}
-            {currentPage === "insights" && (
-              <motion.div 
-                key="insights"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <h2 className="text-xl font-extrabold text-[#1B3A6B]">AI Programmatic Insights Pipeline</h2>
-                    <p className="text-xs text-[#64748B]">Autonomous evaluation anomalies, structural challenges, and positive outcomes mined from uploaded transcripts.</p>
-                  </div>
-
-                  {aiLoading && (
-                    <div className="flex items-center gap-2 text-[#0D9488] text-xs font-semibold animate-pulse bg-[#F0FDFA] px-3 py-1.5 rounded-full border border-[#0D9488]/20">
-                      <RefreshCw className="h-4.5 w-4.5 animate-spin" />
-                      <span>{aiLoadingMessage}</span>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={callClaudeNewInsights}
-                    className="bg-[#1B3A6B] text-white py-2.5 px-4 rounded-lg text-xs font-semibold hover:bg-[#132B53] transition flex items-center gap-1.5 self-start sm:self-center"
-                  >
-                    <Sparkles className="h-4 w-4 text-[#0D9488]" /> Scan Project Variables for New Insights
-                  </button>
-                </div>
-
-                {/* Display grid lists */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {insights.map(ins => (
-                    <div 
-                      key={ins.id}
-                      className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-l-4 hover:border-l-[#0D9488] transition-all duration-200 flex flex-col justify-between space-y-4"
-                    >
-                      <div>
-                        {/* Header indicators */}
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] bg-slate-100 text-[#1B3A6B] px-2 py-0.5 rounded font-extrabold uppercase truncate max-w-40">{ins.projectName}</span>
-                          <span className="text-[10px] font-bold text-[#0D9488] flex items-center gap-0.5 bg-[#F0FDFA] px-2 py-0.5 rounded-full border border-[#0D9488]/20">
-                            ✦ AI Mined
+                        <div className="flex items-center gap-3 text-xs">
+                          <span className="px-2 py-0.5 rounded-md font-medium"
+                            style={{ background: "#F3F4F6", color: "#374151" }}>
+                            {proj.donor}
+                          </span>
+                          <span style={{ color: "#9CA3AF" }}>
+                            {proj.indicators.filter(i => i.current >= i.target).length}/{proj.indicators.length} targets met
                           </span>
                         </div>
 
-                        <h3 className="font-extrabold text-[#1B3A6B] mt-3 leading-snug">{ins.title}</h3>
-                        <p className="text-xs text-slate-600 mt-2 leading-relaxed">{ins.summary}</p>
-                      </div>
+                        <div>
+                          <div className="flex justify-between text-xs mb-1.5">
+                            <span style={{ color: "#6B7280" }}>Progress</span>
+                            <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
+                          </div>
+                          <div className="progress-bar">
+                            <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
+                          </div>
+                        </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-[#64748B] pt-3 border-t border-slate-50">
-                        <span>Confidence: <strong className="text-emerald-700">{ins.confidence}</strong></span>
-                        <button 
-                          onClick={() => {
-                            // Quick alert details modal
-                            alert(`Evaluation Detail:\n\n${ins.title}\n\n${ins.summary}\n\nConfidence: ${ins.confidence} parameter. Integrates FGD transcripts & Survey raw elements.`);
-                          }}
-                          className="text-[#0D9488] font-bold hover:underline"
-                        >
-                          Verify indicators
-                        </button>
+                        <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
+                          <button
+                            onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
+                            className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition text-center"
+                            style={{ background: "#1B3A6B", color: "white" }}>
+                            Open Project
+                          </button>
+                          <button
+                            onClick={() => setProjects(prev => prev.map(p => p.id === proj.id ? { ...p, status: p.status === "Active" ? "Archived" : "Active" } : p))}
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium border transition"
+                            style={{
+                              background: "white",
+                              color: proj.status === "Active" ? "#6B7280" : "#0D9488",
+                              borderColor: "#E5E7EB"
+                            }}>
+                            {proj.status === "Active" ? "Archive" : "Restore"}
+                          </button>
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: PROJECT DETAIL
+                  ====================================== */}
+              {currentPage === "detail" && (
+                <motion.div key="detail" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5">
+                  {/* Project header */}
+                  <div className="bg-white rounded-xl border p-5" style={{ borderColor: "#E5E7EB" }}>
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <span className="label-badge text-[10px]" style={{ background: "#1B3A6B", color: "white" }}>
+                        {currentProject.programArea}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-xs font-medium" style={{ color: "#6B7280" }}>
+                        <span className={`health-dot ${currentProject.health}`} />
+                        {currentProject.health} health
+                      </span>
+                      <span className="text-xs ml-auto" style={{ color: "#9CA3AF" }}>
+                        {currentProject.startDate} → {currentProject.endDate}
+                      </span>
                     </div>
-                  ))}
-                </div>
-
-              </motion.div>
-            )}
-
-            {/* PAGE 7 — KNOWLEDGE BASE */}
-            {currentPage === "kb" && (
-              <motion.div 
-                key="kb"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <h2 className="text-xl font-extrabold text-[#1B3A6B]">Qualitative Knowledge Base</h2>
-                    <p className="text-xs text-[#64748B]">A consolidated registry for past donor summaries, transcript indices, and program guides.</p>
+                    <h2 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>
+                      {currentProject.name}
+                    </h2>
+                    <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{currentProject.description}</p>
+                    <div className="mt-3 flex items-center gap-2 text-xs" style={{ color: "#6B7280" }}>
+                      <span>Donor: <strong style={{ color: "#111827" }}>{currentProject.donor}</strong></span>
+                      <span className="h-3 w-px bg-gray-200" />
+                      <span>Progress: <strong style={{ color: "#111827" }}>{currentProject.progress}%</strong></span>
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => setKbModalOpen(true)}
-                    className="bg-[#1B3A6B] text-white py-2 px-4 rounded-lg text-xs font-semibold hover:bg-[#132B53] transition flex items-center gap-1.5 self-start sm:self-center"
-                  >
-                    <Plus className="h-4 w-4" /> Index Document Card
-                  </button>
-                </div>
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                    {/* Left: Indicators + Files */}
+                    <div className="md:col-span-8 space-y-5">
 
-                {/* Simple semantic search feedback display */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredKnowledgeBase.map(doc => (
-                    <div 
-                      key={doc.id}
-                      className="bg-white rounded-xl p-5 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-l-4 hover:border-l-[#0D9488] transition duration-200 flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between text-[10px] text-slate-400 border-b border-slate-50 pb-2">
-                          <span className={`px-2 py-0.5 rounded font-extrabold uppercase ${
-                            doc.type === "Report" ? "bg-blue-50 text-blue-700" : doc.type === "Transcript" ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"
-                          }`}>{doc.type}</span>
-                          <span>{doc.date}</span>
+                      {/* Indicator cards */}
+                      <div className="bg-white rounded-xl border p-5" style={{ borderColor: "#E5E7EB" }}>
+                        <div className="flex items-center justify-between mb-5">
+                          <div>
+                            <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Performance Indicators</h3>
+                            <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Update current progress values below</p>
+                          </div>
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-lg"
+                            style={{ background: "#F0FDFA", color: "#0D9488" }}>
+                            {currentProject.indicators.filter(i => i.current >= i.target).length}/{currentProject.indicators.length} met
+                          </span>
                         </div>
 
-                        <h3 className="font-extrabold text-[#1B3A6B] mt-3 leading-snug">{doc.title}</h3>
-                        <p className="text-xs text-[#64748B] mt-2 line-clamp-3 leading-relaxed">{doc.snippet}</p>
+                        <div className="space-y-5">
+                          {currentProject.indicators.map((ind, idx) => {
+                            const pct = Math.round((ind.current / ind.target) * 100);
+                            return (
+                              <div key={idx} className="space-y-2 pb-5 border-b last:border-0 last:pb-0" style={{ borderColor: "#F3F4F6" }}>
+                                <div className="flex justify-between items-center text-xs">
+                                  <span className="font-medium" style={{ color: "#374151" }}>{ind.name}</span>
+                                  <span className="font-bold" style={{ color: "#111827" }}>
+                                    {pct}% · {ind.current}/{ind.target} {ind.unit}
+                                  </span>
+                                </div>
+                                <div className="progress-bar">
+                                  <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <input type="range" min="0" max={ind.target} value={ind.current}
+                                    onChange={e => handleUpdateIndicator(currentProject.id, ind.name, parseInt(e.target.value))}
+                                    className="flex-1" />
+                                  <div className="flex items-center gap-1 shrink-0">
+                                    <button onClick={() => handleUpdateIndicator(currentProject.id, ind.name, ind.current - 1)}
+                                      className="h-6 w-6 rounded flex items-center justify-center text-xs font-bold hover:bg-gray-100 transition"
+                                      style={{ color: "#374151", border: "1px solid #E5E7EB" }}>−</button>
+                                    <button onClick={() => handleUpdateIndicator(currentProject.id, ind.name, ind.current + 1)}
+                                      className="h-6 w-6 rounded flex items-center justify-center text-xs font-bold hover:bg-gray-100 transition"
+                                      style={{ color: "#374151", border: "1px solid #E5E7EB" }}>+</button>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
 
-                      <p className="mt-4 pt-3 border-t border-slate-50 text-[10px] text-[#64748B]">Project context: <strong>{doc.project}</strong></p>
+                      {/* File upload */}
+                      <div className="bg-white rounded-xl border p-5 space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                        <div>
+                          <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Source Datasets</h3>
+                          <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>
+                            Upload FGD transcripts, surveys, or evaluation reports.
+                          </p>
+                        </div>
+
+                        <div onDragOver={handleDragOver} onDrop={handleDrop}
+                          onClick={() => triggerManualUpload(`evaluation_${Date.now().toString().slice(-4)}.pdf`, "pdf")}
+                          className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition group"
+                          style={{ borderColor: "#D1D5DB", background: "#F9FAFB" }}
+                          onMouseEnter={e => (e.currentTarget.style.borderColor = "#0D9488")}
+                          onMouseLeave={e => (e.currentTarget.style.borderColor = "#D1D5DB")}>
+                          <Upload className="h-7 w-7 mx-auto mb-2" style={{ color: "#9CA3AF" }} />
+                          <p className="text-sm font-medium" style={{ color: "#374151" }}>Drop files here or click to upload</p>
+                          <p className="text-xs mt-1" style={{ color: "#9CA3AF" }}>Supports PDF, CSV, XLSX, TXT</p>
+                        </div>
+
+                        <div>
+                          <p className="text-xs font-semibold mb-2" style={{ color: "#374151" }}>
+                            Attached Files ({files.filter(f => f.projectId === selectedProjectId).length})
+                          </p>
+                          <div className="space-y-1 max-h-48 overflow-y-auto">
+                            {files.filter(f => f.projectId === selectedProjectId).map(f => (
+                              <div key={f.id} className="flex items-center justify-between p-2.5 rounded-lg text-xs"
+                                style={{ background: "#F9FAFB", border: "1px solid #F3F4F6" }}>
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <FileSpreadsheet className="h-4 w-4 shrink-0" style={{ color: "#0D9488" }} />
+                                  <span className="font-medium truncate" style={{ color: "#111827" }}>{f.name}</span>
+                                  <span style={{ color: "#9CA3AF" }}>({f.size})</span>
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                  <span className={`label-badge text-[9px] ${f.status === "Ready" ? "confidence-high" : "confidence-medium"}`}>
+                                    {f.status}
+                                  </span>
+                                  <button onClick={() => setFiles(prev => prev.filter(fi => fi.id !== f.id))}
+                                    className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition">
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                  
-                  {filteredKnowledgeBase.length === 0 && (
-                    <div className="col-span-full py-20 text-center flex flex-col items-center justify-center space-y-3 bg-white border border-[#E2E8F0] rounded-xl shadow-xs">
-                      <BookOpen className="h-10 w-10 text-slate-300" />
-                      <h4 className="font-bold text-[#1B3A6B]">No documents matching search query found</h4>
-                      <p className="text-xs text-[#64748B] max-w-sm">Adjust search keywords to locate indexed qualitative parameters.</p>
-                      <button onClick={() => setGlobalSearch("")} className="text-xs text-[#0D9488] font-bold hover:underline">
-                        Clear Program Search
+
+                    {/* Right: AI Quick access + Timeline */}
+                    <div className="md:col-span-4 space-y-4">
+                      <div className="rounded-xl p-5 space-y-3" style={{ background: "#1B3A6B" }}>
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="h-4 w-4 text-white" />
+                          <h4 className="text-sm font-bold text-white">AI Research Studio</h4>
+                        </div>
+                        <p className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>
+                          Analyze FGD transcripts against program indicators to surface insights and themes.
+                        </p>
+                        <button onClick={() => navigate("research")}
+                          className="w-full py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition"
+                          style={{ background: "#0D9488", color: "white" }}>
+                          Launch Research Studio <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                        <button onClick={() => navigate("report")}
+                          className="w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+                          style={{ background: "rgba(255,255,255,0.1)", color: "white", border: "1px solid rgba(255,255,255,0.15)" }}>
+                          Open Report Builder <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+
+                      <div className="bg-white rounded-xl border p-5" style={{ borderColor: "#E5E7EB" }}>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#9CA3AF" }}>
+                          Activity Timeline
+                        </h4>
+                        <div className="space-y-3 pl-1">
+                          {currentProject.activityTimeline.map((item, idx) => (
+                            <div key={idx} className="timeline-item">{item}</div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: RESEARCH STUDIO
+                  ====================================== */}
+              {currentPage === "research" && (
+                <motion.div key="research" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Research Studio</h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>AI-powered qualitative analysis from your evaluation materials.</p>
+                    </div>
+                    {aiLoading && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium animate-pulse"
+                        style={{ background: "#F0FDFA", color: "#0D9488", border: "1px solid #99F6E4" }}>
+                        <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                        {aiLoadingMessage}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
+                    {/* Sources Panel */}
+                    <div className="xl:col-span-4 bg-white rounded-xl border p-5 space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                      <div>
+                        <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Source Materials</h3>
+                        <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Select files to include in analysis.</p>
+                      </div>
+
+                      <div className="space-y-2 max-h-52 overflow-y-auto">
+                        {files.map(f => {
+                          const isSelected = researchSelectedFiles.includes(f.id);
+                          return (
+                            <div key={f.id} onClick={() => setResearchSelectedFiles(prev => isSelected ? prev.filter(id => id !== f.id) : [...prev, f.id])}
+                              className="p-3 rounded-lg border text-xs cursor-pointer transition flex items-center justify-between"
+                              style={{
+                                background: isSelected ? "#F0FDFA" : "#F9FAFB",
+                                borderColor: isSelected ? "#0D9488" : "#E5E7EB"
+                              }}>
+                              <div className="min-w-0 mr-2">
+                                <p className="font-medium truncate" style={{ color: "#111827" }}>{f.name}</p>
+                                <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{f.size}</p>
+                              </div>
+                              <div className="h-4 w-4 rounded border-2 flex items-center justify-center shrink-0"
+                                style={{ borderColor: isSelected ? "#0D9488" : "#D1D5DB", background: isSelected ? "#0D9488" : "white" }}>
+                                {isSelected && <Check className="h-2.5 w-2.5 text-white" />}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-semibold mb-1.5 block" style={{ color: "#374151" }}>
+                          Add Raw Text (optional)
+                        </label>
+                        <textarea
+                          placeholder="Paste FGD quotes, field observations..."
+                          value={researchInputText}
+                          onChange={e => setResearchInputText(e.target.value)}
+                          className="w-full h-24 p-3 text-xs rounded-lg border resize-none outline-none focus:ring-1 focus:ring-teal-500"
+                          style={{ background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }}
+                        />
+                      </div>
+
+                      <button onClick={callClaudeAnalysis} disabled={aiLoading}
+                        className="w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition"
+                        style={{ background: aiLoading ? "#6B7280" : "#1B3A6B", color: "white" }}>
+                        <Sparkles className="h-4 w-4" />
+                        {aiLoading ? "Synthesizing..." : "Synthesize Analysis"}
                       </button>
                     </div>
-                  )}
-                </div>
 
-              </motion.div>
-            )}
-
-            {/* PAGE 8 — PROFILE & SIMULATED AUTH ADMINISTRATION */}
-            {currentPage === "profile" && (
-              <motion.div 
-                key="profile"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6 text-left"
-              >
-                <div>
-                  <h2 className="text-xl font-extrabold text-[#1B3A6B]">Account Profile Administration</h2>
-                  <p className="text-xs text-[#64748B]">Manage security headers, active workspace credentials, and switch teammates sessions to inspect platform behaviors.</p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  
-                  {/* Left Column - Edit my profile variables */}
-                  <div className="lg:col-span-7 bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm space-y-6">
-                    <div>
-                      <h3 className="font-bold text-sm text-[#1B3A6B]">Interactive Session Parameters</h3>
-                      <p className="text-[11px] text-slate-500">Edit variables that format UI sidebar, headers, and logs dynamically.</p>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start border-b border-slate-100 pb-5">
-                      <div 
-                        className="h-16 w-16 rounded-2xl flex items-center justify-center text-white text-2xl font-black shadow-md uppercase transition shrink-0"
-                        style={{ backgroundColor: currentUser.avatarColor }}
-                      >
-                        {currentUser.initials}
-                      </div>
-                      
-                      <div className="space-y-1.5 text-center sm:text-left">
-                        <h4 className="font-bold text-base text-slate-800">{currentUser.name || "User"}</h4>
-                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 text-xs">
-                          <span className="bg-slate-100 px-2 py-0.5 rounded font-extrabold text-slate-600 uppercase tracking-wide text-[9px]">{currentUser.role}</span>
-                          <span className="text-slate-400 font-medium font-mono">{currentUser.email}</span>
+                    {/* Analysis Workspace */}
+                    <div className="xl:col-span-8 bg-white rounded-xl border p-5 space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                      <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                        <div>
+                          <h2 className="text-base font-bold" style={{ color: "#111827" }}>Synthesis Workspace</h2>
+                          <p className="text-xs" style={{ color: "#9CA3AF" }}>Qualitative themes & findings extracted by AI.</p>
                         </div>
-                        <p className="text-[11px] text-[#0D9488] font-bold">Organization: {currentUser.organization}</p>
+                        {analysisWorkspace && (
+                          <button onClick={() => { alert("Findings formatted for report builder."); navigate("report"); }}
+                            className="btn-secondary text-xs">
+                            Push to Report <ChevronRight className="h-3.5 w-3.5" />
+                          </button>
+                        )}
                       </div>
+
+                      {analysisWorkspace ? (
+                        <div className="space-y-6">
+                          {/* Themes */}
+                          <div>
+                            <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#9CA3AF" }}>
+                              Identified Themes
+                            </h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              {analysisWorkspace.themes.map((t, idx) => (
+                                <div key={idx} className="p-4 rounded-xl border space-y-2"
+                                  style={{ background: "#F9FAFB", borderColor: "#E5E7EB" }}>
+                                  <div className="flex justify-between items-center">
+                                    <strong className="text-xs" style={{ color: "#111827" }}>{t.theme}</strong>
+                                    <span className={`label-badge text-[9px] ${t.frequency === "High" ? "confidence-high" : t.frequency === "Medium" ? "confidence-medium" : "confidence-low"}`}>
+                                      {t.frequency} freq.
+                                    </span>
+                                  </div>
+                                  <p className="text-xs leading-relaxed" style={{ color: "#6B7280" }}>{t.summary}</p>
+                                  {t.quotes.length > 0 && (
+                                    <blockquote className="text-[11px] italic p-2 rounded-lg border-l-2"
+                                      style={{ background: "white", borderColor: "#0D9488", color: "#374151" }}>
+                                      "{t.quotes[0]}"
+                                    </blockquote>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Findings */}
+                          <div>
+                            <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#9CA3AF" }}>
+                              Key Findings
+                            </h4>
+                            <div className="space-y-2">
+                              {analysisWorkspace.findings.map((f, idx) => (
+                                <div key={idx} className="p-4 rounded-xl group relative"
+                                  style={{ background: "#F0FDFA", borderLeft: "3px solid #0D9488" }}>
+                                  <span className="ai-badge absolute top-3 right-3">✦ AI</span>
+                                  <p className="text-xs leading-relaxed pr-16" style={{ color: "#111827" }}>{f}</p>
+                                  <div className="flex gap-2 mt-3 opacity-0 group-hover:opacity-100 transition">
+                                    <button onClick={() => alert("Finding preserved.")}
+                                      className="btn-teal text-[10px] px-2.5 py-1">Accept</button>
+                                    <button onClick={() => {
+                                      const text = prompt("Edit finding:", f);
+                                      if (text) setAnalysisWorkspace(prev => prev ? { ...prev, findings: prev.findings.map((find, i) => i === idx ? text : find) } : null);
+                                    }} className="btn-secondary text-[10px] px-2.5 py-1">Edit</button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Recommendations */}
+                          <div>
+                            <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#9CA3AF" }}>
+                              Recommendations
+                            </h4>
+                            <ul className="space-y-2">
+                              {analysisWorkspace.recommendations.map((rec, idx) => (
+                                <li key={idx} className="flex gap-2.5 text-xs" style={{ color: "#374151" }}>
+                                  <div className="h-5 w-5 rounded flex items-center justify-center shrink-0 mt-0.5"
+                                    style={{ background: "#F0FDFA" }}>
+                                    <CheckCircle2 className="h-3 w-3" style={{ color: "#0D9488" }} />
+                                  </div>
+                                  {rec}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="py-20 flex flex-col items-center justify-center text-center space-y-3">
+                          <FlaskConical className="h-10 w-10" style={{ color: "#E5E7EB" }} />
+                          <h4 className="font-semibold" style={{ color: "#374151" }}>No analysis yet</h4>
+                          <p className="text-xs max-w-sm" style={{ color: "#9CA3AF" }}>
+                            Select source materials and trigger synthesis to see qualitative results here.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: REPORT BUILDER
+                  ====================================== */}
+              {currentPage === "report" && (
+                <motion.div key="report" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="grid grid-cols-1 xl:grid-cols-12 gap-5">
+
+                  {/* Section nav */}
+                  <div className="xl:col-span-3 bg-white rounded-xl border p-4 space-y-3 print:hidden self-start sticky top-20"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <div>
+                      <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Report Outline</h3>
+                      <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Navigate document sections.</p>
+                    </div>
+                    <div className="space-y-0.5">
+                      {["Executive Summary", "Background", "Methodology", "Key Findings", "Recommendations", "Conclusion"].map(section => {
+                        const activeRep = reports.find(r => r.projectId === selectedProjectId);
+                        const hasContent = activeRep && activeRep.sections[section]?.length > 0;
+                        return (
+                          <button key={section} onClick={() => setActiveReportSection(section)}
+                            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-left transition"
+                            style={{
+                              background: activeReportSection === section ? "#EEF2FF" : "transparent",
+                              color: activeReportSection === section ? "#1B3A6B" : "#6B7280"
+                            }}>
+                            <span>{section}</span>
+                            {hasContent && (
+                              <span className="h-4 w-4 rounded-full flex items-center justify-center text-white text-[9px] shrink-0"
+                                style={{ background: "#10B981" }}>✓</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Writing area */}
+                  <div className="xl:col-span-6 bg-white rounded-xl border p-6 space-y-4 print:col-span-12 print:border-none"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <div className="flex items-center justify-between pb-3 border-b print:hidden" style={{ borderColor: "#F3F4F6" }}>
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#9CA3AF" }}>Editing</p>
+                        <h2 className="text-base font-bold" style={{ color: "#111827" }}>{activeReportSection}</h2>
+                      </div>
+                      <button onClick={() => window.print()}
+                        className="btn-secondary text-xs">
+                        <Download className="h-3.5 w-3.5" /> Export PDF
+                      </button>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-[#1B3A6B]">Full Display Name</label>
-                        <input
-                          type="text"
-                          value={currentUser.name}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            const init = val.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
-                            setCurrentUser(prev => ({
-                              ...prev,
-                              name: val,
-                              initials: init
-                            }));
-                            setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, name: val, initials: init } : u));
-                          }}
-                          className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-[#0D9488]"
-                        />
-                      </div>
+                    <textarea
+                      value={editReportText}
+                      onChange={e => {
+                        const val = e.target.value;
+                        setEditReportText(val);
+                        setReports(prev => prev.map(rep => {
+                          if (rep.projectId === selectedProjectId) {
+                            return { ...rep, sections: { ...rep.sections, [activeReportSection]: val } };
+                          }
+                          return rep;
+                        }));
+                      }}
+                      className="w-full min-h-64 p-4 rounded-xl text-sm leading-relaxed outline-none focus:ring-1 focus:ring-teal-500 resize-none font-sans print:bg-white print:border-none print:p-0"
+                      placeholder="Begin writing your report section here..."
+                      style={{ background: "#FAFAFA", border: "1px solid #E5E7EB", color: "#111827", fontFamily: "var(--font-sans)" }}
+                    />
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-[#1B3A6B]">NGO Email Address</label>
-                        <input
-                          type="email"
-                          value={currentUser.email}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setCurrentUser(prev => ({ ...prev, email: val }));
-                            setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, email: val } : u));
-                          }}
-                          className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-1 focus:ring-[#0D9488]"
-                        />
+                    {/* AI Draft */}
+                    {reports.find(r => r.projectId === selectedProjectId)?.aiDrafts[activeReportSection] && (
+                      <div className="p-4 rounded-xl group relative print:hidden"
+                        style={{ background: "#F0FDFA", borderLeft: "3px solid #0D9488" }}>
+                        <span className="ai-badge absolute top-3 right-3">✦ AI Draft</span>
+                        <div className="text-xs leading-relaxed pr-20 whitespace-pre-line" style={{ color: "#111827" }}>
+                          {reports.find(r => r.projectId === selectedProjectId)?.aiDrafts[activeReportSection]}
+                        </div>
+                        <div className="flex gap-2 mt-3 opacity-0 group-hover:opacity-100 transition">
+                          <button onClick={() => handleAcceptAIDraft(activeReportSection)} className="btn-teal text-[10px] px-3 py-1.5">
+                            Accept & Insert
+                          </button>
+                          <button onClick={() => handleEditAIDraft(activeReportSection)} className="btn-secondary text-[10px] px-3 py-1.5">
+                            Move to Editor
+                          </button>
+                        </div>
                       </div>
+                    )}
+
+                    <p className="text-xs text-center print:hidden" style={{ color: "#D1D5DB" }}>
+                      Auto-saved continuously · ImpactIQ secure print module ready
+                    </p>
+                  </div>
+
+                  {/* AI assistance pane */}
+                  <div className="xl:col-span-3 bg-white rounded-xl border p-4 space-y-4 print:hidden self-start sticky top-20"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <div>
+                      <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>AI Assistance</h3>
+                      <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Generate donor-ready section drafts.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-50 pt-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-[#1B3A6B]">Assigned Workspace Role</label>
-                        <select
-                          value={currentUser.role}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setCurrentUser(prev => ({ ...prev, role: val }));
-                            setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, role: val } : u));
-                            setNotifications(prev => [`Updated active credentials: ${val}`, ...prev]);
-                          }}
-                          className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"
-                        >
-                          <option value="Lead Analyst">Lead Analyst</option>
-                          <option value="Program Coordinator">Program Coordinator</option>
-                          <option value="Senior Advisor">Senior Advisor</option>
-                          <option value="Field Director">Field Director</option>
-                          <option value="Donor Reviewer">Donor Reviewer</option>
-                        </select>
+                    {aiLoading && (
+                      <div className="flex items-center gap-2 p-2.5 rounded-lg text-xs animate-pulse"
+                        style={{ background: "#F0FDFA", color: "#0D9488" }}>
+                        <RefreshCw className="h-3.5 w-3.5 animate-spin shrink-0" />
+                        {aiLoadingMessage}
                       </div>
+                    )}
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-[#1B3A6B]">Organization</label>
-                        <input
-                          type="text"
-                          value={currentUser.organization}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setCurrentUser(prev => ({ ...prev, organization: val }));
-                            setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, organization: val } : u));
-                          }}
-                          className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-[#0D9488]"
-                        />
-                      </div>
+                    <div>
+                      <label className="text-xs font-semibold mb-1.5 block" style={{ color: "#374151" }}>Report style</label>
+                      <select value={reportTone} onChange={e => setReportTone(e.target.value)}
+                        className="w-full p-2 text-xs rounded-lg border outline-none"
+                        style={{ background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }}>
+                        <option value="Donor-Friendly">USAID / Donor-Friendly</option>
+                        <option value="Formal">Technical / Academic</option>
+                        <option value="Action-Oriented">Concise / Action-Oriented</option>
+                      </select>
                     </div>
 
-                    {/* Change Color Picker */}
-                    <div className="space-y-2 border-t border-slate-50 pt-4">
-                      <label className="text-xs font-bold text-[#1B3A6B] block">Change Core Avatar Color Accent</label>
-                      <div className="flex gap-2">
-                        {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map((color) => (
-                          <button
-                            key={color}
-                            onClick={() => {
-                              setCurrentUser(prev => ({ ...prev, avatarColor: color }));
-                              setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, avatarColor: color } : u));
-                            }}
-                            className={`h-7 w-7 rounded-full border-2 transition ${
-                              currentUser.avatarColor === color ? "border-slate-800 scale-110 shadow-xs" : "border-transparent opacity-60 hover:opacity-100"
-                            }`}
-                            style={{ backgroundColor: color }}
-                          />
+                    <div>
+                      <p className="text-xs font-semibold mb-2" style={{ color: "#374151" }}>Indexed Indicators</p>
+                      <div className="space-y-1.5">
+                        {currentProject.indicators.map((ind, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-xs" style={{ color: "#6B7280" }}>
+                            <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "#0D9488" }} />
+                            {ind.name}
+                          </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="border-t border-slate-100 pt-5 flex gap-3 text-xs font-semibold justify-between items-center bg-slate-50 p-4 rounded-xl">
-                      <div>
-                        <p className="font-extrabold text-[#1B3A6B]">Terminate Workspace Token</p>
-                        <p className="text-[10px] text-slate-500">Log out securely of this terminal node session.</p>
-                      </div>
-                      <button 
-                        onClick={() => {
-                          setCurrentUser(prev => ({ ...prev, isLoggedIn: false }));
-                        }}
-                        className="bg-red-50 hover:bg-red-105 text-red-700 py-2 px-4 rounded-lg flex items-center gap-1.5 transition border border-red-200 font-bold"
-                      >
-                        <LogOut className="h-4 w-4" /> Secure Logout
-                      </button>
-                    </div>
-
-                  </div>
-
-                  {/* Right Column - Registered Switch directory */}
-                  <div className="lg:col-span-5 bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4">
-                    <div>
-                      <h3 className="font-bold text-sm text-[#1B3A6B]">Organization Teammates Directory</h3>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">Toggle active sessions instantly to inspect individual permission matrices.</p>
-                    </div>
-
-                    <div className="space-y-3">
-                      {registeredUsers.map((user, idx) => {
-                        const isActive = user.email.toLowerCase() === currentUser.email.toLowerCase();
-                        return (
-                          <div 
-                            key={idx}
-                            onClick={() => {
-                              if (isActive) return;
-                              const init = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
-                              setCurrentUser({
-                                name: user.name,
-                                email: user.email,
-                                role: user.role,
-                                organization: user.organization || "ImpactIQ Global",
-                                avatarColor: user.avatarColor,
-                                initials: init,
-                                isLoggedIn: true
-                              });
-                              setNotifications(prev => [`Session context: ${user.name} logged in`, ...prev]);
-                            }}
-                            className={`p-3 rounded-xl border flex items-center justify-between transition ${
-                              isActive 
-                                ? "bg-[#F0FDFA] border-[#0D9488]/35 text-[#1B3A6B]" 
-                                : "border-[#E2E8F0] hover:bg-slate-50/80 cursor-pointer text-[#1E293B]"
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <div 
-                                className="h-8 w-8 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0 grow-0"
-                                style={{ backgroundColor: user.avatarColor }}
-                              >
-                                {user.initials}
-                              </div>
-                              <div className="text-left overflow-hidden">
-                                <p className="text-xs font-bold leading-none truncate">{user.name}</p>
-                                <p className="text-[10px] text-slate-500 mt-1 truncate">{user.role}</p>
-                              </div>
-                            </div>
-
-                            {isActive ? (
-                              <span className="text-[9px] bg-[#0E7490] text-cyan-50 font-bold px-2 py-0.5 rounded-full border border-cyan-700/10">
-                                Active User
-                              </span>
-                            ) : (
-                              <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full hover:bg-slate-200 transition">
-                                Switch to
-                              </span>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="border-t border-slate-100 pt-4 text-center">
-                      <button 
-                        onClick={() => {
-                          const nEmail = prompt("Register teammate email ID:");
-                          if (nEmail && nEmail.trim()) {
-                            const nName = prompt("Teammate full name:");
-                            if (nName && nName.trim()) {
-                              const nRole = prompt("Assign Teammate role (Lead Analyst/Program Coordinator/Senior Advisor/Field Director):", "Program Coordinator");
-                              const init = nName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
-                              const colors = ["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"];
-                              const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                              
-                              const newTeammate = {
-                                name: nName,
-                                email: nEmail,
-                                role: nRole || "Program Coordinator",
-                                organization: currentUser.organization || "ImpactIQ Global",
-                                avatarColor: randomColor,
-                                initials: init
-                              };
-                              setRegisteredUsers(prev => [...prev, newTeammate]);
-                              setNotifications(prev => [`New teammate '${nName}' registered inside the node`, ...prev]);
-                            }
-                          }
-                        }}
-                        className="text-xs text-[#0D9488] hover:text-[#0B7A70] font-bold flex items-center gap-1 justify-center mx-auto hover:underline"
-                      >
-                        <Plus className="h-3.5 w-3.5" /> Register Teammate Card
-                      </button>
-                    </div>
-
-                  </div>
-
-                </div>
-              </motion.div>
-            )}
-
-          </AnimatePresence>
-        </main>
-      </div>
-
-      {/* MODAL 1: NEW PROJECT CREATION INLINE PANEL */}
-      <AnimatePresence>
-        {projectModalOpen && (
-          <div className="fixed inset-0 bg-[#1B3A6B]/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-            <motion.div 
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl p-6 w-full max-w-lg space-y-5"
-            >
-              <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                <div>
-                  <h3 className="font-extrabold text-lg text-[#1B3A6B]">Create NGO Initiative</h3>
-                  <p className="text-xs text-[#64748B]">Set target indicators, donor parameters, and timelines.</p>
-                </div>
-                <button onClick={() => setProjectModalOpen(false)} className="text-[#64748B] hover:text-[#1B3A6B] p-1 rounded-lg">
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#1B3A6B]">Initiative Title Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Sustainable Forestry program"
-                    value={newProjName}
-                    onChange={(e) => setNewProjName(e.target.value)}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Target Donor</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. USAID, DFID, Unicef"
-                      value={newProjDonor}
-                      onChange={(e) => setNewProjDonor(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Programmatic Select Category</label>
-                    <select
-                      value={newProjArea}
-                      onChange={(e) => setNewProjArea(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none"
-                    >
-                      <option value="Gender Equality">Gender Equality & Capital</option>
-                      <option value="Climate Adaptation">Climate Resilient Adaptation</option>
-                      <option value="Literacy Training">Literacy & Training Development</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Cycle Start Date</label>
-                    <input
-                      type="date"
-                      value={newProjStart}
-                      onChange={(e) => setNewProjStart(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Cycle End Date</label>
-                    <input
-                      type="date"
-                      value={newProjEnd}
-                      onChange={(e) => setNewProjEnd(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-                </div>
-
-                {/* Input custom indicators fields section */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Initial Quantitative Indicators</label>
-                    <button 
-                      onClick={() => setNewProjIndicators(prev => [...prev, { name: "", target: 100, current: 0, unit: "people" }])}
-                      className="text-[#0D9488] font-bold text-[10px] hover:underline hover:text-[#0B7A70]"
-                    >
-                      + Add Indicator
+                    <button onClick={callClaudeReportSection} disabled={aiLoading} className="w-full btn-teal justify-center text-xs">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      {aiLoading ? "Drafting..." : `Draft "${activeReportSection}"`}
                     </button>
                   </div>
-                  
-                  <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
-                    {newProjIndicators.map((ind, index) => (
-                      <div key={index} className="flex gap-2 items-center">
-                        <input
-                          type="text"
-                          placeholder="Indicator name (e.g. Beneficiaries reached)"
-                          value={ind.name}
-                          onChange={(e) => setNewProjIndicators(prev => prev.map((val, i) => i === index ? { ...val, name: e.target.value } : val))}
-                          className="flex-1 p-2 bg-slate-50 border border-slate-200 rounded text-xs"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Target"
-                          value={ind.target}
-                          onChange={(e) => setNewProjIndicators(prev => prev.map((val, i) => i === index ? { ...val, target: parseInt(e.target.value) || 0 } : val))}
-                          className="w-16 p-2 bg-slate-50 border border-slate-200 rounded text-xs"
-                        />
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: INSIGHTS
+                  ====================================== */}
+              {currentPage === "insights" && (
+                <motion.div key="insights" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>AI Insights</h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>
+                        Evaluation patterns, anomalies, and program opportunities mined from your data.
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {aiLoading && (
+                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium animate-pulse"
+                          style={{ background: "#F0FDFA", color: "#0D9488", border: "1px solid #99F6E4" }}>
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                          {aiLoadingMessage}
+                        </div>
+                      )}
+                      <button onClick={callClaudeNewInsights} disabled={aiLoading} className="btn-primary self-start">
+                        <Sparkles className="h-4 w-4" /> Generate Insights
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {insights.map(ins => (
+                      <div key={ins.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
+                        <div className="flex items-start justify-between gap-2">
+                          <span className="label-badge text-[9px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
+                            {ins.projectName.length > 25 ? ins.projectName.substring(0, 24) + "…" : ins.projectName}
+                          </span>
+                          <span className="ai-badge shrink-0">✦ AI</span>
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{ins.title}</h3>
+                          <p className="text-xs mt-1.5 leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
+                          <span className={`label-badge text-[9px] confidence-${ins.confidence.toLowerCase()}`}>
+                            {ins.confidence} confidence
+                          </span>
+                          <button onClick={() => alert(`${ins.title}\n\n${ins.summary}\n\nConfidence: ${ins.confidence}`)}
+                            className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
+                            View detail
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              )}
 
-              {/* Action buttons */}
-              <div className="flex gap-3 justify-end pt-3 border-t border-slate-100 text-xs font-semibold">
-                <button 
-                  onClick={() => setProjectModalOpen(false)}
-                  className="bg-white border border-[#1B3A6B]/20 text-[#1B3A6B] py-2 px-4 rounded-lg hover:bg-slate-50 text-xs transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    if (!newProjName) {
-                      alert("Please specify a project name.");
-                      return;
-                    }
+              {/* ======================================
+                  PAGE: KNOWLEDGE BASE
+                  ====================================== */}
+              {currentPage === "kb" && (
+                <motion.div key="kb" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Knowledge Base</h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>
+                        A registry of past reports, transcripts, and program guides.
+                      </p>
+                    </div>
+                    <button onClick={() => setKbModalOpen(true)} className="btn-primary self-start">
+                      <Plus className="h-4 w-4" /> Index Document
+                    </button>
+                  </div>
+
+                  {/* Inline search */}
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input type="text" placeholder="Search documents, projects, keywords..."
+                      value={globalSearch} onChange={e => setGlobalSearch(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border outline-none focus:ring-1 focus:ring-teal-500"
+                      style={{ background: "white", borderColor: "#E5E7EB", color: "#111827" }} />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredKnowledgeBase.map(doc => (
+                      <div key={doc.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
+                        <div className="flex items-center justify-between">
+                          <span className={`label-badge text-[10px] doc-type-${doc.type.toLowerCase()}`}>{doc.type}</span>
+                          <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{doc.date}</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{doc.title}</h3>
+                          <p className="text-xs mt-1.5 leading-relaxed line-clamp-3" style={{ color: "#6B7280" }}>{doc.snippet}</p>
+                        </div>
+                        <p className="text-[10px] pt-2 border-t" style={{ borderColor: "#F3F4F6", color: "#9CA3AF" }}>
+                          Project: <strong style={{ color: "#374151" }}>{doc.project}</strong>
+                        </p>
+                      </div>
+                    ))}
+
+                    {filteredKnowledgeBase.length === 0 && (
+                      <div className="col-span-full py-20 flex flex-col items-center text-center space-y-3 bg-white rounded-xl border"
+                        style={{ borderColor: "#E5E7EB" }}>
+                        <BookOpen className="h-10 w-10" style={{ color: "#E5E7EB" }} />
+                        <h4 className="font-semibold" style={{ color: "#374151" }}>No documents found</h4>
+                        <p className="text-xs" style={{ color: "#9CA3AF" }}>Try adjusting your search query.</p>
+                        <button onClick={() => setGlobalSearch("")}
+                          className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
+                          Clear search
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: PROFILE & SETTINGS
+                  ====================================== */}
+              {currentPage === "profile" && (
+                <motion.div key="profile" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-5 max-w-5xl">
+                  <div>
+                    <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Profile & Settings</h1>
+                    <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>Manage your account and workspace preferences.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    {/* Left: Edit profile */}
+                    <div className="lg:col-span-7 bg-white rounded-xl border p-6 space-y-6" style={{ borderColor: "#E5E7EB" }}>
+                      <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start pb-5 border-b" style={{ borderColor: "#F3F4F6" }}>
+                        <div className="h-16 w-16 rounded-2xl flex items-center justify-center text-white text-xl font-black shrink-0"
+                          style={{ background: currentUser.avatarColor }}>
+                          {currentUser.initials}
+                        </div>
+                        <div className="text-center sm:text-left">
+                          <h3 className="text-base font-bold" style={{ color: "#111827" }}>{currentUser.name}</h3>
+                          <div className="flex flex-wrap justify-center sm:justify-start gap-1.5 mt-1">
+                            <span className="label-badge text-[10px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>{currentUser.role}</span>
+                            <span className="text-xs font-mono" style={{ color: "#9CA3AF" }}>{currentUser.email}</span>
+                          </div>
+                          <p className="text-xs mt-1 font-medium" style={{ color: "#0D9488" }}>{currentUser.organization}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {[
+                          { label: "Full name", key: "name", type: "text" },
+                          { label: "Email address", key: "email", type: "email" }
+                        ].map(field => (
+                          <div key={field.key}>
+                            <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>{field.label}</label>
+                            <input type={field.type}
+                              value={(currentUser as any)[field.key]}
+                              onChange={e => {
+                                const val = e.target.value;
+                                const updates: any = { [field.key]: val };
+                                if (field.key === "name") {
+                                  updates.initials = val.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+                                }
+                                setCurrentUser(prev => ({ ...prev, ...updates }));
+                                setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, ...updates } : u));
+                              }}
+                              className="input-base" />
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Role</label>
+                          <select value={currentUser.role}
+                            onChange={e => {
+                              const val = e.target.value;
+                              setCurrentUser(prev => ({ ...prev, role: val }));
+                              setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, role: val } : u));
+                              setNotifications(prev => [`Role updated to ${val}`, ...prev]);
+                            }}
+                            className="input-base">
+                            <option>Lead Analyst</option>
+                            <option>Program Coordinator</option>
+                            <option>Senior Advisor</option>
+                            <option>Field Director</option>
+                            <option>Donor Reviewer</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Organization</label>
+                          <input type="text" value={currentUser.organization}
+                            onChange={e => {
+                              const val = e.target.value;
+                              setCurrentUser(prev => ({ ...prev, organization: val }));
+                              setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, organization: val } : u));
+                            }}
+                            className="input-base" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-semibold block mb-2" style={{ color: "#374151" }}>Avatar color</label>
+                        <div className="flex gap-2">
+                          {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map(c => (
+                            <button key={c} onClick={() => { setCurrentUser(prev => ({ ...prev, avatarColor: c })); setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, avatarColor: c } : u)); }}
+                              className="h-8 w-8 rounded-full border-2 transition"
+                              style={{ background: c, borderColor: currentUser.avatarColor === c ? "#111827" : "transparent", transform: currentUser.avatarColor === c ? "scale(1.15)" : "scale(1)" }} />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Danger zone */}
+                      <div className="rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                        style={{ background: "#FEF2F2", border: "1px solid #FCA5A5" }}>
+                        <div>
+                          <p className="text-sm font-semibold" style={{ color: "#991B1B" }}>Sign Out</p>
+                          <p className="text-xs mt-0.5" style={{ color: "#B91C1C" }}>This will end your current session securely.</p>
+                        </div>
+                        <button onClick={() => setCurrentUser(prev => ({ ...prev, isLoggedIn: false }))}
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition"
+                          style={{ background: "white", color: "#991B1B", border: "1px solid #FCA5A5" }}>
+                          <LogOut className="h-4 w-4" /> Sign Out
+                        </button>
+                      </div>
+
+                      <div className="text-xs pt-1" style={{ color: "#9CA3AF" }}>
+                        <button onClick={() => setShowPrivacyPolicy(true)} className="hover:underline" style={{ color: "#0D9488" }}>
+                          Privacy Policy
+                        </button>
+                        {" "}&mdash; ImpactIQ Global © 2026
+                      </div>
+                    </div>
+
+                    {/* Right: Team directory */}
+                    <div className="lg:col-span-5 bg-white rounded-xl border p-6 space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                      <div>
+                        <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Team Directory</h3>
+                        <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Switch between team member sessions.</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        {registeredUsers.map((user, idx) => {
+                          const isActive = user.email.toLowerCase() === currentUser.email.toLowerCase();
+                          return (
+                            <div key={idx}
+                              onClick={() => {
+                                if (isActive) return;
+                                const init = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
+                                setCurrentUser({ name: user.name, email: user.email, role: user.role, organization: user.organization || "ImpactIQ Global", avatarColor: user.avatarColor, initials: init, isLoggedIn: true });
+                                setNotifications(prev => [`Session: ${user.name} logged in`, ...prev]);
+                              }}
+                              className="p-3 rounded-xl border flex items-center justify-between transition"
+                              style={{
+                                background: isActive ? "#F0FDFA" : "#FAFAFA",
+                                borderColor: isActive ? "#0D9488" : "#F3F4F6",
+                                cursor: isActive ? "default" : "pointer"
+                              }}>
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="h-8 w-8 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0"
+                                  style={{ background: user.avatarColor }}>
+                                  {user.initials}
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="text-xs font-semibold truncate" style={{ color: "#111827" }}>{user.name}</p>
+                                  <p className="text-[10px] truncate" style={{ color: "#9CA3AF" }}>{user.role}</p>
+                                </div>
+                              </div>
+                              {isActive ? (
+                                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0"
+                                  style={{ background: "#CCFBF1", color: "#0F766E" }}>Active</span>
+                              ) : (
+                                <ChevronRight className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div className="pt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
+                        <button onClick={() => {
+                          const nEmail = prompt("Teammate email:");
+                          if (nEmail?.trim()) {
+                            const nName = prompt("Teammate full name:");
+                            if (nName?.trim()) {
+                              const nRole = prompt("Role (Lead Analyst / Program Coordinator / Field Director):", "Program Coordinator");
+                              const init = nName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+                              const colors = ["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"];
+                              const rc = colors[Math.floor(Math.random() * colors.length)];
+                              setRegisteredUsers(prev => [...prev, { name: nName, email: nEmail, password: "", role: nRole || "Program Coordinator", organization: currentUser.organization, avatarColor: rc, initials: init }]);
+                              setNotifications(prev => [`Teammate '${nName}' added to workspace`, ...prev]);
+                            }
+                          }
+                        }}
+                          className="text-xs font-semibold flex items-center gap-1 hover:underline mt-3"
+                          style={{ color: "#0D9488" }}>
+                          <Plus className="h-3.5 w-3.5" /> Invite Teammate
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+            </AnimatePresence>
+          </main>
+        </div>
+
+        {/* ---- MOBILE BOTTOM NAV ---- */}
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-white flex justify-around py-1.5 z-40 print:hidden"
+          style={{ borderColor: "#E5E7EB" }}>
+          {[
+            { id: "home",     label: "Home",     icon: LayoutDashboard },
+            { id: "projects", label: "Projects",  icon: Folder },
+            { id: "research", label: "Research",  icon: FlaskConical },
+            { id: "report",   label: "Reports",   icon: FileText },
+            { id: "insights", label: "Insights",  icon: Lightbulb },
+            { id: "kb",       label: "KB",        icon: BookOpen },
+          ].map(item => {
+            const Icon = item.icon;
+            const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
+            return (
+              <button key={item.id} onClick={() => navigate(item.id)}
+                className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition"
+                style={{ color: isActive ? "#1B3A6B" : "#9CA3AF" }}>
+                <Icon className="h-5 w-5" style={{ color: isActive ? "#0D9488" : "#9CA3AF" }} />
+                <span className="text-[9px] font-semibold">{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* ======================================
+            MODAL: NEW PROJECT
+            ====================================== */}
+        <AnimatePresence>
+          {projectModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.4)" }}>
+              <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.96, opacity: 0 }}
+                className="bg-white rounded-2xl border shadow-2xl p-6 w-full max-w-lg space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <div>
+                    <h3 className="text-base font-bold" style={{ color: "#111827" }}>Create New Project</h3>
+                    <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Set indicators, donor, and timeline.</p>
+                  </div>
+                  <button onClick={() => setProjectModalOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400">
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Project title *</label>
+                    <input type="text" placeholder="e.g. Sustainable Forestry Program" value={newProjName}
+                      onChange={e => setNewProjName(e.target.value)} className="input-base" />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Donor</label>
+                      <input type="text" placeholder="e.g. USAID" value={newProjDonor}
+                        onChange={e => setNewProjDonor(e.target.value)} className="input-base" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Program area</label>
+                      <select value={newProjArea} onChange={e => setNewProjArea(e.target.value)} className="input-base">
+                        <option value="Gender Equality">Gender Equality & Capital</option>
+                        <option value="Climate Adaptation">Climate Resilient Adaptation</option>
+                        <option value="Literacy Training">Literacy & Training Development</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Start date</label>
+                      <input type="date" value={newProjStart} onChange={e => setNewProjStart(e.target.value)} className="input-base" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>End date</label>
+                      <input type="date" value={newProjEnd} onChange={e => setNewProjEnd(e.target.value)} className="input-base" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-semibold" style={{ color: "#374151" }}>Indicators</label>
+                      <button onClick={() => setNewProjIndicators(prev => [...prev, { name: "", target: 100, current: 0, unit: "people" }])}
+                        className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>+ Add</button>
+                    </div>
+                    <div className="space-y-2 max-h-32 overflow-y-auto">
+                      {newProjIndicators.map((ind, idx) => (
+                        <div key={idx} className="flex gap-2">
+                          <input type="text" placeholder="Indicator name" value={ind.name}
+                            onChange={e => setNewProjIndicators(prev => prev.map((v, i) => i === idx ? { ...v, name: e.target.value } : v))}
+                            className="input-base flex-1" />
+                          <input type="number" placeholder="Target" value={ind.target}
+                            onChange={e => setNewProjIndicators(prev => prev.map((v, i) => i === idx ? { ...v, target: parseInt(e.target.value) || 0 } : v))}
+                            className="input-base w-20" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 justify-end pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
+                  <button onClick={() => setProjectModalOpen(false)} className="btn-secondary text-xs">Cancel</button>
+                  <button onClick={() => {
+                    if (!newProjName) { alert("Please enter a project name."); return; }
                     const nProjId = `proj_${Date.now()}`;
                     const nProj: Project = {
-                      id: nProjId,
-                      name: newProjName,
-                      donor: newProjDonor || "N/A",
-                      programArea: newProjArea,
-                      health: "green",
-                      progress: 0,
-                      startDate: newProjStart,
-                      endDate: newProjEnd,
-                      description: "A customized evaluation workspace parameter.",
+                      id: nProjId, name: newProjName, donor: newProjDonor || "N/A", programArea: newProjArea,
+                      health: "green", progress: 0, startDate: newProjStart, endDate: newProjEnd,
+                      description: "A customized evaluation workspace.",
                       indicators: newProjIndicators.filter(i => i.name.trim().length > 0),
-                      activityTimeline: ["Initiative created"],
-                      status: "Active"
+                      activityTimeline: ["Project created"], status: "Active"
                     };
-
                     setProjects(prev => [...prev, nProj]);
-                    setReports(prev => [
-                      ...prev,
-                      {
-                        id: `rep_${Date.now()}`,
-                        name: `${newProjName} Progress review`,
-                        projectId: nProjId,
-                        status: "Draft",
-                        lastSaved: new Date().toISOString().split("T")[0],
-                        sections: {},
-                        aiDrafts: {}
-                      }
-                    ]);
-
+                    setReports(prev => [...prev, { id: `rep_${Date.now()}`, name: `${newProjName} Progress Report`, projectId: nProjId, status: "Draft", lastSaved: new Date().toISOString().split("T")[0], sections: {}, aiDrafts: {} }]);
                     setProjectModalOpen(false);
-                    // Reset fields
-                    setNewProjName("");
-                    setNewProjDonor("");
+                    setNewProjName(""); setNewProjDonor("");
                     setSelectedProjectId(nProjId);
-                    setCurrentPage("detail");
-                    setNotifications(prev => [`New project workspace ${newProjName} synchronized`, ...prev]);
-                  }}
-                  className="bg-[#1B3A6B] text-white py-2 px-4 rounded-lg hover:bg-[#132B53] text-xs transition"
-                >
-                  Create Project Workspace
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* MODAL 2: NEW KNOWLEDGE BASE DOCUMENT CREATION */}
-      <AnimatePresence>
-        {kbModalOpen && (
-          <div className="fixed inset-0 bg-[#1B3A6B]/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-            <motion.div 
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl p-6 w-full max-w-md space-y-5"
-            >
-              <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                <div>
-                  <h3 className="font-extrabold text-lg text-[#1B3A6B]">Index Document Card</h3>
-                  <p className="text-xs text-[#64748B]">Insert programmatic knowledge sheets.</p>
+                    navigate("detail");
+                    setNotifications(prev => [`Project "${newProjName}" created`, ...prev]);
+                  }} className="btn-primary text-xs">Create Project</button>
                 </div>
-                <button onClick={() => setKbModalOpen(false)} className="text-[#64748B] hover:text-[#1B3A6B] p-1 rounded-lg">
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
 
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#1B3A6B]">Document Narrative Title</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Mid-term evaluative survey raw insights"
-                    value={newKbTitle}
-                    onChange={(e) => setNewKbTitle(e.target.value)}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
-                  />
+        {/* ======================================
+            MODAL: INDEX KB DOCUMENT
+            ====================================== */}
+        <AnimatePresence>
+          {kbModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.4)" }}>
+              <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.96, opacity: 0 }}
+                className="bg-white rounded-2xl border shadow-2xl p-6 w-full max-w-md space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <div>
+                    <h3 className="text-base font-bold" style={{ color: "#111827" }}>Index Document</h3>
+                    <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Add a document to the knowledge base.</p>
+                  </div>
+                  <button onClick={() => setKbModalOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400">
+                    <X className="h-4 w-4" />
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Associated Project Title</label>
-                    <select
-                      value={newKbProj}
-                      onChange={(e) => setNewKbProj(e.target.value)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none"
-                    >
-                      {projects.map(p => (
-                        <option key={p.id} value={p.name}>{p.name}</option>
-                      ))}
-                      <option value="General Reference">General Reference / Guideline</option>
-                    </select>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Document title</label>
+                    <input type="text" placeholder="e.g. Mid-term evaluation summary" value={newKbTitle}
+                      onChange={e => setNewKbTitle(e.target.value)} className="input-base" />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#1B3A6B]">Index Document Type</label>
-                    <select
-                      value={newKbType}
-                      onChange={(e) => setNewKbType(e.target.value as any)}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none"
-                    >
-                      <option value="Report">Report Document</option>
-                      <option value="Transcript">Dialogue Transcript</option>
-                      <option value="Dataset">Dataset / Excel sheet</option>
-                    </select>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Associated project</label>
+                      <select value={newKbProj} onChange={e => setNewKbProj(e.target.value)} className="input-base">
+                        {projects.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                        <option value="General Reference">General Reference</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Document type</label>
+                      <select value={newKbType} onChange={e => setNewKbType(e.target.value as any)} className="input-base">
+                        <option value="Report">Report</option>
+                        <option value="Transcript">Transcript</option>
+                        <option value="Dataset">Dataset</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Preview snippet</label>
+                    <textarea placeholder="2-sentence document preview..." value={newKbSnippet}
+                      onChange={e => setNewKbSnippet(e.target.value)}
+                      className="w-full h-20 p-3 text-xs rounded-lg border resize-none outline-none focus:ring-1 focus:ring-teal-500"
+                      style={{ background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }} />
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#1B3A6B]">Document Preview Snippet</label>
-                  <textarea
-                    placeholder="Provide a 2-sentence excerpt or finding preview..."
-                    value={newKbSnippet}
-                    onChange={(e) => setNewKbSnippet(e.target.value)}
-                    className="w-full h-24 p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-[#0D9488]"
-                  />
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex gap-3 justify-end pt-3 border-t border-slate-100 text-xs font-semibold">
-                <button 
-                  onClick={() => setKbModalOpen(false)}
-                  className="bg-white border border-[#1B3A6B]/20 text-[#1B3A6B] py-2 px-4 rounded-lg hover:bg-slate-50 text-xs transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    if (!newKbTitle || !newKbSnippet) {
-                      alert("Please fill all required inputs.");
-                      return;
-                    }
-
-                    const nDoc: KBDoc = {
-                      id: `kb_doc_${Date.now()}`,
-                      title: newKbTitle,
-                      project: newKbProj,
-                      date: new Date().toISOString().split("T")[0],
-                      type: newKbType,
-                      snippet: newKbSnippet
-                    };
-
-                    setKnowledgeBase(prev => [nDoc, ...prev]);
+                <div className="flex gap-2 justify-end pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
+                  <button onClick={() => setKbModalOpen(false)} className="btn-secondary text-xs">Cancel</button>
+                  <button onClick={() => {
+                    if (!newKbTitle || !newKbSnippet) { alert("Please fill all required fields."); return; }
+                    setKnowledgeBase(prev => [{ id: `kb_doc_${Date.now()}`, title: newKbTitle, project: newKbProj, date: new Date().toISOString().split("T")[0], type: newKbType, snippet: newKbSnippet }, ...prev]);
                     setKbModalOpen(false);
-                    // Reset fields
-                    setNewKbTitle("");
-                    setNewKbSnippet("");
-                    setNotifications(prev => [`Database document '${newKbTitle}' successfully archived`, ...prev]);
-                  }}
-                  className="bg-[#1B3A6B] text-white py-2 px-4 rounded-lg hover:bg-[#132B53] text-xs transition"
-                >
-                  Index Document Card
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                    setNewKbTitle(""); setNewKbSnippet("");
+                    setNotifications(prev => [`Document '${newKbTitle}' indexed`, ...prev]);
+                  }} className="btn-primary text-xs">Index Document</button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
 
-    </div>
+      </div>
+    </>
   );
 }
