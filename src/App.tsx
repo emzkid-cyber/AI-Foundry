@@ -96,7 +96,7 @@ function PrivacyPolicyModal({ onClose }: { onClose: () => void }) {
               </div>
               <div>
                 <h2 className="text-sm font-bold text-gray-900">Privacy Policy</h2>
-                <p className="text-xs text-gray-500">ImpactIQ Platform — Last updated July 2026</p>
+                <p className="text-xs text-gray-500">ImpactIQ Platform — Effective Date: July 19, 2026</p>
               </div>
             </div>
             <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
@@ -106,15 +106,10 @@ function PrivacyPolicyModal({ onClose }: { onClose: () => void }) {
 
           <div className="overflow-y-auto px-6 py-5 text-sm text-gray-600 space-y-5 leading-relaxed">
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">1. Introduction</h3>
-              <p>ImpactIQ ("we", "our", "the platform") is committed to protecting the privacy and security of data entrusted to us by non-governmental organizations, development agencies, and their authorized personnel. This Privacy Policy describes how we collect, use, store, and protect your information when you access or use the ImpactIQ platform.</p>
-            </section>
-
-            <section>
-              <h3 className="font-semibold text-gray-900 mb-2">2. Data We Collect</h3>
-              <p className="mb-2">We collect the following categories of information:</p>
+              <h3 className="font-semibold text-gray-900 mb-2">1. Information We Collect</h3>
+              <p className="mb-2">We collect the following categories of information to provide and improve our services:</p>
               <ul className="list-disc pl-5 space-y-1">
-                <li><strong>Account Data:</strong> Name, email address, organizational role, and affiliation provided during registration.</li>
+                <li><strong>Account Data:</strong> Name, email address, password, organizational role, and affiliation provided during registration.</li>
                 <li><strong>Program Data:</strong> Project indicators, evaluation datasets, FGD transcripts, survey data, and reports you upload or create within the platform.</li>
                 <li><strong>Usage Data:</strong> Platform interactions, session activity, and feature usage analytics to improve the platform experience.</li>
                 <li><strong>Device Data:</strong> Browser type, operating system, and device identifiers for security and compatibility purposes.</li>
@@ -122,9 +117,10 @@ function PrivacyPolicyModal({ onClose }: { onClose: () => void }) {
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">3. How We Use Your Data</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">2. How We Use Information</h3>
+              <p className="mb-2">We use the collected information for the following purposes:</p>
               <ul className="list-disc pl-5 space-y-1">
-                <li>To provide, operate, and improve the ImpactIQ platform and its AI-assisted features.</li>
+                <li>To provide, operate, and maintain the ImpactIQ platform and its features.</li>
                 <li>To generate qualitative analysis, program insights, and donor reports using uploaded evaluation materials.</li>
                 <li>To authenticate users and maintain secure workspace sessions.</li>
                 <li>To send operational notifications relevant to your projects and evaluations.</li>
@@ -133,38 +129,53 @@ function PrivacyPolicyModal({ onClose }: { onClose: () => void }) {
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">4. AI Processing & Third-Party Services</h3>
-              <p>ImpactIQ uses AI models (including Claude by Anthropic) to analyze qualitative data. When you use AI-assisted features, relevant content may be transmitted to third-party AI service providers under strict data processing agreements. We do not permit these providers to use your program data for training their models. All AI outputs are advisory and should be reviewed by qualified program staff before use in official donor reporting.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">3. AI Data Processing</h3>
+              <p>ImpactIQ uses advanced artificial intelligence models to process and analyze qualitative program data, including interview transcripts and evaluation materials. All AI data processing is conducted under strict confidentiality. We do not permit third-party AI models or providers to use your uploaded program datasets, transcripts, or personal data to train public models or improve their services. All AI-generated suggestions, themes, and summaries are advisory and must be reviewed by authorized program staff before official publication.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">5. Data Storage & Security</h3>
-              <p>Your data is stored using industry-standard encryption at rest and in transit. We implement access controls, regular security audits, and secure session management. Program data is stored per your organization's workspace and is not shared with other organizations. Session data is persisted locally in your browser using localStorage.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">4. Data Storage and Security</h3>
+              <p>Your data is stored using industry-standard encryption at rest and in transit. We implement robust access controls, regular security monitoring, and secure session management. Program data is strictly partitioned by organization and is not accessible to any unauthorized third party. Session and workspace data are persisted in your local browser storage and secure local states.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">6. Data Retention</h3>
-              <p>We retain your account and program data for the duration of your active subscription and up to 24 months after account deactivation to support audit and compliance requirements. You may request deletion of your data at any time by contacting our Data Protection Officer.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">5. User Rights</h3>
+              <p>You have the right to access, rectify, or request the deletion of your personal account data at any time. If your organization processes personal data of beneficiaries within the platform, you are responsible for securing necessary consents. You can exercise your rights by contacting us at our designated support channel.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">7. Your Rights</h3>
-              <p>Depending on your jurisdiction, you may have rights to access, rectify, erase, or port your personal data. To exercise these rights, contact: <strong>privacy@impactiq.org</strong>. We will respond to verifiable requests within 30 days.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">6. Cookies and Analytics</h3>
+              <p>We use essential cookies and local browser storage mechanisms to maintain session state, authenticate your login credentials, and preserve your local workspace preferences. We may use anonymous analytics cookies or trackers to understand platform navigation and diagnostic performance issues without tracking individual personal identifiers.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">8. Children's Privacy</h3>
-              <p>ImpactIQ is designed for professional use by authorized NGO personnel. We do not knowingly collect data from individuals under 18 years of age.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">7. Third-Party Services</h3>
+              <p>We may integrate secure, enterprise-grade third-party services to assist in data hosting, authentication, or qualitative processing. These third parties are authorized to use your personal or program data only as necessary to provide these sub-services and are bound by strict data processing and confidentiality agreements.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">9. Changes to This Policy</h3>
-              <p>We may update this Privacy Policy periodically. Material changes will be communicated via platform notifications and email. Continued use of ImpactIQ after such changes constitutes acceptance of the updated policy.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">8. Data Retention</h3>
+              <p>We retain your account and program data for the duration of your active workspace subscription. You may request manual deletion of your workspace data or account at any time, in which case all stored datasets, files, and generated reports will be permanently purged from our active databases, subject to any legally mandated retention periods.</p>
             </section>
 
             <section>
-              <h3 className="font-semibold text-gray-900 mb-2">10. Contact</h3>
-              <p>For privacy-related inquiries, contact our Data Protection Officer at <strong>privacy@impactiq.org</strong> or write to: ImpactIQ Global, 14 Development Way, Suite 300, Washington, D.C. 20001.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">9. Children’s Privacy</h3>
+              <p>ImpactIQ is designed for professional use by authorized adult personnel of NGOs and development organizations. We do not knowingly collect personal information from individuals under 18 years of age.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">10. Changes to this Policy</h3>
+              <p>We may update this Privacy Policy from time to time to reflect changes in our practices or regulatory standards. Material updates will be communicated through platform notifications or via email. Your continued use of the platform following updates constitutes acceptance of the modified policy.</p>
+            </section>
+
+            <section>
+              <h3 className="font-semibold text-gray-900 mb-2">11. Contact Information</h3>
+              <p>For inquiries regarding this Privacy Policy or data protection practices, please contact us at:</p>
+              <p className="mt-1.5 pl-3 border-l-2 border-teal-500 text-xs">
+                <strong>Company Name:</strong> ImpactIQ<br />
+                <strong>Support email:</strong> support@impactiq.com<br />
+                <strong>Company Address:</strong> [To be updated]
+              </p>
             </section>
           </div>
 
@@ -325,24 +336,6 @@ export default function App() {
         organization: "ImpactIQ Global",
         avatarColor: "#0D9488",
         initials: "EH"
-      },
-      {
-        name: "Sarah Jenkins",
-        email: "s.jenkins@usaid.gov",
-        password: "impact2026",
-        role: "Senior Donor Reviewer",
-        organization: "USAID",
-        avatarColor: "#8B5CF6",
-        initials: "SJ"
-      },
-      {
-        name: "Dr. Marcus Vance",
-        email: "marcus.vance@unicef.org",
-        password: "impact2026",
-        role: "Field Evaluation Director",
-        organization: "UNICEF",
-        avatarColor: "#F59E0B",
-        initials: "MV"
       }
     ];
   });
@@ -372,156 +365,17 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>("home");
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useState<string>("empowerment");
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
   const [globalSearch, setGlobalSearch] = useState<string>("");
-  const [notifications, setNotifications] = useState<string[]>([
-    "Analysis completed on FGD_Transcript_June.pdf",
-    "USAID indicator target reached 78%",
-    "AI generated a new insight on Accounting Training gaps"
-  ]);
+  const [notifications, setNotifications] = useState<string[]>([]);
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
   // --- MAIN DATA ---
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: "empowerment",
-      name: "Women's Economic Empowerment Program",
-      donor: "USAID",
-      programArea: "Gender Equality",
-      health: "green",
-      progress: 75,
-      startDate: "2026-01-15",
-      endDate: "2026-12-31",
-      description: "A comprehensive initiative targeting rural women to develop business skills, access micro-loans, and build sustainable local savings groups.",
-      indicators: [
-        { name: "% women with savings accounts", target: 60, current: 47, unit: "%" },
-        { name: "Number of trainings delivered", target: 24, current: 18, unit: "sessions" },
-        { name: "Number of beneficiaries reached", target: 500, current: 412, unit: "people" }
-      ],
-      activityTimeline: [
-        "June 3, 2026: FGD Transcript uploaded by Sarah",
-        "May 15, 2026: Mid-quarter survey completed",
-        "April 10, 2026: Q1 Progress Report published"
-      ],
-      status: "Active"
-    },
-    {
-      id: "climate",
-      name: "Climate Resilient Agriculture Initiative",
-      donor: "DFID",
-      programArea: "Climate Adaptation",
-      health: "amber",
-      progress: 48,
-      startDate: "2026-02-10",
-      endDate: "2027-02-10",
-      description: "Promoting drought-resistant methodologies, organic composting, and smart rainwater irrigation systems with smallholder rural farmers.",
-      indicators: [
-        { name: "Farmers adopting drought-resistant crops", target: 80, current: 35, unit: "%" },
-        { name: "Rainwater harvesting containers deployed", target: 120, current: 65, unit: "units" }
-      ],
-      activityTimeline: [
-        "May 28, 2026: Crop yield data sheet uploaded",
-        "April 14, 2026: Baseline survey executed"
-      ],
-      status: "Active"
-    }
-  ]);
-
-  const [files, setFiles] = useState<UploadedFile[]>([
-    {
-      id: "fgd_june",
-      name: "FGD_Transcript_June.pdf",
-      projectId: "empowerment",
-      type: "pdf",
-      size: "1.2 MB",
-      uploadDate: "2026-06-03",
-      status: "Ready",
-      content: "First Focus Group transcription. Participants discussed high interest rates of old moneylenders (50%). Program savings groups solved this, but treasury record-keeping is still manual and difficult for some illiterate coordinators. 'Business ideas can change our lives, but we need simple paper ledgers to keep our trust, Participant Anna shared.'"
-    },
-    {
-      id: "survey_q2",
-      name: "Survey_Data_Q2.csv",
-      projectId: "empowerment",
-      type: "csv",
-      size: "340 KB",
-      uploadDate: "2026-06-02",
-      status: "Ready",
-      content: "Empowerment evaluation dataset: 154 women responded. Monthly average income increased by $28. 94% report higher self-confidence."
-    }
-  ]);
-
-  const [reports, setReports] = useState<Report[]>([
-    {
-      id: "q2_report",
-      name: "Q2 Progress Report",
-      projectId: "empowerment",
-      status: "Draft",
-      lastSaved: "2026-06-04",
-      sections: {
-        "Executive Summary": "This report outlines key Q2 progress. 412 beneficiaries are active in savings groups.",
-        "Background": "A USAID-funded program supporting financial autonomy among agrarian women groups.",
-        "Methodology": "Mixed-methods evaluated via FGD transcripts (June) and Q2 quantitative surveys.",
-        "Key Findings": "Savings accessibility improved drastically. However, accounting compliance is limited by basic literacy rates.",
-        "Recommendations": "Implement visual LEDGER sheets and direct mobile tracking systems.",
-        "Conclusion": "The model is durable. Scaling visual ledgers in Q3 will resolve compliance."
-      },
-      aiDrafts: {}
-    }
-  ]);
-
-  const [insights, setInsights] = useState<Insight[]>([
-    {
-      id: "ins_1",
-      title: "Inter-Group Mentorship Emergence",
-      summary: "Evaluations reveal mature savings circles are proactively guiding newly introduced circles in neighboring villages, amplifying training leverage by 1.8x without extra operational budgets.",
-      projectId: "empowerment",
-      projectName: "Women's Economic Empowerment Program",
-      confidence: "High"
-    },
-    {
-      id: "ins_2",
-      title: "Accounting Stress Signals",
-      summary: "While group trust is vital, basic literacy hurdles lead to book-keeping math errors. Treasurers indicate deep anxiety around audits, highlighting a structural need for visual tools.",
-      projectId: "empowerment",
-      projectName: "Women's Economic Empowerment Program",
-      confidence: "Medium"
-    },
-    {
-      id: "ins_3",
-      title: "Immediate Capital Reinvestment",
-      summary: "91% of loan withdrawals are funneled cleanly into income-generating crop trades instead of short-term domestic consumption, vastly outpacing original projections.",
-      projectId: "empowerment",
-      projectName: "Women's Economic Empowerment Program",
-      confidence: "High"
-    }
-  ]);
-
-  const [knowledgeBase, setKnowledgeBase] = useState<KBDoc[]>([
-    {
-      id: "kb_1",
-      title: "Q1 Progress Evaluation - Women's Capital",
-      project: "Women's Economic Empowerment Program",
-      date: "2026-04-10",
-      type: "Report",
-      snippet: "Baseline indicators verified that 12 target circles are functional. Preliminary savings increased by 11% average."
-    },
-    {
-      id: "kb_2",
-      title: "June FGD Transcripts Raw Dialogue",
-      project: "Women's Economic Empowerment Program",
-      date: "2026-06-03",
-      type: "Transcript",
-      snippet: "Full qualitative transcription. Dialogues covering high-interest lenders, loan safety, and savings group ledger templates."
-    },
-    {
-      id: "kb_3",
-      title: "USAID Evaluation Standard Operating Guide 2026",
-      project: "General Reference",
-      date: "2025-11-20",
-      type: "Report",
-      snippet: "Framework guidance for designing indicator definitions, target baselines, and gender-transformative reporting frameworks."
-    }
-  ]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [files, setFiles] = useState<UploadedFile[]>([]);
+  const [reports, setReports] = useState<Report[]>([]);
+  const [insights, setInsights] = useState<Insight[]>([]);
+  const [knowledgeBase, setKnowledgeBase] = useState<KBDoc[]>([]);
 
   // --- MODAL CONTROLS ---
   const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
@@ -538,7 +392,7 @@ export default function App() {
   ]);
 
   const [newKbTitle, setNewKbTitle] = useState<string>("");
-  const [newKbProj, setNewKbProj] = useState<string>("Women's Economic Empowerment Program");
+  const [newKbProj, setNewKbProj] = useState<string>("General Reference");
   const [newKbType, setNewKbType] = useState<"Report" | "Transcript" | "Dataset">("Report");
   const [newKbSnippet, setNewKbSnippet] = useState<string>("");
 
@@ -550,34 +404,10 @@ export default function App() {
     findings: string[];
     recommendations: string[];
     summary: string;
-  } | null>({
-    themes: [
-      {
-        theme: "Interest Rate Relief",
-        summary: "Traditional local lenders impose high debts. Savings circles provided a safer source of agricultural liquidity.",
-        quotes: ["'The savings group helped me buy fertilizer for my crops without a high-interest loan.'"],
-        frequency: "High"
-      },
-      {
-        theme: "Record-Keeping Literacy Demands",
-        summary: "Illiteracy among group members interferes with precise, comfortable accounting, yielding high administrative anxiety.",
-        quotes: ["'We need more training on accounting. While the money is safe, keeping records is hard.'"],
-        frequency: "Medium"
-      }
-    ],
-    findings: [
-      "Access to cooperative savings groups has almost completely eliminated dependence on predatory village lending systems.",
-      "A clear financial confidence transition is occurring, with beneficiary women expressing high self-reliance during village councils."
-    ],
-    recommendations: [
-      "Deploy extremely simplified, icon-based ledger books for illiterate group coordinators.",
-      "Coordinate mobile ledger pilots in rural program districts."
-    ],
-    summary: "Evaluation validates positive economic adaptation, hampered only by minor literacy bottlenecks in bookkeeping."
-  });
+  } | null>(null);
 
   const [researchInputText, setResearchInputText] = useState<string>("");
-  const [researchSelectedFiles, setResearchSelectedFiles] = useState<string[]>(["fgd_june"]);
+  const [researchSelectedFiles, setResearchSelectedFiles] = useState<string[]>([]);
 
   // --- REPORT BUILDER STATE ---
   const [activeReportSection, setActiveReportSection] = useState<string>("Executive Summary");
@@ -641,24 +471,13 @@ export default function App() {
     ];
     triggerQualitativeLoad(steps, async () => {
       try {
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
+        const response = await fetch("/api/analyze", {
           method: "POST",
-          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
-          body: JSON.stringify({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: 1000,
-            system: "You are an expert qualitative research analyst for NGOs. Return ONLY a valid JSON object.",
-            messages: [{
-              role: "user",
-              content: `Analyze this qualitative content. Return JSON:\n{"themes":[{"theme":"string","summary":"string","quotes":["string"],"frequency":"High|Medium|Low"}],"findings":["string"],"recommendations":["string"],"summary":"string"}\n\nText:\n${sourceContent}`
-            }]
-          })
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ content: sourceContent })
         });
         if (!response.ok) throw new Error("API rejection");
-        const resData = await response.json();
-        const rawText = resData.content[0].text;
-        const cleanJSON = rawText.substring(rawText.indexOf("{"), rawText.lastIndexOf("}") + 1);
-        const parsed = JSON.parse(cleanJSON);
+        const parsed = await response.json();
         const normalizedThemes = (parsed.themes || []).map((t: any) => ({
           theme: t.theme || t.name || "Identified Pattern",
           summary: t.summary || t.description || "",
@@ -709,22 +528,19 @@ export default function App() {
     ];
     triggerQualitativeLoad(steps, async () => {
       try {
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
+        const response = await fetch("/api/report-section", {
           method: "POST",
-          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
+          headers: { "content-type": "application/json" },
           body: JSON.stringify({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: 1000,
-            system: "You are an expert NGO donor report writer. Write clean professional sections in Markdown.",
-            messages: [{
-              role: "user",
-              content: `Write a professional report section:\nSection: [${activeReportSection}]\nTone: [${reportTone}]\nProject: [${parentProj?.name} - ${parentProj?.description}]\nInsights: [${analysisWorkspace?.summary || ""}]\n\nWrite 2-3 specific, evidence-based paragraphs.`
-            }]
+            section: activeReportSection,
+            tone: reportTone,
+            projectDescription: parentProj ? `${parentProj.name} - ${parentProj.description}` : "",
+            insightsSummary: analysisWorkspace?.summary || ""
           })
         });
         if (!response.ok) throw new Error("API rejection");
         const resData = await response.json();
-        const textOut = resData.content[0].text;
+        const textOut = resData.text;
         setReports(prev => prev.map(rep => {
           if (rep.projectId === selectedProjectId) {
             return { ...rep, aiDrafts: { ...rep.aiDrafts, [activeReportSection]: textOut } };
@@ -784,21 +600,13 @@ export default function App() {
     const steps = ["Scanning evaluation files...", "Mining pattern vectors...", "Structuring insight cards..."];
     triggerQualitativeLoad(steps, async () => {
       try {
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
+        const response = await fetch("/api/generate-insights", {
           method: "POST",
-          headers: { "content-type": "application/json", "anthropic-version": "2023-06-01" },
-          body: JSON.stringify({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: 1000,
-            system: "You are an expert NGO analyst. Return ONLY a valid JSON array.",
-            messages: [{ role: "user", content: `Generate 3 evaluation insights for: ${pName}. JSON Array: [{"title":"string","summary":"string","confidence":"High|Medium|Low"}]` }]
-          })
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ projectName: pName })
         });
         if (!response.ok) throw new Error("API rejection");
-        const resData = await response.json();
-        const rawText = resData.content[0].text;
-        const cleanJSON = rawText.substring(rawText.indexOf("["), rawText.lastIndexOf("]") + 1);
-        const parsed: any[] = JSON.parse(cleanJSON);
+        const parsed: any[] = await response.json();
         const newIns: Insight[] = parsed.map((item, idx) => ({
           id: `ai_ins_${Date.now()}_${idx}`,
           title: item.title || "Community Assessment Insight",
@@ -808,6 +616,7 @@ export default function App() {
           confidence: item.confidence || "High"
         }));
         setInsights(prev => [...newIns, ...prev]);
+        setNotifications(prev => ["3 new insight cards generated from project variables", ...prev]);
       } catch (err) {
         const simulated: Insight[] = [
           { id: `sim_ins_1_${Date.now()}`, title: "Micro-Loan Capital Reinvestment Velocity", summary: "Recent ledger sheets reveal female beneficiaries are returning capital 14 days earlier than anticipated, utilizing rapid tomato-crop rotation cycles.", projectId: selectedProjectId, projectName: pName, confidence: "High" },
@@ -1045,63 +854,36 @@ export default function App() {
                   <div>
                     <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Email address</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input
                         type="email" required autoComplete="email"
                         placeholder="you@organization.org"
                         value={authEmail} onChange={e => setAuthEmail(e.target.value)}
-                        className="auth-input pl-9"
+                        className="auth-input auth-input-has-left-icon"
                       />
                     </div>
                   </div>
                   <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-sm font-medium" style={{ color: "#374151" }}>Password</label>
-                    </div>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Password</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input
                         type={showAuthPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={authPassword} onChange={e => setAuthPassword(e.target.value)}
-                        className="auth-input pl-9 pr-10"
+                        className="auth-input auth-input-has-left-icon auth-input-has-right-icon"
                       />
                       <button type="button" onClick={() => setShowAuthPassword(p => !p)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none flex items-center justify-center">
                         {showAuthPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>
                   <button type="submit" disabled={authLoading}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition"
+                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition cursor-pointer"
                     style={{ background: authLoading ? "#6B7280" : "#1B3A6B" }}>
                     {authLoading ? <><RefreshCw className="h-4 w-4 animate-spin" /> Signing in...</> : <><Lock className="h-4 w-4" /> Sign In</>}
                   </button>
-
-                  {/* Quick access demo */}
-                  <div className="mt-4 pt-4 border-t" style={{ borderColor: "#F3F4F6" }}>
-                    <p className="text-xs font-medium mb-2" style={{ color: "#9CA3AF" }}>Demo Access — click to sign in:</p>
-                    <div className="space-y-2">
-                      {registeredUsers.slice(0, 3).map((u, i) => (
-                        <button key={i} type="button"
-                          onClick={() => {
-                            setCurrentUser({ name: u.name, email: u.email, role: u.role, organization: u.organization || "NGO Partner", avatarColor: u.avatarColor, initials: u.initials, isLoggedIn: true });
-                            setNotifications(prev => [`Welcome back, ${u.name}`, ...prev]);
-                          }}
-                          className="w-full flex items-center gap-3 p-2.5 rounded-xl border text-left transition group"
-                          style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}>
-                          <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" style={{ background: u.avatarColor }}>
-                            {u.initials}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-xs font-semibold truncate" style={{ color: "#111827" }}>{u.name}</p>
-                            <p className="text-[10px]" style={{ color: "#9CA3AF" }}>{u.role}</p>
-                          </div>
-                          <ChevronRight className="h-3.5 w-3.5 ml-auto shrink-0 text-gray-400 group-hover:translate-x-0.5 transition" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
                 </form>
               )}
 
@@ -1111,49 +893,56 @@ export default function App() {
                   <div>
                     <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Full name</label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input type="text" required placeholder="John Doe"
-                        value={authName} onChange={e => setAuthName(e.target.value)}
-                        className="auth-input pl-9" />
+                         value={authName} onChange={e => setAuthName(e.target.value)}
+                         className="auth-input auth-input-has-left-icon" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Work email</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input type="email" required placeholder="you@organization.org"
-                        value={authEmail} onChange={e => setAuthEmail(e.target.value)}
-                        className="auth-input pl-9" />
+                         value={authEmail} onChange={e => setAuthEmail(e.target.value)}
+                         className="auth-input auth-input-has-left-icon" />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Role</label>
-                      <select value={authRole} onChange={e => setAuthRole(e.target.value)}
-                        className="auth-input text-sm">
-                        <option>Lead Analyst</option>
-                        <option>Program Coordinator</option>
-                        <option>Senior Advisor</option>
-                        <option>Field Director</option>
-                        <option>Donor Reviewer</option>
-                      </select>
+                      <div className="relative">
+                        <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                        <select value={authRole} onChange={e => setAuthRole(e.target.value)}
+                          className="auth-input auth-input-has-left-icon pr-10 text-sm cursor-pointer">
+                          <option>Lead Analyst</option>
+                          <option>Program Coordinator</option>
+                          <option>Senior Advisor</option>
+                          <option>Field Director</option>
+                          <option>Donor Reviewer</option>
+                        </select>
+                        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Organization</label>
-                      <input type="text" placeholder="Your NGO"
-                        value={authOrg} onChange={e => setAuthOrg(e.target.value)}
-                        className="auth-input" />
+                      <div className="relative">
+                        <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                        <input type="text" placeholder="Your NGO"
+                          value={authOrg} onChange={e => setAuthOrg(e.target.value)}
+                          className="auth-input auth-input-has-left-icon" />
+                      </div>
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Password</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input type={showAuthPassword ? "text" : "password"} placeholder="Min. 6 characters"
                         value={authPassword} onChange={e => setAuthPassword(e.target.value)}
-                        className="auth-input pl-9 pr-10" />
+                        className="auth-input auth-input-has-left-icon auth-input-has-right-icon" />
                       <button type="button" onClick={() => setShowAuthPassword(p => !p)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none flex items-center justify-center">
                         {showAuthPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
@@ -1161,24 +950,24 @@ export default function App() {
                   <div>
                     <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Confirm password</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: "#9CA3AF" }} />
+                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                       <input type="password" placeholder="Repeat password"
                         value={authConfirmPassword} onChange={e => setAuthConfirmPassword(e.target.value)}
-                        className="auth-input pl-9" />
+                        className="auth-input auth-input-has-left-icon" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "#374151" }}>Avatar color</label>
+                    <label className="block text-sm font-medium mb-1.5" style={{ color: "#374151" }}>Avatar color</label>
                     <div className="flex gap-2">
                       {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map(c => (
                         <button key={c} type="button" onClick={() => setAuthColor(c)}
-                          className="h-7 w-7 rounded-full border-2 transition"
+                          className="h-7 w-7 rounded-full border-2 transition cursor-pointer"
                           style={{ background: c, borderColor: authColor === c ? "#111827" : "transparent", transform: authColor === c ? "scale(1.15)" : "scale(1)" }} />
                       ))}
                     </div>
                   </div>
                   <button type="submit" disabled={authLoading}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition"
+                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition cursor-pointer"
                     style={{ background: authLoading ? "#6B7280" : "#1B3A6B" }}>
                     {authLoading ? <><RefreshCw className="h-4 w-4 animate-spin" /> Creating account...</> : <><UserPlus className="h-4 w-4" /> Create Account</>}
                   </button>
@@ -1501,7 +1290,7 @@ export default function App() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
                       <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>
-                        Good morning, {currentUser.name.split(" ")[0]} 👋
+                        Hi, {currentUser.name.split(" ")[0]} 👋
                       </h1>
                       <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>
                         Here's what's happening across your programs today.
@@ -1580,54 +1369,71 @@ export default function App() {
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {projects.map(proj => (
-                          <div key={proj.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition cursor-default">
-                            <div className="flex items-start justify-between">
-                              <span className="label-badge text-[10px]"
-                                style={{ background: "#EFF6FF", color: "#1E40AF" }}>
-                                {proj.programArea}
-                              </span>
-                              <div className="flex items-center gap-1.5">
-                                <span className={`health-dot ${proj.health}`} />
-                                <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>
-                                  {proj.health}
+                      <div className={projects.length > 0 ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "block"}>
+                        {projects.length > 0 ? (
+                          projects.map(proj => (
+                            <div key={proj.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition cursor-default">
+                              <div className="flex items-start justify-between">
+                                <span className="label-badge text-[10px]"
+                                  style={{ background: "#EFF6FF", color: "#1E40AF" }}>
+                                  {proj.programArea}
                                 </span>
+                                <div className="flex items-center gap-1.5">
+                                  <span className={`health-dot ${proj.health}`} />
+                                  <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>
+                                    {proj.health}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>
+                                  {proj.name}
+                                </h3>
+                                <p className="text-xs mt-1 line-clamp-2 leading-relaxed" style={{ color: "#6B7280" }}>
+                                  {proj.description}
+                                </p>
+                              </div>
+
+                              <div>
+                                <div className="flex justify-between items-center text-xs mb-1.5">
+                                  <span style={{ color: "#6B7280" }}>Progress</span>
+                                  <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
+                                </div>
+                                <div className="progress-bar">
+                                  <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
+                                </div>
+                              </div>
+
+                              <div className="flex items-center justify-between pt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
+                                <span className="text-xs" style={{ color: "#6B7280" }}>
+                                  Donor: <strong style={{ color: "#111827" }}>{proj.donor}</strong>
+                                </span>
+                                <button
+                                  onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
+                                  className="text-xs font-semibold hover:underline flex items-center gap-0.5"
+                                  style={{ color: "#1B3A6B" }}>
+                                  Open <ChevronRight className="h-3 w-3" />
+                                </button>
                               </div>
                             </div>
-
-                            <div>
-                              <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>
-                                {proj.name}
-                              </h3>
-                              <p className="text-xs mt-1 line-clamp-2 leading-relaxed" style={{ color: "#6B7280" }}>
-                                {proj.description}
+                          ))
+                        ) : (
+                          <div className="bg-white rounded-xl border p-8 text-center space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                            <div className="mx-auto w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                              <Folder className="h-6 w-6" />
+                            </div>
+                            <div className="max-w-sm mx-auto space-y-1">
+                              <h3 className="text-sm font-bold" style={{ color: "#111827" }}>No active initiatives</h3>
+                              <p className="text-xs" style={{ color: "#6B7280" }}>
+                                Create your first project to begin tracking performance indicators, indexing source data, and drafting impact reports.
                               </p>
                             </div>
-
-                            <div>
-                              <div className="flex justify-between items-center text-xs mb-1.5">
-                                <span style={{ color: "#6B7280" }}>Progress</span>
-                                <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
-                              </div>
-                              <div className="progress-bar">
-                                <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
-                              <span className="text-xs" style={{ color: "#6B7280" }}>
-                                Donor: <strong style={{ color: "#111827" }}>{proj.donor}</strong>
-                              </span>
-                              <button
-                                onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
-                                className="text-xs font-semibold hover:underline flex items-center gap-0.5"
-                                style={{ color: "#1B3A6B" }}>
-                                Open <ChevronRight className="h-3 w-3" />
-                              </button>
-                            </div>
+                            <button onClick={() => setProjectModalOpen(true)} className="btn-primary inline-flex mx-auto text-xs py-2 px-4 rounded-lg font-semibold shadow-xs">
+                              <Plus className="h-4 w-4 mr-1.5" /> Create Your First Project
+                            </button>
                           </div>
-                        ))}
+                        )}
                       </div>
 
                       {/* Recent Insights */}
@@ -1640,26 +1446,35 @@ export default function App() {
                           </button>
                         </div>
                         <div className="space-y-3">
-                          {insights.slice(0, 2).map(ins => (
-                            <div key={ins.id} className="bg-white rounded-xl p-4 border"
-                              style={{ borderColor: "#E5E7EB", borderLeft: "3px solid #0D9488" }}>
-                              <div className="flex items-start justify-between gap-3">
-                                <div className="min-w-0">
-                                  <h4 className="text-sm font-semibold leading-snug mb-1" style={{ color: "#111827" }}>
-                                    {ins.title}
-                                  </h4>
-                                  <p className="text-xs leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
+                          {insights.length > 0 ? (
+                            insights.slice(0, 2).map(ins => (
+                              <div key={ins.id} className="bg-white rounded-xl p-4 border"
+                                style={{ borderColor: "#E5E7EB", borderLeft: "3px solid #0D9488" }}>
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="min-w-0">
+                                    <h4 className="text-sm font-semibold leading-snug mb-1" style={{ color: "#111827" }}>
+                                      {ins.title}
+                                    </h4>
+                                    <p className="text-xs leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
+                                  </div>
+                                  <span className="ai-badge shrink-0">✦ AI</span>
                                 </div>
-                                <span className="ai-badge shrink-0">✦ AI</span>
+                                <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
+                                  <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{ins.projectName}</span>
+                                  <span className={`label-badge confidence-${ins.confidence.toLowerCase()} text-[10px]`}>
+                                    {ins.confidence} confidence
+                                  </span>
+                                </div>
                               </div>
-                              <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
-                                <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{ins.projectName}</span>
-                                <span className={`label-badge confidence-${ins.confidence.toLowerCase()} text-[10px]`}>
-                                  {ins.confidence} confidence
-                                </span>
-                              </div>
+                            ))
+                          ) : (
+                            <div className="bg-white rounded-xl p-6 border text-center space-y-1" style={{ borderColor: "#E5E7EB" }}>
+                              <p className="text-xs font-semibold" style={{ color: "#374151" }}>No qualitative insights generated</p>
+                              <p className="text-[11px]" style={{ color: "#6B7280" }}>
+                                Insights will appear once source files are uploaded and synthesized in the Research Studio.
+                              </p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1673,19 +1488,23 @@ export default function App() {
                           Upcoming Deadlines
                         </h3>
                         <div className="space-y-2.5">
-                          {[
-                            { title: "USAID Q2 Donor Draft", due: "June 30, 2026", urgent: true },
-                            { title: "FGD Transcription Audit", due: "July 15, 2026", urgent: false }
-                          ].map(d => (
-                            <div key={d.title} className="p-2.5 rounded-lg" style={{ background: "#F9FAFB" }}>
-                              <div className="flex items-start justify-between gap-2">
-                                <p className="text-xs font-semibold" style={{ color: "#111827" }}>{d.title}</p>
-                                {d.urgent && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
-                                  style={{ background: "#FEF2F2", color: "#B91C1C" }}>Urgent</span>}
+                          {reports.length > 0 ? (
+                            reports.map(d => (
+                              <div key={d.id} className="p-2.5 rounded-lg" style={{ background: "#F9FAFB" }}>
+                                <div className="flex items-start justify-between gap-2">
+                                  <p className="text-xs font-semibold" style={{ color: "#111827" }}>{d.name} Submission</p>
+                                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                                    style={{ background: "#FEF2F2", color: "#B91C1C" }}>Draft</span>
+                                </div>
+                                <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>Last saved {d.lastSaved}</p>
                               </div>
-                              <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{d.due}</p>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center rounded-xl border border-dashed" style={{ borderColor: "#E5E7EB" }}>
+                              <p className="text-xs font-semibold" style={{ color: "#374151" }}>No upcoming deadlines</p>
+                              <p className="text-[10px] mt-1" style={{ color: "#9CA3AF" }}>Index a draft report in your workspace to track deadlines.</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
 
@@ -1696,18 +1515,25 @@ export default function App() {
                           Recent Datasets
                         </h3>
                         <div className="space-y-2">
-                          {files.map(f => (
-                            <div key={f.id} className="flex items-center justify-between text-xs py-2 border-b last:border-0"
-                              style={{ borderColor: "#F3F4F6" }}>
-                              <div className="min-w-0 mr-2">
-                                <p className="font-medium truncate" style={{ color: "#111827" }}>{f.name}</p>
-                                <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{f.size} · {f.uploadDate}</p>
+                          {files.length > 0 ? (
+                            files.slice(0, 3).map(f => (
+                              <div key={f.id} className="flex items-center justify-between text-xs py-2 border-b last:border-0"
+                                style={{ borderColor: "#F3F4F6" }}>
+                                <div className="min-w-0 mr-2">
+                                  <p className="font-medium truncate" style={{ color: "#111827" }}>{f.name}</p>
+                                  <p className="text-[10px] mt-0.5" style={{ color: "#9CA3AF" }}>{f.size} · {f.uploadDate}</p>
+                                </div>
+                                <span className={`label-badge text-[9px] shrink-0 ${f.status === "Ready" ? "confidence-high" : "confidence-medium"}`}>
+                                  {f.status}
+                                </span>
                               </div>
-                              <span className={`label-badge text-[9px] shrink-0 ${f.status === "Ready" ? "confidence-high" : "confidence-medium"}`}>
-                                {f.status}
-                              </span>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center rounded-xl border border-dashed" style={{ borderColor: "#E5E7EB" }}>
+                              <p className="text-xs font-semibold" style={{ color: "#374151" }}>No datasets indexed yet</p>
+                              <p className="text-[10px] mt-1" style={{ color: "#9CA3AF" }}>Upload evaluation material to any active project.</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
 
@@ -1718,16 +1544,23 @@ export default function App() {
                           Activity Log
                         </h3>
                         <div className="space-y-3">
-                          {[
-                            { actor: currentUser.name.split(" ")[0], action: "uploaded FGD_Transcript_June.pdf" },
-                            { actor: "AI Engine", action: "synchronized 3 financial insight nodes" },
-                            { actor: "System", action: "initialized PDF generation templates" }
-                          ].map((entry, idx) => (
-                            <div key={idx} className="timeline-item">
-                              <strong style={{ color: "#111827" }}>{entry.actor}</strong>{" "}
-                              <span style={{ color: "#6B7280" }}>{entry.action}</span>
+                          {projects.length > 0 ? (
+                            [
+                              { actor: currentUser.name.split(" ")[0], action: `created initiative "${projects[0].name}"` },
+                              ...(files.length > 0 ? [{ actor: currentUser.name.split(" ")[0], action: `indexed document "${files[0].name}"` }] : []),
+                              { actor: "System", action: "ImpactIQ workspace initialized" }
+                            ].map((entry, idx) => (
+                              <div key={idx} className="timeline-item">
+                                <strong style={{ color: "#111827" }}>{entry.actor}</strong>{" "}
+                                <span style={{ color: "#6B7280" }}>{entry.action}</span>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center rounded-xl border border-dashed" style={{ borderColor: "#E5E7EB" }}>
+                              <p className="text-xs font-semibold" style={{ color: "#374151" }}>No recent activities</p>
+                              <p className="text-[10px] mt-1" style={{ color: "#9CA3AF" }}>Activities will be logged once you take actions.</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1771,72 +1604,89 @@ export default function App() {
                   </div>
 
                   {/* Cards grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {projects.map(proj => (
-                      <div key={proj.id} className="metric-card flex flex-col gap-4 hover:shadow-md transition">
-                        <div className="flex items-start justify-between">
-                          <span className="label-badge text-[10px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
-                            {proj.programArea}
-                          </span>
-                          <div className="flex items-center gap-1.5">
-                            <span className={`health-dot ${proj.health}`} />
-                            <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>{proj.health}</span>
+                  {projects.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                      {projects.map(proj => (
+                        <div key={proj.id} className="metric-card flex flex-col gap-4 hover:shadow-md transition">
+                          <div className="flex items-start justify-between">
+                            <span className="label-badge text-[10px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
+                              {proj.programArea}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <span className={`health-dot ${proj.health}`} />
+                              <span className="text-[10px] font-medium capitalize" style={{ color: "#6B7280" }}>{proj.health}</span>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h3 className="font-semibold text-sm leading-snug mb-1" style={{ color: "#111827" }}>{proj.name}</h3>
+                            <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "#6B7280" }}>{proj.description}</p>
+                          </div>
+
+                          <div className="flex items-center gap-3 text-xs">
+                            <span className="px-2 py-0.5 rounded-md font-medium"
+                              style={{ background: "#F3F4F6", color: "#374151" }}>
+                              {proj.donor}
+                            </span>
+                            <span style={{ color: "#9CA3AF" }}>
+                              {proj.indicators.filter(i => i.current >= i.target).length}/{proj.indicators.length} targets met
+                            </span>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-xs mb-1.5">
+                              <span style={{ color: "#6B7280" }}>Progress</span>
+                              <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
+                            </div>
+                            <div className="progress-bar">
+                              <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
+                            <button
+                              onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
+                              className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition text-center"
+                              style={{ background: "#1B3A6B", color: "white" }}>
+                              Open Project
+                            </button>
+                            <button
+                              onClick={() => setProjects(prev => prev.map(p => p.id === proj.id ? { ...p, status: p.status === "Active" ? "Archived" : "Active" } : p))}
+                              className="px-3 py-1.5 rounded-lg text-xs font-medium border transition"
+                              style={{
+                                background: "white",
+                                color: proj.status === "Active" ? "#6B7280" : "#0D9488",
+                                borderColor: "#E5E7EB"
+                              }}>
+                              {proj.status === "Active" ? "Archive" : "Restore"}
+                            </button>
                           </div>
                         </div>
-
-                        <div>
-                          <h3 className="font-semibold text-sm leading-snug mb-1" style={{ color: "#111827" }}>{proj.name}</h3>
-                          <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "#6B7280" }}>{proj.description}</p>
-                        </div>
-
-                        <div className="flex items-center gap-3 text-xs">
-                          <span className="px-2 py-0.5 rounded-md font-medium"
-                            style={{ background: "#F3F4F6", color: "#374151" }}>
-                            {proj.donor}
-                          </span>
-                          <span style={{ color: "#9CA3AF" }}>
-                            {proj.indicators.filter(i => i.current >= i.target).length}/{proj.indicators.length} targets met
-                          </span>
-                        </div>
-
-                        <div>
-                          <div className="flex justify-between text-xs mb-1.5">
-                            <span style={{ color: "#6B7280" }}>Progress</span>
-                            <span className="font-semibold" style={{ color: "#111827" }}>{proj.progress}%</span>
-                          </div>
-                          <div className="progress-bar">
-                            <div className="progress-bar-fill" style={{ width: `${proj.progress}%` }} />
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
-                          <button
-                            onClick={() => { setSelectedProjectId(proj.id); navigate("detail"); }}
-                            className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition text-center"
-                            style={{ background: "#1B3A6B", color: "white" }}>
-                            Open Project
-                          </button>
-                          <button
-                            onClick={() => setProjects(prev => prev.map(p => p.id === proj.id ? { ...p, status: p.status === "Active" ? "Archived" : "Active" } : p))}
-                            className="px-3 py-1.5 rounded-lg text-xs font-medium border transition"
-                            style={{
-                              background: "white",
-                              color: proj.status === "Active" ? "#6B7280" : "#0D9488",
-                              borderColor: "#E5E7EB"
-                            }}>
-                            {proj.status === "Active" ? "Archive" : "Restore"}
-                          </button>
-                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="bg-white rounded-2xl border p-12 text-center max-w-xl mx-auto space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                      <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                        <Folder className="h-8 w-8" />
                       </div>
-                    ))}
-                  </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-bold" style={{ color: "#111827" }}>No active projects</h3>
+                        <p className="text-sm" style={{ color: "#6B7280" }}>
+                          Create your first project initiative to start tracking your performance metrics, indexing transcripts, and drafting donor-ready impact reports.
+                        </p>
+                      </div>
+                      <button onClick={() => setProjectModalOpen(true)} className="btn-primary inline-flex items-center mx-auto text-xs py-2.5 px-5 rounded-xl font-semibold shadow-xs">
+                        <Plus className="h-4 w-4 mr-2" /> Create Your First Project
+                      </button>
+                    </div>
+                  )}
                 </motion.div>
               )}
 
               {/* ======================================
                   PAGE: PROJECT DETAIL
                   ====================================== */}
-              {currentPage === "detail" && (
+              {currentPage === "detail" && currentProject && (
                 <motion.div key="detail" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                   className="space-y-5">
                   {/* Project header */}
@@ -2000,6 +1850,23 @@ export default function App() {
                 </motion.div>
               )}
 
+              {currentPage === "detail" && !currentProject && (
+                <div className="bg-white rounded-2xl border p-12 text-center max-w-xl mx-auto space-y-4 animate-fadeIn" style={{ borderColor: "#E5E7EB" }}>
+                  <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                    <Folder className="h-8 w-8" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base font-bold" style={{ color: "#111827" }}>No active project selected</h3>
+                    <p className="text-sm" style={{ color: "#6B7280" }}>
+                      Please select or create a project first.
+                    </p>
+                  </div>
+                  <button onClick={() => navigate("home")} className="btn-primary inline-flex items-center mx-auto text-xs py-2.5 px-5 rounded-xl font-semibold shadow-xs">
+                    Go Back Home
+                  </button>
+                </div>
+              )}
+
               {/* ======================================
                   PAGE: RESEARCH STUDIO
                   ====================================== */}
@@ -2079,12 +1946,18 @@ export default function App() {
                           <h2 className="text-base font-bold" style={{ color: "#111827" }}>Synthesis Workspace</h2>
                           <p className="text-xs" style={{ color: "#9CA3AF" }}>Qualitative themes & findings extracted by AI.</p>
                         </div>
-                        {analysisWorkspace && (
-                          <button onClick={() => { alert("Findings formatted for report builder."); navigate("report"); }}
-                            className="btn-secondary text-xs">
-                            Push to Report <ChevronRight className="h-3.5 w-3.5" />
-                          </button>
-                        )}
+                        <button
+                          onClick={() => {
+                            if (!analysisWorkspace) return;
+                            alert("Findings formatted for report builder.");
+                            navigate("report");
+                          }}
+                          disabled={!analysisWorkspace}
+                          className="btn-secondary text-xs disabled:opacity-40 disabled:cursor-not-allowed transition"
+                          title={!analysisWorkspace ? "Please synthesize source materials first" : ""}
+                        >
+                          Push to Report <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
                       </div>
 
                       {analysisWorkspace ? (
@@ -2175,7 +2048,7 @@ export default function App() {
               {/* ======================================
                   PAGE: REPORT BUILDER
                   ====================================== */}
-              {currentPage === "report" && (
+              {currentPage === "report" && currentProject && (
                 <motion.div key="report" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                   className="grid grid-cols-1 xl:grid-cols-12 gap-5">
 
@@ -2310,6 +2183,23 @@ export default function App() {
                 </motion.div>
               )}
 
+              {currentPage === "report" && !currentProject && (
+                <div className="bg-white rounded-2xl border p-12 text-center max-w-xl mx-auto space-y-4 animate-fadeIn" style={{ borderColor: "#E5E7EB" }}>
+                  <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                    <FileText className="h-8 w-8" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base font-bold" style={{ color: "#111827" }}>No active project selected</h3>
+                    <p className="text-sm" style={{ color: "#6B7280" }}>
+                      Please select or create a project first.
+                    </p>
+                  </div>
+                  <button onClick={() => navigate("home")} className="btn-primary inline-flex items-center mx-auto text-xs py-2.5 px-5 rounded-xl font-semibold shadow-xs">
+                    Go Back Home
+                  </button>
+                </div>
+              )}
+
               {/* ======================================
                   PAGE: INSIGHTS
                   ====================================== */}
@@ -2395,23 +2285,23 @@ export default function App() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredKnowledgeBase.map(doc => (
-                      <div key={doc.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
-                        <div className="flex items-center justify-between">
-                          <span className={`label-badge text-[10px] doc-type-${doc.type.toLowerCase()}`}>{doc.type}</span>
-                          <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{doc.date}</span>
+                    {knowledgeBase.length === 0 ? (
+                      <div className="col-span-full py-20 flex flex-col items-center text-center space-y-4 bg-white rounded-2xl border"
+                        style={{ borderColor: "#E5E7EB" }}>
+                        <div className="mx-auto w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                          <BookOpen className="h-6 w-6" />
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{doc.title}</h3>
-                          <p className="text-xs mt-1.5 leading-relaxed line-clamp-3" style={{ color: "#6B7280" }}>{doc.snippet}</p>
+                        <div className="max-w-sm mx-auto space-y-1">
+                          <h4 className="font-semibold text-sm" style={{ color: "#111827" }}>Knowledge base is empty</h4>
+                          <p className="text-xs" style={{ color: "#6B7280" }}>
+                            Upload reports, assessment guidelines, or interview transcript files to construct your project-wide knowledge base.
+                          </p>
                         </div>
-                        <p className="text-[10px] pt-2 border-t" style={{ borderColor: "#F3F4F6", color: "#9CA3AF" }}>
-                          Project: <strong style={{ color: "#374151" }}>{doc.project}</strong>
-                        </p>
+                        <button onClick={() => setKbModalOpen(true)} className="btn-primary inline-flex mx-auto text-xs py-2 px-4 rounded-lg font-semibold shadow-xs">
+                          <Plus className="h-4 w-4 mr-1.5" /> Index Your First Document
+                        </button>
                       </div>
-                    ))}
-
-                    {filteredKnowledgeBase.length === 0 && (
+                    ) : filteredKnowledgeBase.length === 0 ? (
                       <div className="col-span-full py-20 flex flex-col items-center text-center space-y-3 bg-white rounded-xl border"
                         style={{ borderColor: "#E5E7EB" }}>
                         <BookOpen className="h-10 w-10" style={{ color: "#E5E7EB" }} />
@@ -2422,6 +2312,22 @@ export default function App() {
                           Clear search
                         </button>
                       </div>
+                    ) : (
+                      filteredKnowledgeBase.map(doc => (
+                        <div key={doc.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
+                          <div className="flex items-center justify-between">
+                            <span className={`label-badge text-[10px] doc-type-${doc.type.toLowerCase()}`}>{doc.type}</span>
+                            <span className="text-[10px]" style={{ color: "#9CA3AF" }}>{doc.date}</span>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{doc.title}</h3>
+                            <p className="text-xs mt-1.5 leading-relaxed line-clamp-3" style={{ color: "#6B7280" }}>{doc.snippet}</p>
+                          </div>
+                          <p className="text-[10px] pt-2 border-t" style={{ borderColor: "#F3F4F6", color: "#9CA3AF" }}>
+                            Project: <strong style={{ color: "#374151" }}>{doc.project}</strong>
+                          </p>
+                        </div>
+                      ))
                     )}
                   </div>
                 </motion.div>
@@ -2550,8 +2456,10 @@ export default function App() {
                       </div>
 
                       <div className="space-y-2">
-                        {registeredUsers.map((user, idx) => {
-                          const isActive = user.email.toLowerCase() === currentUser.email.toLowerCase();
+                        {registeredUsers
+                          .filter(user => (user.organization || "ImpactIQ Partner").toLowerCase() === (currentUser.organization || "ImpactIQ Partner").toLowerCase())
+                          .map((user, idx) => {
+                            const isActive = user.email.toLowerCase() === currentUser.email.toLowerCase();
                           return (
                             <div key={idx}
                               onClick={() => {

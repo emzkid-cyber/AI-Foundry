@@ -357,19 +357,38 @@ input[type="range"]::-moz-range-thumb {
 /* --- AUTH LAYOUT OVERRIDES --- */
 .auth-input {
   width: 100%;
-  padding: 10px 14px;
+  padding: 11px 14px;
   font-size: 14px;
   font-family: var(--font-sans);
-  background: white;
+  background: #FFFFFF;
   border: 1px solid #E5E7EB;
   border-radius: var(--radius-md);
   color: #111827;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.auth-input-has-left-icon {
+  padding-left: 42px !important;
+}
+.auth-input-has-right-icon {
+  padding-right: 42px !important;
+}
+select.auth-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+select.auth-input::-ms-expand {
+  display: none;
+}
+.auth-input:hover {
+  border-color: #D1D5DB;
 }
 .auth-input:focus {
   border-color: var(--color-brand-teal);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15), var(--shadow-sm);
+  background: #FFFFFF;
 }
 .auth-input::placeholder {
   color: #9CA3AF;
