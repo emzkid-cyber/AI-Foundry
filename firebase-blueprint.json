@@ -1,0 +1,36 @@
+{
+  "entities": {
+    "users": {
+      "title": "users",
+      "description": "User accounts and profile details",
+      "properties": {
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "organization": { "type": "string" },
+        "avatarColor": { "type": "string" },
+        "initials": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["email", "name"]
+    },
+    "projects": {
+      "title": "projects",
+      "description": "M&E project details and indicators",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "sector": { "type": "string" },
+        "funder": { "type": "string" },
+        "budget": { "type": "string" },
+        "status": { "type": "string" },
+        "location": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "description": { "type": "string" },
+        "manager": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    }
+  }
+}

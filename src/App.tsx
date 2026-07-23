@@ -15,6 +15,8 @@ import { LogFrameMatrix } from "./components/LogFrameMatrix";
 import { KoboFieldCollector } from "./components/KoboFieldCollector";
 import { GrantComplianceHub } from "./components/GrantComplianceHub";
 import { DqaEvaluationMatrix } from "./components/DqaEvaluationMatrix";
+import { db } from "./lib/firebase";
+import { collection, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 // ============================================================
 // TYPES & INTERFACES
@@ -352,6 +354,49 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("impact_iq_registered_users", JSON.stringify(registeredUsers));
   }, [registeredUsers]);
+
+  // Firestore real-time listeners for user accounts & projects
+  useEffect(() => {
+    try {
+      const unsubUsers = onSnapshot(collection(db, "users"), (snapshot) => {
+        if (!snapshot.empty) {
+          const docs = snapshot.docs.map(doc => doc.data() as any);
+          setRegisteredUsers(docs);
+        }
+      });
+
+      const unsubProjects = onSnapshot(collection(db, "projects"), (snapshot) => {
+        if (!snapshot.empty) {
+          const docs = snapshot.docs.map(doc => doc.data() as Project);
+          setProjects(docs);
+        }
+      });
+
+      return () => {
+        unsubUsers();
+        unsubProjects();
+      };
+    } catch (e) {
+      console.error("Firestore sync error:", e);
+    }
+  }, []);
+
+  const syncUserToFirestore = async (userObj: any) => {
+    try {
+      const docId = userObj.email.toLowerCase().replace(/[^a-zA-Z0-9]/g, "_");
+      await setDoc(doc(db, "users", docId), userObj, { merge: true });
+    } catch (err) {
+      console.error("Error saving user to Firestore:", err);
+    }
+  };
+
+  const syncProjectToFirestore = async (projObj: Project) => {
+    try {
+      await setDoc(doc(db, "projects", projObj.id), projObj, { merge: true });
+    } catch (err) {
+      console.error("Error saving project to Firestore:", err);
+    }
+  };
 
   // Auth form state
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
@@ -754,6 +799,7 @@ export default function App() {
           const init = niceName.substring(0, 2).toUpperCase();
           const newUserObj = { name: niceName, email: authEmail, password: authPassword, role: "Program Coordinator", organization: "ImpactIQ Partner", avatarColor: "#6366F1", initials: init };
           setRegisteredUsers(prev => [...prev, newUserObj]);
+          syncUserToFirestore(newUserObj);
           setCurrentUser({ ...newUserObj, isLoggedIn: true });
           setNotifications(prev => [`Welcome, ${niceName}! Account created.`, ...prev]);
         }
@@ -772,6 +818,7 @@ export default function App() {
         const init = authName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
         const newUser = { name: authName, email: authEmail, password: authPassword, role: authRole, organization: authOrg || "ImpactIQ Partner", avatarColor: authColor, initials: init };
         setRegisteredUsers(prev => [...prev, newUser]);
+        syncUserToFirestore(newUser);
         setCurrentUser({ ...newUser, isLoggedIn: true });
         setNotifications(prev => [`Account created for ${authName}`, ...prev]);
         setAuthLoading(false);
@@ -3124,6 +3171,7 @@ export default function App() {
                       activityTimeline: ["Project created"], status: "Active"
                     };
                     setProjects(prev => [...prev, nProj]);
+                    syncProjectToFirestore(nProj);
                     setReports(prev => [...prev, { id: `rep_${Date.now()}`, name: `${newProjName} Progress Report`, projectId: nProjId, status: "Draft", lastSaved: new Date().toISOString().split("T")[0], sections: {}, aiDrafts: {} }]);
                     setProjectModalOpen(false);
                     setNewProjName(""); setNewProjDonor("");
