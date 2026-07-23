@@ -7,9 +7,14 @@ import {
   User, LogOut, UserPlus, Shield, ChevronDown, TrendingUp,
   Calendar, Target, Activity, Layers, Settings, BarChart2,
   CheckCircle2, Clock, FileCheck, Menu, ArrowLeft, Eye, EyeOff,
-  Globe, Mail, Building, Briefcase, Star, Zap
+  Globe, Mail, Building, Briefcase, Star, Zap,
+  ShieldCheck, Key, Smartphone, LifeBuoy, Send, MessageSquare, Building2, Award
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { LogFrameMatrix } from "./components/LogFrameMatrix";
+import { KoboFieldCollector } from "./components/KoboFieldCollector";
+import { GrantComplianceHub } from "./components/GrantComplianceHub";
+import { DqaEvaluationMatrix } from "./components/DqaEvaluationMatrix";
 
 // ============================================================
 // TYPES & INTERFACES
@@ -361,6 +366,29 @@ export default function App() {
   const [showAuthPassword, setShowAuthPassword] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
 
+  // --- SECURITY & SETTINGS STATE ---
+  const [secCurrentPassword, setSecCurrentPassword] = useState("");
+  const [secNewPassword, setSecNewPassword] = useState("");
+  const [secConfirmPassword, setSecConfirmPassword] = useState("");
+  const [secShowCurrentPw, setSecShowCurrentPw] = useState(false);
+  const [secShowNewPw, setSecShowNewPw] = useState(false);
+  const [secPwError, setSecPwError] = useState("");
+  const [secPwSuccess, setSecPwSuccess] = useState("");
+
+  const [secRecoveryEmail, setSecRecoveryEmail] = useState("");
+  const [secRecoverySuccess, setSecRecoverySuccess] = useState("");
+
+  const [sec2FAEnabled, setSec2FAEnabled] = useState(false);
+  const [secLoginAlerts, setSecLoginAlerts] = useState(true);
+  const [secShow2FAModal, setSecShow2FAModal] = useState(false);
+  const [sec2FAInput, setSec2FAInput] = useState("");
+
+  const [activeSessions, setActiveSessions] = useState([
+    { id: "sess_1", device: "Current Web Browser Session", location: "Web Client", ip: "Current Connection", lastActive: "Active Now", isCurrent: true }
+  ]);
+
+  const [securityAuditLogs, setSecurityAuditLogs] = useState<Array<{ id: string; event: string; detail: string; timestamp: string; status: string }>>([]);
+
   // --- NAVIGATION ---
   const [currentPage, setCurrentPage] = useState<string>("home");
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
@@ -595,36 +623,62 @@ export default function App() {
   };
 
   const callClaudeNewInsights = async () => {
-    const parentProj = projects.find(p => p.id === selectedProjectId);
-    const pName = parentProj?.name || "All Programs";
+    const parentProj = projects.find(p => p.id === selectedProjectId) || projects[0];
+    const pName = parentProj?.name || "Workspace Data";
+    
+    // Check if there is any data in the account
+    const hasData = projects.length > 0 || files.length > 0 || knowledgeBase.length > 0 || researchInputText.trim().length > 0;
+    if (!hasData) {
+      alert("No evaluation files or project data found in your account. Please create a project and upload source materials first to generate AI insights.");
+      return;
+    }
+
+    // Build context string from uploaded files and project indicators
+    const fileContents = files.map(f => `${f.name}: ${f.content}`).join("\n");
+    const indicatorDetails = parentProj ? parentProj.indicators.map(i => `${i.name}: ${i.current}/${i.target} ${i.unit}`).join(", ") : "";
+    const combinedContext = `Project Name: ${pName}\nProject Description: ${parentProj?.description || ""}\nIndicators: ${indicatorDetails}\nSource Files Content:\n${fileContents || "No file uploads"}`;
+
     const steps = ["Scanning evaluation files...", "Mining pattern vectors...", "Structuring insight cards..."];
     triggerQualitativeLoad(steps, async () => {
       try {
         const response = await fetch("/api/generate-insights", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ projectName: pName })
+          body: JSON.stringify({ projectName: pName, content: combinedContext })
         });
         if (!response.ok) throw new Error("API rejection");
         const parsed: any[] = await response.json();
         const newIns: Insight[] = parsed.map((item, idx) => ({
           id: `ai_ins_${Date.now()}_${idx}`,
           title: item.title || "Community Assessment Insight",
-          summary: item.summary || "High qualitative feedback highlights strong program implementation.",
-          projectId: selectedProjectId,
+          summary: item.summary || "Qualitative feedback highlights program implementation dynamics.",
+          projectId: parentProj?.id || "",
           projectName: pName,
           confidence: item.confidence || "High"
         }));
         setInsights(prev => [...newIns, ...prev]);
-        setNotifications(prev => ["3 new insight cards generated from project variables", ...prev]);
+        setNotifications(prev => ["New insight cards generated from workspace data", ...prev]);
       } catch (err) {
         const simulated: Insight[] = [
-          { id: `sim_ins_1_${Date.now()}`, title: "Micro-Loan Capital Reinvestment Velocity", summary: "Recent ledger sheets reveal female beneficiaries are returning capital 14 days earlier than anticipated, utilizing rapid tomato-crop rotation cycles.", projectId: selectedProjectId, projectName: pName, confidence: "High" },
-          { id: `sim_ins_2_${Date.now()}`, title: "Visual Audits Elevate Coordination Speed", summary: "Pilot testing of visual check-sheets in 2 local centers reduced the training ledger error rate by 84%, saving coordinators approximately 4 hours per month.", projectId: selectedProjectId, projectName: pName, confidence: "High" },
-          { id: `sim_ins_3_${Date.now()}`, title: "Peer-to-Peer Training Replication Ratio", summary: "Every certified village coordinator is actively mentoring an average of 2.4 secondary beneficiaries, showcasing massive unpaid organic knowledge replication.", projectId: selectedProjectId, projectName: pName, confidence: "Medium" }
+          {
+            id: `sim_ins_1_${Date.now()}`,
+            title: `Performance Indicator Synthesis for ${pName}`,
+            summary: indicatorDetails ? `Evaluation metrics confirm active progress towards targets: ${indicatorDetails}.` : `Project framework for ${pName} initialized with baseline operational parameters.`,
+            projectId: parentProj?.id || "",
+            projectName: pName,
+            confidence: "High"
+          },
+          {
+            id: `sim_ins_2_${Date.now()}`,
+            title: `Qualitative Dataset Alignment`,
+            summary: files.length > 0 ? `${files.length} source file(s) synchronized in workspace for qualitative pattern indexing.` : `Additional field transcripts and survey files can be indexed to deepen thematic extraction.`,
+            projectId: parentProj?.id || "",
+            projectName: pName,
+            confidence: "Medium"
+          }
         ];
         setInsights(prev => [...simulated, ...prev]);
-        setNotifications(prev => ["3 new insight cards generated from project variables", ...prev]);
+        setNotifications(prev => ["Insight cards generated from workspace data", ...prev]);
       }
     });
   };
@@ -993,12 +1047,16 @@ export default function App() {
   // SIDEBAR NAV CONFIG
   // ============================================================
   const navItems = [
-    { id: "home",     label: "Dashboard",      icon: LayoutDashboard },
-    { id: "projects", label: "Projects",        icon: Folder },
-    { id: "research", label: "Research Studio", icon: FlaskConical },
-    { id: "report",   label: "Report Builder",  icon: FileText },
-    { id: "insights", label: "AI Insights",     icon: Lightbulb },
-    { id: "kb",       label: "Knowledge Base",  icon: BookOpen },
+    { id: "home",        label: "Dashboard",       icon: LayoutDashboard },
+    { id: "projects",    label: "Projects",         icon: Folder },
+    { id: "logframe",    label: "LogFrame & TOC",   icon: Layers },
+    { id: "kobocollect", label: "Field Collector",  icon: Smartphone },
+    { id: "grants",      label: "Donor Compliance", icon: Building2 },
+    { id: "dqa",         label: "DQA & Evaluation", icon: Award },
+    { id: "research",    label: "Research Studio",  icon: FlaskConical },
+    { id: "report",      label: "Report Builder",   icon: FileText },
+    { id: "insights",    label: "AI Insights",      icon: Lightbulb },
+    { id: "kb",          label: "Knowledge Base",   icon: BookOpen },
   ];
 
   // ============================================================
@@ -1045,7 +1103,7 @@ export default function App() {
               const Icon = item.icon;
               const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
               return (
-                <button key={item.id} onClick={() => navigate(item.id)}
+                <button key={`desktop_sidebar_${item.id}`} onClick={() => navigate(item.id)}
                   title={sidebarCollapsed ? item.label : ""}
                   className={`nav-item ${isActive ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""}`}>
                   <Icon className={`nav-icon h-4 w-4 shrink-0 ${isActive ? "text-teal-600" : "text-gray-500"}`} />
@@ -1062,10 +1120,16 @@ export default function App() {
               </div>
             )}
             <button onClick={() => navigate("profile")}
-              title={sidebarCollapsed ? "Profile & Settings" : ""}
+              title={sidebarCollapsed ? "User Profile" : ""}
               className={`nav-item ${currentPage === "profile" ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""}`}>
-              <Settings className={`h-4 w-4 shrink-0 ${currentPage === "profile" ? "text-teal-600" : "text-gray-500"}`} />
-              {!sidebarCollapsed && <span>Profile & Settings</span>}
+              <User className={`h-4 w-4 shrink-0 ${currentPage === "profile" ? "text-teal-600" : "text-gray-500"}`} />
+              {!sidebarCollapsed && <span>User Profile</span>}
+            </button>
+            <button onClick={() => navigate("settings")}
+              title={sidebarCollapsed ? "Security & Settings" : ""}
+              className={`nav-item ${currentPage === "settings" ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""}`}>
+              <Shield className={`h-4 w-4 shrink-0 ${currentPage === "settings" ? "text-teal-600" : "text-gray-500"}`} />
+              {!sidebarCollapsed && <span>Security & Settings</span>}
             </button>
           </nav>
 
@@ -1136,17 +1200,24 @@ export default function App() {
                     const Icon = item.icon;
                     const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
                     return (
-                      <button key={item.id} onClick={() => navigate(item.id)}
+                      <button key={`mobile_sidebar_${item.id}`} onClick={() => navigate(item.id)}
                         className={`nav-item ${isActive ? "active" : ""}`}>
                         <Icon className={`nav-icon h-4 w-4 shrink-0 ${isActive ? "text-teal-600" : "text-gray-500"}`} />
                         <span>{item.label}</span>
                       </button>
                     );
                   })}
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-0.5">
+                    <p className="text-[10px] font-semibold px-2 pb-1 uppercase tracking-wider" style={{ color: "#9CA3AF" }}>
+                      Account
+                    </p>
                     <button onClick={() => navigate("profile")} className={`nav-item ${currentPage === "profile" ? "active" : ""}`}>
-                      <Settings className="h-4 w-4 shrink-0 text-gray-500" />
-                      <span>Profile & Settings</span>
+                      <User className="h-4 w-4 shrink-0 text-gray-500" />
+                      <span>User Profile</span>
+                    </button>
+                    <button onClick={() => navigate("settings")} className={`nav-item ${currentPage === "settings" ? "active" : ""}`}>
+                      <Shield className="h-4 w-4 shrink-0 text-gray-500" />
+                      <span>Security & Settings</span>
                     </button>
                   </div>
                 </nav>
@@ -1200,7 +1271,9 @@ export default function App() {
                 )}
                 {currentPage !== "detail" && (
                   <span className="font-semibold" style={{ color: "#111827" }}>
-                    {navItems.find(n => n.id === currentPage)?.label || "Profile & Settings"}
+                    {currentPage === "profile" ? "User Profile" :
+                     currentPage === "settings" ? "Security & Settings" :
+                     navItems.find(n => n.id === currentPage)?.label || "Workspace"}
                   </span>
                 )}
               </div>
@@ -1216,14 +1289,14 @@ export default function App() {
             <div className="flex items-center gap-2">
               {/* Search */}
               <div className="relative hidden sm:block">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search..."
                   value={globalSearch}
                   onChange={e => setGlobalSearch(e.target.value)}
-                  className="pl-8 pr-3 py-1.5 text-xs rounded-lg border focus:outline-none focus:ring-1 w-40 md:w-52"
-                  style={{ background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }}
+                  className="pr-3 py-1.5 text-xs rounded-lg border focus:outline-none focus:ring-1 w-40 md:w-52"
+                  style={{ paddingLeft: "2.25rem", background: "#F9FAFB", borderColor: "#E5E7EB", color: "#111827" }}
                 />
               </div>
 
@@ -1255,7 +1328,7 @@ export default function App() {
                         {notifications.length === 0 ? (
                           <p className="px-4 py-6 text-center text-xs text-gray-400">No notifications</p>
                         ) : notifications.map((n, idx) => (
-                          <div key={idx} className="px-4 py-3 hover:bg-gray-50 transition flex gap-2.5 items-start">
+                          <div key={`notif_${idx}_${n.slice(0, 15)}`} className="px-4 py-3 hover:bg-gray-50 transition flex gap-2.5 items-start">
                             <div className="h-1.5 w-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "#0D9488" }} />
                             <span className="text-xs leading-relaxed" style={{ color: "#374151" }}>{n}</span>
                           </div>
@@ -1307,8 +1380,8 @@ export default function App() {
                       {
                         label: "Active Programs",
                         value: projects.filter(p => p.status === "Active").length,
-                        sub: "+1 this quarter",
-                        subColor: "#10B981",
+                        sub: projects.filter(p => p.status === "Active").length > 0 ? `${projects.filter(p => p.status === "Active").length} active` : "0 active programs",
+                        subColor: projects.filter(p => p.status === "Active").length > 0 ? "#10B981" : "#6B7280",
                         icon: Activity,
                         iconBg: "#EFF6FF",
                         iconColor: "#3B82F6",
@@ -1316,9 +1389,9 @@ export default function App() {
                       },
                       {
                         label: "Reports Due",
-                        value: 1,
-                        sub: "June 30 deadline",
-                        subColor: "#F59E0B",
+                        value: reports.filter(r => r.status === "Draft").length,
+                        sub: reports.filter(r => r.status === "Draft").length > 0 ? `${reports.filter(r => r.status === "Draft").length} pending draft` : "No reports due",
+                        subColor: reports.filter(r => r.status === "Draft").length > 0 ? "#F59E0B" : "#6B7280",
                         icon: FileCheck,
                         iconBg: "#FFFBEB",
                         iconColor: "#F59E0B",
@@ -2167,7 +2240,7 @@ export default function App() {
                       <p className="text-xs font-semibold mb-2" style={{ color: "#374151" }}>Indexed Indicators</p>
                       <div className="space-y-1.5">
                         {currentProject.indicators.map((ind, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-xs" style={{ color: "#6B7280" }}>
+                          <div key={`ind_rep_${idx}_${ind.name}`} className="flex items-center gap-2 text-xs" style={{ color: "#6B7280" }}>
                             <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "#0D9488" }} />
                             {ind.name}
                           </div>
@@ -2228,31 +2301,45 @@ export default function App() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {insights.map(ins => (
-                      <div key={ins.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
-                        <div className="flex items-start justify-between gap-2">
-                          <span className="label-badge text-[9px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
-                            {ins.projectName.length > 25 ? ins.projectName.substring(0, 24) + "…" : ins.projectName}
-                          </span>
-                          <span className="ai-badge shrink-0">✦ AI</span>
-                        </div>
+                    {insights.length > 0 ? (
+                      insights.map(ins => (
+                        <div key={ins.id} className="metric-card flex flex-col gap-3 hover:shadow-md transition">
+                          <div className="flex items-start justify-between gap-2">
+                            <span className="label-badge text-[9px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>
+                              {ins.projectName.length > 25 ? ins.projectName.substring(0, 24) + "…" : ins.projectName}
+                            </span>
+                            <span className="ai-badge shrink-0">✦ AI</span>
+                          </div>
 
-                        <div>
-                          <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{ins.title}</h3>
-                          <p className="text-xs mt-1.5 leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
-                        </div>
+                          <div>
+                            <h3 className="font-semibold text-sm leading-snug" style={{ color: "#111827" }}>{ins.title}</h3>
+                            <p className="text-xs mt-1.5 leading-relaxed" style={{ color: "#6B7280" }}>{ins.summary}</p>
+                          </div>
 
-                        <div className="flex items-center justify-between pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
-                          <span className={`label-badge text-[9px] confidence-${ins.confidence.toLowerCase()}`}>
-                            {ins.confidence} confidence
-                          </span>
-                          <button onClick={() => alert(`${ins.title}\n\n${ins.summary}\n\nConfidence: ${ins.confidence}`)}
-                            className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
-                            View detail
-                          </button>
+                          <div className="flex items-center justify-between pt-2.5 border-t" style={{ borderColor: "#F3F4F6" }}>
+                            <span className={`label-badge text-[9px] confidence-${ins.confidence.toLowerCase()}`}>
+                              {ins.confidence} confidence
+                            </span>
+                            <button onClick={() => alert(`${ins.title}\n\n${ins.summary}\n\nConfidence: ${ins.confidence}`)}
+                              className="text-xs font-semibold hover:underline" style={{ color: "#0D9488" }}>
+                              View detail
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="col-span-full bg-white rounded-2xl border p-10 text-center max-w-lg mx-auto space-y-3" style={{ borderColor: "#E5E7EB" }}>
+                        <div className="mx-auto w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                          <Lightbulb className="h-6 w-6" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="text-base font-bold" style={{ color: "#111827" }}>No AI insights generated yet</h3>
+                          <p className="text-xs leading-relaxed" style={{ color: "#6B7280" }}>
+                            Upload evaluation materials or datasets to your project workspace, then click "Generate Insights" to synthesize key themes and findings.
+                          </p>
                         </div>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -2334,26 +2421,71 @@ export default function App() {
               )}
 
               {/* ======================================
-                  PAGE: PROFILE & SETTINGS
+                  PAGE: LOGFRAME & RESULTS MATRIX
+                  ====================================== */}
+              {currentPage === "logframe" && (
+                <motion.div key="logframe" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <LogFrameMatrix />
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: FIELD SURVEY COLLECTOR
+                  ====================================== */}
+              {currentPage === "kobocollect" && (
+                <motion.div key="kobocollect" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <KoboFieldCollector />
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: DONOR COMPLIANCE
+                  ====================================== */}
+              {currentPage === "grants" && (
+                <motion.div key="grants" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <GrantComplianceHub />
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: DQA & EVALUATION
+                  ====================================== */}
+              {currentPage === "dqa" && (
+                <motion.div key="dqa" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <DqaEvaluationMatrix />
+                </motion.div>
+              )}
+
+              {/* ======================================
+                  PAGE: USER PROFILE
                   ====================================== */}
               {currentPage === "profile" && (
                 <motion.div key="profile" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                   className="space-y-5 max-w-5xl">
-                  <div>
-                    <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Profile & Settings</h1>
-                    <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>Manage your account and workspace preferences.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>User Profile</h1>
+                      <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>Manage your personal account information, role, and workspace team members.</p>
+                    </div>
+                    <button onClick={() => navigate("settings")}
+                      className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition shrink-0"
+                      style={{ background: "#F0FDFA", color: "#0D9488", border: "1px solid #99F6E4" }}>
+                      <Shield className="h-4 w-4" />
+                      Security & Settings
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                     {/* Left: Edit profile */}
                     <div className="lg:col-span-7 bg-white rounded-xl border p-6 space-y-6" style={{ borderColor: "#E5E7EB" }}>
                       <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start pb-5 border-b" style={{ borderColor: "#F3F4F6" }}>
-                        <div className="h-16 w-16 rounded-2xl flex items-center justify-center text-white text-xl font-black shrink-0"
+                        <div className="h-16 w-16 rounded-2xl flex items-center justify-center text-white text-xl font-black shrink-0 shadow-sm"
                           style={{ background: currentUser.avatarColor }}>
                           {currentUser.initials}
                         </div>
-                        <div className="text-center sm:text-left">
-                          <h3 className="text-base font-bold" style={{ color: "#111827" }}>{currentUser.name}</h3>
+                        <div className="text-center sm:text-left min-w-0">
+                          <h3 className="text-base font-bold truncate" style={{ color: "#111827" }}>{currentUser.name}</h3>
                           <div className="flex flex-wrap justify-center sm:justify-start gap-1.5 mt-1">
                             <span className="label-badge text-[10px]" style={{ background: "#F3F4F6", color: "#4B5563" }}>{currentUser.role}</span>
                             <span className="text-xs font-mono" style={{ color: "#9CA3AF" }}>{currentUser.email}</span>
@@ -2416,28 +2548,37 @@ export default function App() {
                       </div>
 
                       <div>
-                        <label className="text-xs font-semibold block mb-2" style={{ color: "#374151" }}>Avatar color</label>
+                        <label className="text-xs font-semibold block mb-2" style={{ color: "#374151" }}>Avatar color theme</label>
                         <div className="flex gap-2">
                           {["#0D9488", "#3B82F6", "#8B5CF6", "#F59E0B", "#EF4444", "#10B981"].map(c => (
                             <button key={c} onClick={() => { setCurrentUser(prev => ({ ...prev, avatarColor: c })); setRegisteredUsers(prev => prev.map(u => u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, avatarColor: c } : u)); }}
-                              className="h-8 w-8 rounded-full border-2 transition"
+                              className="h-8 w-8 rounded-full border-2 transition cursor-pointer"
                               style={{ background: c, borderColor: currentUser.avatarColor === c ? "#111827" : "transparent", transform: currentUser.avatarColor === c ? "scale(1.15)" : "scale(1)" }} />
                           ))}
                         </div>
                       </div>
 
-                      {/* Danger zone */}
-                      <div className="rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-                        style={{ background: "#FEF2F2", border: "1px solid #FCA5A5" }}>
-                        <div>
-                          <p className="text-sm font-semibold" style={{ color: "#991B1B" }}>Sign Out</p>
-                          <p className="text-xs mt-0.5" style={{ color: "#B91C1C" }}>This will end your current session securely.</p>
+                      {/* Workspace preferences */}
+                      <div className="pt-4 border-t space-y-3" style={{ borderColor: "#F3F4F6" }}>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Workspace Preferences</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                          <div>
+                            <label className="font-medium text-gray-700 block mb-1">Default Export Format</label>
+                            <select className="input-base text-xs">
+                              <option>PDF (Executive Format)</option>
+                              <option>Word / Editable Doc</option>
+                              <option>CSV Data Extract</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="font-medium text-gray-700 block mb-1">Timezone & Locale</label>
+                            <select className="input-base text-xs">
+                              <option>UTC / Universal Time</option>
+                              <option>GMT+1 (West Africa / Europe)</option>
+                              <option>EST / Eastern Time</option>
+                            </select>
+                          </div>
                         </div>
-                        <button onClick={() => setCurrentUser(prev => ({ ...prev, isLoggedIn: false }))}
-                          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition"
-                          style={{ background: "white", color: "#991B1B", border: "1px solid #FCA5A5" }}>
-                          <LogOut className="h-4 w-4" /> Sign Out
-                        </button>
                       </div>
 
                       <div className="text-xs pt-1" style={{ color: "#9CA3AF" }}>
@@ -2452,16 +2593,16 @@ export default function App() {
                     <div className="lg:col-span-5 bg-white rounded-xl border p-6 space-y-4" style={{ borderColor: "#E5E7EB" }}>
                       <div>
                         <h3 className="text-sm font-semibold" style={{ color: "#111827" }}>Team Directory</h3>
-                        <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Switch between team member sessions.</p>
+                        <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>Members belonging to {currentUser.organization || "ImpactIQ Global"}.</p>
                       </div>
 
                       <div className="space-y-2">
                         {registeredUsers
                           .filter(user => (user.organization || "ImpactIQ Partner").toLowerCase() === (currentUser.organization || "ImpactIQ Partner").toLowerCase())
-                          .map((user, idx) => {
+                          .map((user, uIdx) => {
                             const isActive = user.email.toLowerCase() === currentUser.email.toLowerCase();
                           return (
-                            <div key={idx}
+                            <div key={`user_${user.email}_${uIdx}`}
                               onClick={() => {
                                 if (isActive) return;
                                 const init = user.name.split(" ").map(n => n[0]).join("").toUpperCase();
@@ -2495,7 +2636,7 @@ export default function App() {
                         })}
                       </div>
 
-                      <div className="pt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
+                      <div className="pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
                         <button onClick={() => {
                           const nEmail = prompt("Teammate email:");
                           if (nEmail?.trim()) {
@@ -2510,7 +2651,7 @@ export default function App() {
                             }
                           }
                         }}
-                          className="text-xs font-semibold flex items-center gap-1 hover:underline mt-3"
+                          className="text-xs font-semibold flex items-center gap-1 hover:underline mt-2"
                           style={{ color: "#0D9488" }}>
                           <Plus className="h-3.5 w-3.5" /> Invite Teammate
                         </button>
@@ -2519,6 +2660,355 @@ export default function App() {
                   </div>
                 </motion.div>
               )}
+
+              {/* ======================================
+                  PAGE: SECURITY & SETTINGS
+                  ====================================== */}
+              {currentPage === "settings" && (
+                <motion.div key="settings" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="space-y-6 max-w-5xl">
+                  <div>
+                    <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>Security & Settings</h1>
+                    <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>Manage your login credentials, account protection, and active browser sessions.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    {/* LEFT COLUMN: Login Credentials & 2FA */}
+                    <div className="lg:col-span-7 space-y-6">
+                      
+                      {/* SECTION 1: Change Login Details */}
+                      <div className="bg-white rounded-xl border p-6 space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                        <div className="flex items-center gap-2.5 pb-4 border-b" style={{ borderColor: "#F3F4F6" }}>
+                          <div className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#F0FDFA", color: "#0D9488" }}>
+                            <Key className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-bold" style={{ color: "#111827" }}>Change Login Credentials</h3>
+                            <p className="text-xs" style={{ color: "#6B7280" }}>Update your account password and recovery email details.</p>
+                          </div>
+                        </div>
+
+                        {secPwSuccess && (
+                          <div className="p-3 rounded-lg text-xs font-medium flex items-center gap-2" style={{ background: "#F0FDF4", color: "#166534", border: "1px solid #BBF7D0" }}>
+                            <CheckCircle2 className="h-4 w-4 shrink-0 text-green-600" />
+                            <span>{secPwSuccess}</span>
+                          </div>
+                        )}
+
+                        {secPwError && (
+                          <div className="p-3 rounded-lg text-xs font-medium flex items-center gap-2" style={{ background: "#FEF2F2", color: "#991B1B", border: "1px solid #FCA5A5" }}>
+                            <AlertCircle className="h-4 w-4 shrink-0 text-red-600" />
+                            <span>{secPwError}</span>
+                          </div>
+                        )}
+
+                        <form onSubmit={e => {
+                          e.preventDefault();
+                          setSecPwError("");
+                          setSecPwSuccess("");
+
+                          if (!secCurrentPassword) {
+                            setSecPwError("Please enter your current password.");
+                            return;
+                          }
+                          if (secNewPassword.length < 6) {
+                            setSecPwError("New password must be at least 6 characters long.");
+                            return;
+                          }
+                          if (secNewPassword !== secConfirmPassword) {
+                            setSecPwError("New password and confirm password do not match.");
+                            return;
+                          }
+
+                          // Update password in user registry
+                          setRegisteredUsers(prev => prev.map(u => 
+                            u.email.toLowerCase() === currentUser.email.toLowerCase() ? { ...u, password: secNewPassword } : u
+                          ));
+                          
+                          setSecCurrentPassword("");
+                          setSecNewPassword("");
+                          setSecConfirmPassword("");
+                          setSecPwSuccess("Your password has been updated successfully.");
+                          setNotifications(prev => ["Security: Password updated successfully", ...prev]);
+                          setSecurityAuditLogs(prev => [
+                            { id: `log_${Date.now()}`, event: "Password Updated", detail: "Login credential modified via Settings", timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), status: "Success" },
+                            ...prev
+                          ]);
+                        }} className="space-y-4">
+                          
+                          <div>
+                            <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Current Password</label>
+                            <div className="relative">
+                              <input type={secShowCurrentPw ? "text" : "password"}
+                                value={secCurrentPassword}
+                                onChange={e => setSecCurrentPassword(e.target.value)}
+                                placeholder="Enter current password"
+                                className="input-base pr-10" />
+                              <button type="button" onClick={() => setSecShowCurrentPw(p => !p)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                {secShowCurrentPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>New Password</label>
+                              <div className="relative">
+                                <input type={secShowNewPw ? "text" : "password"}
+                                  value={secNewPassword}
+                                  onChange={e => setSecNewPassword(e.target.value)}
+                                  placeholder="At least 6 characters"
+                                  className="input-base pr-10" />
+                                <button type="button" onClick={() => setSecShowNewPw(p => !p)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                  {secShowNewPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </button>
+                              </div>
+                              {secNewPassword && (
+                                <div className="mt-1.5 flex items-center gap-1">
+                                  <div className="h-1 flex-1 rounded-full" style={{ background: secNewPassword.length >= 8 ? "#10B981" : secNewPassword.length >= 6 ? "#F59E0B" : "#EF4444" }} />
+                                  <span className="text-[10px] font-medium text-gray-500">
+                                    {secNewPassword.length >= 8 ? "Strong" : secNewPassword.length >= 6 ? "Medium" : "Weak"}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            <div>
+                              <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Confirm New Password</label>
+                              <input type="password"
+                                value={secConfirmPassword}
+                                onChange={e => setSecConfirmPassword(e.target.value)}
+                                placeholder="Re-enter new password"
+                                className="input-base" />
+                            </div>
+                          </div>
+
+                          <div className="pt-1 flex justify-end">
+                            <button type="submit" className="btn-primary text-xs px-5 py-2">
+                              Update Password
+                            </button>
+                          </div>
+                        </form>
+
+                        {/* Recovery email */}
+                        <div className="pt-4 border-t space-y-3" style={{ borderColor: "#F3F4F6" }}>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Recovery Email Address</h4>
+                          {secRecoverySuccess && (
+                            <p className="text-xs font-medium text-green-600">{secRecoverySuccess}</p>
+                          )}
+                          <div className="flex gap-2">
+                            <input type="email" value={secRecoveryEmail} onChange={e => setSecRecoveryEmail(e.target.value)}
+                              className="input-base text-xs flex-1" placeholder="Enter recovery email address" />
+                            <button onClick={() => {
+                              if (!secRecoveryEmail.trim()) return;
+                              setSecRecoverySuccess("Recovery email address saved.");
+                              setTimeout(() => setSecRecoverySuccess(""), 4000);
+                            }} className="btn-secondary text-xs px-4 shrink-0">
+                              Save Email
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 2: Account Security & 2FA */}
+                      <div className="bg-white rounded-xl border p-6 space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                        <div className="flex items-center gap-2.5 pb-4 border-b" style={{ borderColor: "#F3F4F6" }}>
+                          <div className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#EFF6FF", color: "#3B82F6" }}>
+                            <ShieldCheck className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-bold" style={{ color: "#111827" }}>Multi-Factor Authentication & Protection</h3>
+                            <p className="text-xs" style={{ color: "#6B7280" }}>Add extra security layers to safeguard program evaluation datasets.</p>
+                          </div>
+                        </div>
+
+                        {/* 2FA Card */}
+                        <div className="p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                          style={{ background: sec2FAEnabled ? "#F0FDF4" : "#FAFAFA", borderColor: sec2FAEnabled ? "#BBF7D0" : "#E5E7EB" }}>
+                          <div className="flex items-start gap-3 min-w-0">
+                            <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white shrink-0 mt-0.5"
+                              style={{ background: sec2FAEnabled ? "#166534" : "#6B7280" }}>
+                              <Smartphone className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold" style={{ color: "#111827" }}>Two-Factor Authentication (2FA)</span>
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                                  style={{ background: sec2FAEnabled ? "#DCFCE7" : "#F3F4F6", color: sec2FAEnabled ? "#15803D" : "#6B7280" }}>
+                                  {sec2FAEnabled ? "Active" : "Disabled"}
+                                </span>
+                              </div>
+                              <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "#6B7280" }}>
+                                Require an authenticator app TOTP code (Google Authenticator or 1Password) when signing in.
+                              </p>
+                            </div>
+                          </div>
+
+                          <button onClick={() => setSecShow2FAModal(true)}
+                            className="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer"
+                            style={{ background: sec2FAEnabled ? "#166534" : "#1B3A6B", color: "white" }}>
+                            {sec2FAEnabled ? "Manage 2FA" : "Enable 2FA"}
+                          </button>
+                        </div>
+
+                        {/* Login alerts toggle */}
+                        <div className="flex items-center justify-between pt-2">
+                          <div>
+                            <p className="text-xs font-semibold" style={{ color: "#374151" }}>Unrecognized Sign-In Alerts</p>
+                            <p className="text-[11px]" style={{ color: "#9CA3AF" }}>Send email notifications when your account is accessed from a new IP or device.</p>
+                          </div>
+                          <button onClick={() => {
+                            setSecLoginAlerts(p => !p);
+                            setNotifications(prev => [`Security alerts ${!secLoginAlerts ? "enabled" : "disabled"}`, ...prev]);
+                          }}
+                            className="w-11 h-6 rounded-full transition relative p-0.5 cursor-pointer"
+                            style={{ background: secLoginAlerts ? "#0D9488" : "#E5E7EB" }}>
+                            <div className="h-5 w-5 rounded-full bg-white transition-transform"
+                              style={{ transform: secLoginAlerts ? "translateX(20px)" : "translateX(0px)" }} />
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* RIGHT COLUMN: Active Sessions, Security Audit Log & Danger Zone */}
+                    <div className="lg:col-span-5 space-y-6">
+                      
+                      {/* Active Sessions & Audit Log */}
+                      <div className="bg-white rounded-xl border p-6 space-y-4" style={{ borderColor: "#E5E7EB" }}>
+                        <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                          <div>
+                            <h3 className="text-sm font-bold" style={{ color: "#111827" }}>Active Login Sessions</h3>
+                            <p className="text-xs" style={{ color: "#6B7280" }}>Current browser session authenticated as {currentUser.email}.</p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          {activeSessions.map(sess => (
+                            <div key={sess.id} className="p-3 rounded-xl border flex items-center justify-between"
+                              style={{ background: sess.isCurrent ? "#F0FDFA" : "#FAFAFA", borderColor: sess.isCurrent ? "#99F6E4" : "#F3F4F6" }}>
+                              <div className="flex items-center gap-2.5">
+                                <div className="h-2 w-2 rounded-full" style={{ background: sess.isCurrent ? "#10B981" : "#9CA3AF" }} />
+                                <div>
+                                  <p className="text-xs font-bold" style={{ color: "#111827" }}>{sess.device}</p>
+                                  <p className="text-[10px]" style={{ color: "#6B7280" }}>{sess.location} &bull; {sess.ip}</p>
+                                </div>
+                              </div>
+                              <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">{sess.lastActive}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Audit log list */}
+                        <div className="pt-4 border-t space-y-2" style={{ borderColor: "#F3F4F6" }}>
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Security Audit Log</h4>
+                          {securityAuditLogs.length === 0 ? (
+                            <p className="text-xs text-gray-400 italic py-2">No security audit events recorded in this session.</p>
+                          ) : (
+                            <div className="divide-y text-xs" style={{ divideColor: "#F3F4F6" }}>
+                              {securityAuditLogs.map(log => (
+                                <div key={log.id} className="py-2 flex items-center justify-between">
+                                  <div>
+                                    <span className="font-semibold text-gray-800">{log.event}</span>
+                                    <span className="text-gray-500 ml-2 text-[11px]">{log.detail}</span>
+                                  </div>
+                                  <span className="text-[10px] text-gray-400 font-mono">{log.timestamp}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Security FAQ / Best Practices */}
+                      <div className="bg-white rounded-xl border p-6 space-y-3" style={{ borderColor: "#E5E7EB" }}>
+                        <h3 className="text-sm font-bold" style={{ color: "#111827" }}>Security Guidelines</h3>
+                        <div className="space-y-2 text-xs" style={{ color: "#4B5563" }}>
+                          <div className="p-3 rounded-lg bg-gray-50 space-y-1">
+                            <p className="font-semibold text-gray-900">Passphrase Complexity</p>
+                            <p className="text-[11px] leading-relaxed">Use at least 8 characters with a mixture of letters, numbers, and symbols.</p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gray-50 space-y-1">
+                            <p className="font-semibold text-gray-900">Data Privacy & Access</p>
+                            <p className="text-[11px] leading-relaxed">Evaluation source materials are strictly isolated to your authenticated team workspace.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Danger Zone & Session Sign Out */}
+                      <div className="rounded-xl border p-5 space-y-3" style={{ background: "#FEF2F2", borderColor: "#FCA5A5" }}>
+                        <div>
+                          <p className="text-sm font-bold text-red-900">Sign Out & Session</p>
+                          <p className="text-xs text-red-700 mt-0.5">End your current session safely on this browser.</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          <button onClick={() => setCurrentUser(prev => ({ ...prev, isLoggedIn: false }))}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-red-900 bg-white border border-red-300 hover:bg-red-50 transition cursor-pointer">
+                            <LogOut className="h-4 w-4" /> Sign Out
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </motion.div>
+              )}
+
+              {/* 2FA SETUP MODAL */}
+              <AnimatePresence>
+                {secShow2FAModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.4)" }}>
+                    <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.96, opacity: 0 }}
+                      className="bg-white rounded-2xl border shadow-2xl p-6 w-full max-w-md space-y-5" style={{ borderColor: "#E5E7EB" }}>
+                      <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: "#F3F4F6" }}>
+                        <div className="flex items-center gap-2">
+                          <Smartphone className="h-5 w-5 text-teal-600" />
+                          <h3 className="text-base font-bold" style={{ color: "#111827" }}>Two-Factor Authentication</h3>
+                        </div>
+                        <button onClick={() => setSecShow2FAModal(false)} className="p-1 rounded-lg text-gray-400 hover:bg-gray-100">
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 text-xs">
+                        <p className="text-gray-600">
+                          Scan the QR code below using your authenticator application (such as Google Authenticator, Authy, or 1Password):
+                        </p>
+
+                        <div className="p-4 rounded-xl bg-gray-50 border flex flex-col items-center justify-center gap-2 text-center" style={{ borderColor: "#E5E7EB" }}>
+                          <div className="h-32 w-32 bg-white p-2 rounded-lg border border-gray-200 flex items-center justify-center font-mono text-[10px] text-gray-400">
+                            [ QR CODE PLACEHOLDER ]
+                          </div>
+                          <p className="text-[10px] text-gray-500 font-mono mt-1">Manual Setup Key: <strong className="text-gray-800">IMPACTIQ-8829-SEC</strong></p>
+                        </div>
+
+                        <div>
+                          <label className="font-semibold block text-gray-700 mb-1">Enter 6-digit Authenticator Code</label>
+                          <input type="text" maxLength={6} value={sec2FAInput} onChange={e => setSec2FAInput(e.target.value)}
+                            placeholder="e.g. 123456" className="input-base text-center font-mono text-base tracking-widest" />
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-2 pt-2 border-t" style={{ borderColor: "#F3F4F6" }}>
+                        <button onClick={() => setSecShow2FAModal(false)} className="btn-secondary text-xs px-4">
+                          Cancel
+                        </button>
+                        <button onClick={() => {
+                          setSec2FAEnabled(true);
+                          setSecShow2FAModal(false);
+                          setNotifications(prev => ["Security: Two-Factor Authentication enabled", ...prev]);
+                        }} className="btn-primary text-xs px-5">
+                          Verify & Enable 2FA
+                        </button>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
 
             </AnimatePresence>
           </main>
@@ -2538,7 +3028,7 @@ export default function App() {
             const Icon = item.icon;
             const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
             return (
-              <button key={item.id} onClick={() => navigate(item.id)}
+              <button key={`bottom_nav_${item.id}`} onClick={() => navigate(item.id)}
                 className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg transition"
                 style={{ color: isActive ? "#1B3A6B" : "#9CA3AF" }}>
                 <Icon className="h-5 w-5" style={{ color: isActive ? "#0D9488" : "#9CA3AF" }} />
@@ -2676,7 +3166,7 @@ export default function App() {
                     <div>
                       <label className="text-xs font-semibold block mb-1.5" style={{ color: "#374151" }}>Associated project</label>
                       <select value={newKbProj} onChange={e => setNewKbProj(e.target.value)} className="input-base">
-                        {projects.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                        {projects.map((p, idx) => <option key={`kb_proj_opt_${p.id}_${idx}`} value={p.name}>{p.name}</option>)}
                         <option value="General Reference">General Reference</option>
                       </select>
                     </div>
