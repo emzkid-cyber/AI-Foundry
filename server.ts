@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import { handleLlamaChat, getLlamaConfig } from "./server/llamaService";
 
 dotenv.config();
 
@@ -150,6 +151,58 @@ async function startServer() {
     } catch (err: any) {
       console.error("Gemini API call failed for generate insights:", err);
       res.json(simulateNewInsights(projectName || "Program", content || ""));
+    }
+  });
+
+  // Meta Llama Assistant Endpoints
+  app.get("/api/assistant/status", (req, res) => {
+    const config = getLlamaConfig();
+    res.json({
+      configured: config.isConfigured,
+      model: config.model,
+      provider: config.provider
+    });
+  });
+
+  // Admin & Developer System Metrics
+  app.get("/api/admin/metrics", (req, res) => {
+    const llamaConfig = getLlamaConfig();
+    const memory = process.memoryUsage();
+    res.json({
+      status: "operational",
+      uptimeSeconds: Math.floor(process.uptime()),
+      memoryMb: Math.round(memory.heapUsed / 1024 / 1024),
+      geminiConfigured: !!process.env.GEMINI_API_KEY,
+      llamaConfigured: llamaConfig.isConfigured,
+      llamaProvider: llamaConfig.provider,
+      llamaModel: llamaConfig.model,
+      nodeVersion: process.version,
+      timestamp: new Date().toISOString()
+    });
+  });
+
+  app.post("/api/assistant/chat", async (req, res) => {
+    try {
+      const { message, history, project, researchFiles, reports, insights, kbDocs, user } = req.body;
+      if (!message || typeof message !== "string" || !message.trim()) {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      const result = await handleLlamaChat({
+        message,
+        history,
+        project,
+        researchFiles,
+        reports,
+        insights,
+        kbDocs,
+        user
+      });
+
+      res.json(result);
+    } catch (err: any) {
+      console.error("Assistant chat error:", err);
+      res.status(500).json({ error: "Failed to generate AI assistant response" });
     }
   });
 

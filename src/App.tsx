@@ -8,13 +8,15 @@ import {
   Calendar, Target, Activity, Layers, Settings, BarChart2,
   CheckCircle2, Clock, FileCheck, Menu, ArrowLeft, Eye, EyeOff,
   Globe, Mail, Building, Briefcase, Star, Zap,
-  ShieldCheck, Key, Smartphone, LifeBuoy, Send, MessageSquare, Building2, Award
+  ShieldCheck, Key, Smartphone, LifeBuoy, Send, MessageSquare, Building2, Award, Bot, Terminal
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { LogFrameMatrix } from "./components/LogFrameMatrix";
 import { KoboFieldCollector } from "./components/KoboFieldCollector";
 import { GrantComplianceHub } from "./components/GrantComplianceHub";
 import { DqaEvaluationMatrix } from "./components/DqaEvaluationMatrix";
+import { ImpactIqAssistant } from "./components/ImpactIqAssistant";
+import { AdminHub } from "./components/AdminHub";
 import { db } from "./lib/firebase";
 import { collection, doc, setDoc, onSnapshot } from "firebase/firestore";
 
@@ -388,6 +390,51 @@ export default function App() {
     } catch (err) {
       console.error("Error saving user to Firestore:", err);
     }
+  };
+
+  const handleUpdateUserRole = (email: string, newRole: string) => {
+    setRegisteredUsers(prev => prev.map(u => {
+      if (u.email.toLowerCase() === email.toLowerCase()) {
+        const updated = { ...u, role: newRole };
+        syncUserToFirestore(updated);
+        return updated;
+      }
+      return u;
+    }));
+
+    if (currentUser.email.toLowerCase() === email.toLowerCase()) {
+      setCurrentUser(prev => ({ ...prev, role: newRole }));
+    }
+
+    setSecurityAuditLogs(prev => [
+      {
+        id: `audit_${Date.now()}`,
+        event: "User Role Updated",
+        detail: `Role for ${email} modified to ${newRole} by ${currentUser.email}`,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        status: "success"
+      },
+      ...prev
+    ]);
+  };
+
+  const handleAddUser = (newUser: any) => {
+    setRegisteredUsers(prev => {
+      const updated = [...prev, newUser];
+      return updated;
+    });
+    syncUserToFirestore(newUser);
+
+    setSecurityAuditLogs(prev => [
+      {
+        id: `audit_${Date.now()}`,
+        event: "User Provisioned",
+        detail: `New account ${newUser.email} (${newUser.role}) provisioned by admin`,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        status: "success"
+      },
+      ...prev
+    ]);
   };
 
   const syncProjectToFirestore = async (projObj: Project) => {
@@ -1093,9 +1140,18 @@ export default function App() {
   // ============================================================
   // SIDEBAR NAV CONFIG
   // ============================================================
+  const isAdmin =
+    currentUser.email?.toLowerCase() === "emmanuelhabila2018@gmail.com" ||
+    (currentUser.role && (
+      currentUser.role.toLowerCase().includes("admin") ||
+      currentUser.role.toLowerCase().includes("lead") ||
+      currentUser.role.toLowerCase().includes("director")
+    ));
+
   const navItems = [
     { id: "home",        label: "Dashboard",       icon: LayoutDashboard },
     { id: "projects",    label: "Projects",         icon: Folder },
+    { id: "assistant",   label: "AI Assistant",    icon: Bot },
     { id: "logframe",    label: "LogFrame & TOC",   icon: Layers },
     { id: "kobocollect", label: "Field Collector",  icon: Smartphone },
     { id: "grants",      label: "Donor Compliance", icon: Building2 },
@@ -1178,6 +1234,26 @@ export default function App() {
               <Shield className={`h-4 w-4 shrink-0 ${currentPage === "settings" ? "text-teal-600" : "text-gray-500"}`} />
               {!sidebarCollapsed && <span>Security & Settings</span>}
             </button>
+
+            {/* Admin Hub nav item - visible only to Admin */}
+            {isAdmin && (
+              <>
+                {!sidebarCollapsed && (
+                  <div className="pt-3">
+                    <p className="text-[10px] font-bold px-2 pb-1 uppercase tracking-wider text-amber-700 flex items-center justify-between">
+                      <span>Admin Access</span>
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">DEV</span>
+                    </p>
+                  </div>
+                )}
+                <button onClick={() => navigate("admin")}
+                  title={sidebarCollapsed ? "Developer & Admin Hub" : ""}
+                  className={`nav-item ${currentPage === "admin" ? "active" : ""} ${sidebarCollapsed ? "justify-center" : ""} border border-amber-200/60 bg-amber-50/40 hover:bg-amber-100/50`}>
+                  <Terminal className={`h-4 w-4 shrink-0 ${currentPage === "admin" ? "text-teal-600" : "text-amber-600"}`} />
+                  {!sidebarCollapsed && <span className="font-semibold text-gray-900">Admin & Dev Hub</span>}
+                </button>
+              </>
+            )}
           </nav>
 
           {/* Bottom: collapse toggle + user */}
@@ -1267,6 +1343,19 @@ export default function App() {
                       <span>Security & Settings</span>
                     </button>
                   </div>
+
+                  {isAdmin && (
+                    <div className="pt-2 space-y-0.5">
+                      <p className="text-[10px] font-bold px-2 pb-1 uppercase tracking-wider text-amber-700 flex items-center justify-between">
+                        <span>Admin Access</span>
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">DEV</span>
+                      </p>
+                      <button onClick={() => navigate("admin")} className={`nav-item ${currentPage === "admin" ? "active" : ""} bg-amber-50/50 border border-amber-200/50`}>
+                        <Terminal className="h-4 w-4 shrink-0 text-amber-600" />
+                        <span className="font-semibold text-gray-900">Admin & Dev Hub</span>
+                      </button>
+                    </div>
+                  )}
                 </nav>
                 <div className="border-t px-3 py-3" style={{ borderColor: "#F3F4F6" }}>
                   <div className="flex items-center gap-2">
@@ -1481,6 +1570,37 @@ export default function App() {
                   <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
                     {/* Left — Active Projects */}
                     <div className="xl:col-span-8 space-y-5">
+                      {/* Quick AI Assistant Banner */}
+                      <div className="rounded-2xl p-4 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3"
+                        style={{ background: "linear-gradient(135deg, #1B3A6B 0%, #0F172A 100%)", border: "1px solid #334155" }}>
+                        <div className="flex items-center gap-3">
+                          <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
+                            style={{ background: "rgba(13, 148, 136, 0.2)", border: "1px solid rgba(20, 184, 166, 0.4)" }}>
+                            <Bot className="h-5 w-5 text-teal-300" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-sm font-bold text-white">ImpactIQ AI Assistant</h3>
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded"
+                                style={{ background: "rgba(13, 148, 136, 0.3)", color: "#5EEAD4", border: "1px solid rgba(94, 234, 212, 0.3)" }}>
+                                Powered by Meta Llama
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-300 mt-0.5">
+                              Query project indicators, challenges, qualitative research findings, and donor summaries.
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => navigate("assistant")}
+                          className="px-3.5 py-2 rounded-xl text-xs font-semibold text-white transition flex items-center justify-center gap-1.5 shrink-0 shadow-sm hover:opacity-90"
+                          style={{ background: "#0D9488" }}
+                        >
+                          <span>Open Assistant</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+
                       <div className="flex items-center justify-between">
                         <h2 className="text-base font-bold" style={{ color: "#111827" }}>Active Initiatives</h2>
                         <button onClick={() => navigate("projects")}
@@ -1827,10 +1947,20 @@ export default function App() {
                       {currentProject.name}
                     </h2>
                     <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{currentProject.description}</p>
-                    <div className="mt-3 flex items-center gap-2 text-xs" style={{ color: "#6B7280" }}>
-                      <span>Donor: <strong style={{ color: "#111827" }}>{currentProject.donor}</strong></span>
-                      <span className="h-3 w-px bg-gray-200" />
-                      <span>Progress: <strong style={{ color: "#111827" }}>{currentProject.progress}%</strong></span>
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs" style={{ color: "#6B7280" }}>
+                      <div className="flex items-center gap-2">
+                        <span>Donor: <strong style={{ color: "#111827" }}>{currentProject.donor}</strong></span>
+                        <span className="h-3 w-px bg-gray-200" />
+                        <span>Progress: <strong style={{ color: "#111827" }}>{currentProject.progress}%</strong></span>
+                      </div>
+                      <button
+                        onClick={() => { setSelectedProjectId(currentProject.id); navigate("assistant"); }}
+                        className="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition hover:opacity-90 shadow-sm"
+                        style={{ background: "linear-gradient(135deg, #1B3A6B 0%, #0D9488 100%)", color: "white" }}
+                      >
+                        <Bot className="h-3.5 w-3.5" />
+                        <span>Ask Project AI Assistant</span>
+                      </button>
                     </div>
                   </div>
 
@@ -2468,6 +2598,24 @@ export default function App() {
               )}
 
               {/* ======================================
+                  PAGE: IMPACTIQ AI ASSISTANT (META LLAMA)
+                  ====================================== */}
+              {currentPage === "assistant" && (
+                <motion.div key="assistant" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <ImpactIqAssistant
+                    projects={projects}
+                    selectedProjectId={selectedProjectId}
+                    onSelectProject={(id) => setSelectedProjectId(id)}
+                    files={files}
+                    reports={reports}
+                    insights={insights}
+                    kbDocs={knowledgeBase.map(k => ({ title: k.title, content: k.snippet }))}
+                    currentUser={currentUser}
+                  />
+                </motion.div>
+              )}
+
+              {/* ======================================
                   PAGE: LOGFRAME & RESULTS MATRIX
                   ====================================== */}
               {currentPage === "logframe" && (
@@ -2514,13 +2662,22 @@ export default function App() {
                       <h1 className="text-xl font-bold" style={{ color: "#111827", letterSpacing: "-0.02em" }}>User Profile</h1>
                       <p className="text-sm mt-0.5" style={{ color: "#6B7280" }}>Manage your personal account information, role, and workspace team members.</p>
                     </div>
-                    <button onClick={() => navigate("settings")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition shrink-0"
-                      style={{ background: "#F0FDFA", color: "#0D9488", border: "1px solid #99F6E4" }}>
-                      <Shield className="h-4 w-4" />
-                      Security & Settings
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {isAdmin && (
+                        <button onClick={() => navigate("admin")}
+                          className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition shrink-0 bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100">
+                          <Terminal className="h-4 w-4 text-amber-700" />
+                          Admin Hub
+                        </button>
+                      )}
+                      <button onClick={() => navigate("settings")}
+                        className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition shrink-0"
+                        style={{ background: "#F0FDFA", color: "#0D9488", border: "1px solid #99F6E4" }}>
+                        <Shield className="h-4 w-4" />
+                        Security & Settings
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
@@ -3005,6 +3162,28 @@ export default function App() {
                 </motion.div>
               )}
 
+              {/* ======================================
+                  PAGE: DEVELOPER & ADMIN HUB
+                  ====================================== */}
+              {currentPage === "admin" && (
+                <motion.div key="admin" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+                  <AdminHub
+                    currentUser={currentUser}
+                    registeredUsers={registeredUsers}
+                    onUpdateUserRole={handleUpdateUserRole}
+                    onAddUser={handleAddUser}
+                    projects={projects}
+                    files={files}
+                    reports={reports}
+                    insights={insights}
+                    auditLogs={securityAuditLogs}
+                    onRefreshData={() => {
+                      setNotifications(prev => ["Refreshed system telemetry & registry snapshot", ...prev]);
+                    }}
+                  />
+                </motion.div>
+              )}
+
               {/* 2FA SETUP MODAL */}
               <AnimatePresence>
                 {secShow2FAModal && (
@@ -3065,12 +3244,12 @@ export default function App() {
         <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-white flex justify-around py-1.5 z-40 print:hidden"
           style={{ borderColor: "#E5E7EB" }}>
           {[
-            { id: "home",     label: "Home",     icon: LayoutDashboard },
-            { id: "projects", label: "Projects",  icon: Folder },
-            { id: "research", label: "Research",  icon: FlaskConical },
-            { id: "report",   label: "Reports",   icon: FileText },
-            { id: "insights", label: "Insights",  icon: Lightbulb },
-            { id: "kb",       label: "KB",        icon: BookOpen },
+            { id: "home",      label: "Home",      icon: LayoutDashboard },
+            { id: "projects",  label: "Projects",  icon: Folder },
+            { id: "assistant", label: "Assistant", icon: Bot },
+            { id: "research",  label: "Research",  icon: FlaskConical },
+            { id: "report",    label: "Reports",   icon: FileText },
+            { id: "insights",  label: "Insights",  icon: Lightbulb },
           ].map(item => {
             const Icon = item.icon;
             const isActive = currentPage === item.id || (item.id === "projects" && currentPage === "detail");
